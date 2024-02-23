@@ -1,0 +1,28 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "board.h": "c",
+        "bsp_uart_modbus.h": "c",
+        "bsp_dma.h": "c",
+        "bsp_spi_flash.h": "c",
+        "bsp_adc.h": "c",
+        "sdio_test.h": "c",
+        "common.h": "c",
+        "bsp_sdio_sd.h": "c",
+        "bsp_rtc.h": "c",
+        "iap.h": "c",
+        "stm32f4xx.h": "c",
+        "shell_port.h": "c",
+        "bsp_eth.h": "c",
+        "lwip_eth_user.h": "c",
+        "sockets.h": "c",
+        "dns.h": "c",
+        "memp_std.h": "c",
+        "cc.h": "c",
+        "sys.h": "c",
+        "etharp.h": "c",
+        "ethernet.h": "c",
+        "lleddriver.h": "c"
+    }
+}

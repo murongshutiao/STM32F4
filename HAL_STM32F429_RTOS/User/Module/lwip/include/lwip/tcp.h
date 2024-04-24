@@ -219,10 +219,10 @@ typedef u16_t tcpflags_t;
   u16_t local_port
 
 
-/** TCPÕìÌıµÄĞ­Òé¿ØÖÆ¿é */
+/** TCPä¾¦å¬çš„åè®®æ§åˆ¶å— */
 struct tcp_pcb_listen {
 /** Common members of all PCB types */
-  IP_PCB; /* Ğ­Òé¿ØÖÆ¿é³ÉÔ± */
+  IP_PCB; /* åè®®æ§åˆ¶å—æˆå‘˜ */
 /** Protocol specific PCB members */
   TCP_PCB_COMMON(struct tcp_pcb_listen);
 

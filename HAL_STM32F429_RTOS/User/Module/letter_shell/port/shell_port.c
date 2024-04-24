@@ -1,17 +1,17 @@
 #include "./Module/letter_shell/port/shell_port.h"
 
 
-/* 1.´´½¨Shell¶ÔÏó£¬³õÊ¼»¯Shell»º³åÇø */
+/* 1.åˆ›å»ºShellå¯¹è±¡ï¼Œåˆå§‹åŒ–Shellç¼“å†²åŒº */
 Shell shell;
 char shell_buffer[512];
 
-/* 2.±àĞ´½Ó¿Úº¯Êı */
+/* 2.ç¼–å†™æ¥å£å‡½æ•° */
 void User_Shell_Write(const char ch)
 {
     HAL_UART_Transmit(&DebugUartHandler,(uint8_t *)&ch, 1, 0xFFFF);
 }
 
-/* ³õÊ¼»¯letter-shell */
+/* åˆå§‹åŒ–letter-shell */
 void User_Shell_Init(void)
 {
     shell.write = User_Shell_Write;

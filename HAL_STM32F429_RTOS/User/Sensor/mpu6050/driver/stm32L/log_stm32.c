@@ -40,12 +40,12 @@
 int fputcc(int ch)
 {
   
-//  /* ·¢ËÍÒ»¸ö×Ö½ÚÊý¾Ýµ½´®¿ÚDEBUG_USART */
+//  /* å‘é€ä¸€ä¸ªå­—èŠ‚æ•°æ®åˆ°ä¸²å£DEBUG_USART */
 //	HAL_UART_Transmit(&DEBUG_USART, (uint8_t *)&ch, 1, 1000);	
-		/* ·¢ËÍÒ»¸ö×Ö½ÚÊý¾Ýµ½USART1 */
+		/* å‘é€ä¸€ä¸ªå­—èŠ‚æ•°æ®åˆ°USART1 */
 		WRITE_REG(DEBUG_USART->DR, (uint8_t) ch);
 ////		
-//////		/* µÈ´ý·¢ËÍÍê±Ï */
+//////		/* ç­‰å¾…å‘é€å®Œæ¯• */
 //////		while ( __HAL_UART_GET_FLAG(&DEBUG_USART, UART_FLAG_TXE) == RESET);		
 	
 		return (ch);

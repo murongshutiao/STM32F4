@@ -390,7 +390,7 @@ eMBMasterFuncReadDiscreteInputs( UCHAR * pucFrame, USHORT * usLen );
 eMBException
 eMBMasterFuncReadWriteMultipleHoldingRegister( UCHAR * pucFrame, USHORT * usLen );
 
-/*£° \ingroup modbus
+/*≈ÅƒÑ \ingroup modbus
  *\brief These functions are interface for Modbus Master
  */
 void vMBMasterGetPDUSndBuf( UCHAR ** pucFrame );

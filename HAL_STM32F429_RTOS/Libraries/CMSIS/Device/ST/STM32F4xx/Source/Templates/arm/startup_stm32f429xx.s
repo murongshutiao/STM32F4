@@ -80,7 +80,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     MemManage_Handler          ; MPU Fault Handler
                 DCD     BusFault_Handler           ; Bus Fault Handler
                 DCD     UsageFault_Handler         ; Usage Fault Handler
-                DCD     0x11111112                    ; �汾�� 
+                DCD     0x11111112                    ; °æ±¾ºÅ 
                 DCD     0                          ; Reserved
                 DCD     0                          ; Reserved
                 DCD     0                          ; Reserved

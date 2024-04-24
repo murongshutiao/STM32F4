@@ -21,7 +21,7 @@
 
 //    while(1)
 //    {
-//        conn = netconn_new(NETCONN_TCP);    /* ÉêÇëÒ»¸öTCPÁ¬½ÓÊı¾İ½á¹¹ */
+//        conn = netconn_new(NETCONN_TCP);    /* ç”³è¯·ä¸€ä¸ªTCPè¿æ¥æ•°æ®ç»“æ„ */
 
 //        if(conn == NULL)
 //        {
@@ -30,14 +30,14 @@
 //            continue;
 //        }
 
-//        IP4_ADDR(&ipaddr,IP_ADDR0,IP_ADDR1,IP_ADDR2,IP_ADDR3);    /* ÅäÖÃ·şÎñÆ÷IPµØÖ· ipaddr */
+//        IP4_ADDR(&ipaddr,IP_ADDR0,IP_ADDR1,IP_ADDR2,IP_ADDR3);    /* é…ç½®æœåŠ¡å™¨IPåœ°å€ ipaddr */
 
-//        ret = netconn_connect(conn, &ipaddr, LOCAL_PORT); /* Á¬½Ó·şÎñÆ÷,TCP½øĞĞÎÕÊÖ£¬Ö¸¶¨¶Ë¿Ú5001 */
+//        ret = netconn_connect(conn, &ipaddr, LOCAL_PORT); /* è¿æ¥æœåŠ¡å™¨,TCPè¿›è¡Œæ¡æ‰‹ï¼ŒæŒ‡å®šç«¯å£5001 */
 
 //        if(ret == -1)
 //        {
 //            printf("Connect fail!\n");
-//            netconn_close(conn);          /* Á¬½ÓÊ§°Ü£¬¹Ø±ÕÁ¬½Ó */
+//            netconn_close(conn);          /* è¿æ¥å¤±è´¥ï¼Œå…³é—­è¿æ¥ */
 //            vTaskDelay(10);
 //            continue;
 //        }
@@ -46,7 +46,7 @@
 
 //        while(1)
 //        {
-//            /* Á¬½Ó³É¹¦£¬Ã¿¸ôÒ»Ãë·¢ËÍ²âÊÔÊı¾İ */
+//            /* è¿æ¥æˆåŠŸï¼Œæ¯éš”ä¸€ç§’å‘é€æµ‹è¯•æ•°æ® */
 //            ret = netconn_write(conn, send_buf, sizeof(send_buf),0);
 //            vTaskDelay(1000);
 //        }
@@ -69,43 +69,43 @@
 //    err_t err;
 //    LWIP_UNUSED_ARG(arg);
 
-//    conn = netconn_new(NETCONN_TCP);    /* ÉêÇëÒ»¸öTCPÁ¬½ÓÊı¾İ½á¹¹ */
-//    netconn_bind(conn, IP_ADDR_ANY, LOCAL_PORT);  /* °ó¶¨±¾µØIPµØÖ·ºÍ¶Ë¿ÚºÅ */
+//    conn = netconn_new(NETCONN_TCP);    /* ç”³è¯·ä¸€ä¸ªTCPè¿æ¥æ•°æ®ç»“æ„ */
+//    netconn_bind(conn, IP_ADDR_ANY, LOCAL_PORT);  /* ç»‘å®šæœ¬åœ°IPåœ°å€å’Œç«¯å£å· */
 
 //    LWIP_ERROR("tcpecho: invalid conn", (conn != NULL),return;);
 
-//    netconn_listen(conn);               /* ½øÈë¼àÌı×´Ì¬ */
+//    netconn_listen(conn);               /* è¿›å…¥ç›‘å¬çŠ¶æ€ */
 
 //    while(1)
 //    {
-//        err = netconn_accept(conn, &newconn);   /* ´¦Àí¿Í»§¶ËÁ¬½ÓÇëÇó£¬×èÈû */
+//        err = netconn_accept(conn, &newconn);   /* å¤„ç†å®¢æˆ·ç«¯è¿æ¥è¯·æ±‚ï¼Œé˜»å¡ */
 
-//        /* ÊÇ·ñÓĞ¿Í»§¶ËÁ¬½Ó½øÀ´ */
+//        /* æ˜¯å¦æœ‰å®¢æˆ·ç«¯è¿æ¥è¿›æ¥ */
 //        if(err == ERR_OK)   
 //        {
 //            struct netbuf *buf;
 //            void *data;
 //            u16_t len;
 
-//            /* ½ÓÊÕ¿Í»§¶Ë·¢À´µÄÊı¾İ°ü */
+//            /* æ¥æ”¶å®¢æˆ·ç«¯å‘æ¥çš„æ•°æ®åŒ… */
 //            while( (err = netconn_recv(newconn, &buf)) == ERR_OK)
 //            {
 //                do
 //                {
-//                    netbuf_data(buf, &data, &len);                          /* ±£´æÊı¾İ */
-//                    err = netconn_write(newconn, data, len, NETCONN_COPY);  /* »ØĞ´¸ø¿Í»§¶Ë */
+//                    netbuf_data(buf, &data, &len);                          /* ä¿å­˜æ•°æ® */
+//                    err = netconn_write(newconn, data, len, NETCONN_COPY);  /* å›å†™ç»™å®¢æˆ·ç«¯ */
 //#if 0
 //                    if(err != ERR_OK)
 //                    {
 //                        printf("tcpecho: netconn_write: error \"%s"\n",lwip_strerr(err));
 //                    }
 //#endif
-//                }while(netbuf_next(buf) >= 0);  /* µÈ´ıÊı¾İ»ØĞ´Íê³É */
+//                }while(netbuf_next(buf) >= 0);  /* ç­‰å¾…æ•°æ®å›å†™å®Œæˆ */
 
 //                netbuf_delete(buf);
 //            }
 
-//            netconn_close(newconn);             /* ¹Ø±ÕÓë¿Í»§¶ËµÄÁ¬½Ó */
+//            netconn_close(newconn);             /* å…³é—­ä¸å®¢æˆ·ç«¯çš„è¿æ¥ */
 //            netconn_delete(newconn);
 //        }
 //    }
@@ -126,14 +126,14 @@
 //    err_t err;
 //    LWIP_UNUSED_ARG(arg);
 
-//    conn = netconn_new(NETCONN_UDP);          /* ´´½¨Ò»¸öUDPÁ¬½ÓÊı¾İ½á¹¹ */
-//    netconn_bind(conn, IP_ADDR_ANY, LOCAL_PORT);    /* °ó¶¨±¾µØIPºÍ¶Ë¿ÚºÅ */
+//    conn = netconn_new(NETCONN_UDP);          /* åˆ›å»ºä¸€ä¸ªUDPè¿æ¥æ•°æ®ç»“æ„ */
+//    netconn_bind(conn, IP_ADDR_ANY, LOCAL_PORT);    /* ç»‘å®šæœ¬åœ°IPå’Œç«¯å£å· */
 
 //    LWIP_ERROR("udpecho: invalid conn", (conn != NULL), return;);
 
 //    while(1)
 //    {
-//        err = netconn_recv(conn, &buf);   /* Ïß³Ì×èÈûÖĞ½ÓÊÕÊı¾İ£¬ÓĞÊı¾İÔò´æÈëbufÖĞ */
+//        err = netconn_recv(conn, &buf);   /* çº¿ç¨‹é˜»å¡ä¸­æ¥æ”¶æ•°æ®ï¼Œæœ‰æ•°æ®åˆ™å­˜å…¥bufä¸­ */
 
 //        if(err == ERR_OK)
 //        {
@@ -144,7 +144,7 @@
 //            else
 //            {
 //                buffer[buf->p->tot_len] = '\0';
-//                err = netconn_send(conn, buf);    /* »ØÏÔÊÕµ½µÄÊı¾İ */
+//                err = netconn_send(conn, buf);    /* å›æ˜¾æ”¶åˆ°çš„æ•°æ® */
 
 //                if(err != ERR_OK)
 //                {
@@ -170,13 +170,13 @@
 //{
 //#if 0    
 //    int sock = -1;
-//    struct sockaddr_in client_addr;   /* ¶¨ÒåsocketµØÖ·ĞÅÏ¢½á¹¹Ìå */
+//    struct sockaddr_in client_addr;   /* å®šä¹‰socketåœ°å€ä¿¡æ¯ç»“æ„ä½“ */
 
 //    uint8_t send_buf[] = "This is a TCP Client test...\n";
 
 //    while(1)
 //    {
-//        sock = socket(AF_INET, SOCK_STREAM, 0);   /* ÉêÇëÒ»¸ösocketÊı¾İ½á¹¹,STREAM,Á÷£¬*/
+//        sock = socket(AF_INET, SOCK_STREAM, 0);   /* ç”³è¯·ä¸€ä¸ªsocketæ•°æ®ç»“æ„,STREAM,æµï¼Œ*/
 
 //        if(sock < 0)
 //        {
@@ -185,12 +185,12 @@
 //            continue;
 //        }
 
-    //    client_addr.sin_family = AF_INET;     /* ÅäÖÃĞ­Òé´Ø£¬¶ÔÓÚTCP/IPĞ­Òé£¬Ê¼ÖÕÊÇÕâ¸ö³£Á¿ */
-//        client_addr.sin_port = htons(LOCAL_PORT);   /* ¶Ë¿ÚĞÅÏ¢ */
-//        client_addr.sin_addr.s_addr = inet_addr(DEST_IP_ADDR);/* IPµØÖ· */
-//        memset(&(client_addr.sin_zero), 0, sizeof(client_addr.sin_zero)); /* sin_zero×Ö¶ÎÎ´ÓÃµ½£¬ÅäÖÃÎª0 */
+    //    client_addr.sin_family = AF_INET;     /* é…ç½®åè®®ç°‡ï¼Œå¯¹äºTCP/IPåè®®ï¼Œå§‹ç»ˆæ˜¯è¿™ä¸ªå¸¸é‡ */
+//        client_addr.sin_port = htons(LOCAL_PORT);   /* ç«¯å£ä¿¡æ¯ */
+//        client_addr.sin_addr.s_addr = inet_addr(DEST_IP_ADDR);/* IPåœ°å€ */
+//        memset(&(client_addr.sin_zero), 0, sizeof(client_addr.sin_zero)); /* sin_zeroå­—æ®µæœªç”¨åˆ°ï¼Œé…ç½®ä¸º0 */
 
-            /* ·¢ÆğTCPÎÕÊÖÁ¬½Ó */
+            /* å‘èµ·TCPæ¡æ‰‹è¿æ¥ */
 //        if(connect(sock,(struct sockaddr *)&client_addr,sizeof(struct sockaddr)) == -1)
 //        {
 //            printf("Connect failed!\n");
@@ -203,7 +203,7 @@
 
 //        while(1)
 //        {
-                /* ·¢ËÍÊı¾İ */
+                /* å‘é€æ•°æ® */
 //            if(write(sock, send_buf, sizeof(send_buf)) < 0)
 //            {
 //                break;
@@ -232,7 +232,7 @@ static void Socket_TCP_Server_Thread(void *arg)
     socklen_t sin_size;
     int recv_data_len;
 
-    /* ·¢Åä¿Õ¼ä */
+    /* å‘é…ç©ºé—´ */
     recv_data = (char *)pvPortMalloc(RECV_DATA);
 
     if(recv_data == NULL)
@@ -241,7 +241,7 @@ static void Socket_TCP_Server_Thread(void *arg)
         goto __exit;
     }
 
-    /* ÉêÇëÒ»¸ösocketÊı¾İ½á¹¹ */
+    /* ç”³è¯·ä¸€ä¸ªsocketæ•°æ®ç»“æ„ */
     sock = socket(AF_INET, SOCK_STREAM, 0);
 
     if(sock < 0)
@@ -255,7 +255,7 @@ static void Socket_TCP_Server_Thread(void *arg)
     server_addr.sin_port = htons(LOCAL_PORT);
     memset(&(server_addr.sin_zero), 0, sizeof(server_addr.sin_zero));
 
-    /* °ó¶¨±¾µØ¶Ë¿ÚĞÅÏ¢ */
+    /* ç»‘å®šæœ¬åœ°ç«¯å£ä¿¡æ¯ */
     if(bind(sock, (struct sockaddr *)&server_addr, sizeof(struct sockaddr)) == -1)
     {
         printf("Unable to bind\n");
@@ -272,12 +272,12 @@ static void Socket_TCP_Server_Thread(void *arg)
     {
         sin_size = sizeof(struct sockaddr_in);
 
-        /* µÈ´ıÁ¬½ÓÇëÇó */
+        /* ç­‰å¾…è¿æ¥è¯·æ±‚ */
         connected = accept(sock, (struct sockaddr *)&client_addr, &sin_size);
 
         printf("new client connected from (%s, %d)\n",
 
-        /* ½«IP,¶Ë¿ÚÊı¾İ×ª10½øÖÆ */
+        /* å°†IP,ç«¯å£æ•°æ®è½¬10è¿›åˆ¶ */
         inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
         {
             int flag = 1;
@@ -359,7 +359,7 @@ static void Http_Client(void *thread_param)
     host_ip = HOST_NAME;
 #endif  
     
-    printf("Ä¿±ê¶Ë¿ÚºÅÊÇ£º%d\n\n",DEST_PORT);
+    printf("ç›®æ ‡ç«¯å£å·æ˜¯ï¼š%d\n\n",DEST_PORT);
     
     while(1)
     {
@@ -427,11 +427,11 @@ void Htts_Client_init(void)
 
 static const char http_html_hdr[] = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
 static const char http_index_html[] = 
-"<html><head><title>²Ì³şÇ¿Ê·ÉÏ×îË§!</title></head>\
+"<html><head><title>è”¡æ¥šå¼ºå²ä¸Šæœ€å¸…!</title></head>\
                                        <body><h1 align=\"center\">Hello World!</h1>\
                                        <h2 align=\"center\">Welcome to Fire LwIP HTTP Server!</h1>\
                                        <p align=\"center\">This is a small test page, served by httpserver-netconn.</p>\
-                                       <p align=\"center\"><a href=\"http://www.firebbs.cn/forum.php/\"> <font size=\"6\"> Ò°»ğµç×ÓÂÛÌ³ </font> </a></p>\
+                                       <p align=\"center\"><a href=\"http://www.firebbs.cn/forum.php/\"> <font size=\"6\"> é‡ç«ç”µå­è®ºå› </font> </a></p>\
                                        <a href=\"http://www.firebbs.cn/forum.php/\">\
                                        <p align=\"center\"><img src=\"https://dingyue.nosdn.127.net/e8YpYXEBx37XL1=xTnVuaQLuoVqKH21rN6OvwXVZkP0tj1528602866444compressflag.png\" /></a>\
                                        </body></html>";
@@ -445,31 +445,31 @@ static void http_server_netconn_serve(struct netconn *conn)
     u16_t buflen;
     err_t err;
 
-    /* ¶ÁÈ¡Êı¾İ */
+    /* è¯»å–æ•°æ® */
     err = netconn_recv(conn, &inbuf);
 
     if(err == ERR_OK)
     {
-        /* ½«inbufµÄÊı¾İĞ´ÈëbufÖĞ */
+        /* å°†inbufçš„æ•°æ®å†™å…¥bufä¸­ */
         netbuf_data(inbuf, (void **)&buf, &buflen);
 
-        /* ÅĞ¶ÏGETÃüÁî,±êÖ¾C¿âstrstr£¿ */
+        /* åˆ¤æ–­GETå‘½ä»¤,æ ‡å¿—Cåº“strstrï¼Ÿ */
         if(buflen >= 5 && buf[0] == 'G' && 
                           buf[1] == 'E' && 
                           buf[2] == 'T' && 
                           buf[3] == ' ' && 
                           buf[4] == '/' )
         {
-            /* ·¢ËÍÊı¾İÍ· */
+            /* å‘é€æ•°æ®å¤´ */
             netconn_write(conn, http_html_hdr, sizeof(http_html_hdr) - 1,NETCONN_NOCOPY);
 
-            /* ·¢ËÍÍøÒ³Êı¾İ */
+            /* å‘é€ç½‘é¡µæ•°æ® */
             netconn_write(conn, http_index_html,sizeof(http_index_html) - 1, NETCONN_NOCOPY);
         }
     }
-    netconn_close(conn);    /* ¹Ø±ÕÁ¬½Ó */
+    netconn_close(conn);    /* å…³é—­è¿æ¥ */
 
-    /* ÊÍ·Å inbuf */
+    /* é‡Šæ”¾ inbuf */
     netbuf_delete(inbuf);
 }
 
@@ -479,30 +479,30 @@ static void http_server_netconn_thread(void *arg)
     err_t err;
     LWIP_UNUSED_ARG(arg);
 
-    conn = netconn_new(NETCONN_TCP);        /* ´´½¨netconnÁ¬½Ó½á¹¹ */
-    netconn_bind(conn, IP_ADDR_ANY, 80);    /* °ó¶¨¶Ë¿ÚºÅÓëIPµØÖ·£¬¶Ë¿ÚºÅÄ¬ÈÏÊÇ80 */
+    conn = netconn_new(NETCONN_TCP);        /* åˆ›å»ºnetconnè¿æ¥ç»“æ„ */
+    netconn_bind(conn, IP_ADDR_ANY, 80);    /* ç»‘å®šç«¯å£å·ä¸IPåœ°å€ï¼Œç«¯å£å·é»˜è®¤æ˜¯80 */
     LWIP_ERROR("http_server: invalid conn", (conn != NULL), return;);
 
-    /* ¼àÌı */
+    /* ç›‘å¬ */
     netconn_listen(conn);
 
     do
     {
-        /* ´¦ÀíÁ¬½ÓÇëÇó */
+        /* å¤„ç†è¿æ¥è¯·æ±‚ */
         err = netconn_accept(conn, &newconn);
 
         if(err == ERR_OK)
         {
-            /* ·¢ËÍÍøÒ³Êı¾İ */
+            /* å‘é€ç½‘é¡µæ•°æ® */
             http_server_netconn_serve(newconn);
 
-            /* É¾³ıÁ¬½Ó½á¹¹ */
+            /* åˆ é™¤è¿æ¥ç»“æ„ */
             netconn_delete(newconn);
         }
 
     } while (err == ERR_OK);
 
-    /* ¹Ø±Õ */
+    /* å…³é—­ */
     netconn_close(conn);
     
     netconn_delete(conn);
@@ -513,7 +513,7 @@ void http_server_netconn_init(void)
 {
 
 
-    /* ´´½¨Ïß³Ì */
+    /* åˆ›å»ºçº¿ç¨‹ */
     sys_thread_new("http_server_netconn", http_server_netconn_thread, NULL, 2048, 4);
 }
 
@@ -532,32 +532,32 @@ static void Http_Server_Socket(struct netconn *conn)
     u16_t buflen;
     err_t err;
 
-    /* ¶ÁÈ¡Êı¾İ */
+    /* è¯»å–æ•°æ® */
     err = netconn_recv(conn, &inbuf);
 
     if(err == ERR_OK)
     {
-        /* ½«inbufµÄÊı¾İĞ´ÈëbufÖĞ */
+        /* å°†inbufçš„æ•°æ®å†™å…¥bufä¸­ */
         netbuf_data(inbuf, (void **)&buf, &buflen);
 
-        /* ÅĞ¶ÏGETÃüÁî,±êÖ¾C¿âstrstr£¿ */
+        /* åˆ¤æ–­GETå‘½ä»¤,æ ‡å¿—Cåº“strstrï¼Ÿ */
         if(buflen >= 5 && buf[0] == 'G' && 
                           buf[1] == 'E' && 
                           buf[2] == 'T' && 
                           buf[3] == ' ' && 
                           buf[4] == '/' )
         {
-            /* ·¢ËÍÊı¾İÍ· */
+            /* å‘é€æ•°æ®å¤´ */
             netconn_write(conn, http_html_hdr, sizeof(http_html_hdr) - 1,NETCONN_NOCOPY);
 
-            /* ·¢ËÍÍøÒ³Êı¾İ */
+            /* å‘é€ç½‘é¡µæ•°æ® */
             netconn_write(conn, http_index_html,
             sizeof(http_index_html) - 1, NETCONN_NOCOPY);
         }
     }
-    netconn_close(conn);    /* ¹Ø±ÕÁ¬½Ó */
+    netconn_close(conn);    /* å…³é—­è¿æ¥ */
 
-    /* ÊÍ·Å inbuf */
+    /* é‡Šæ”¾ inbuf */
     netbuf_delete(inbuf);
 }
 
@@ -570,7 +570,7 @@ static void Http_Server_Socket_thread(void *arg)
     socklen_t sin_size;
     int recv_data_len;
 
-    /* ·¢Åä¿Õ¼ä */
+    /* å‘é…ç©ºé—´ */
     recv_data = (char *)pvPortMalloc(RECV_DATA);
 
     if(recv_data == NULL)
@@ -579,7 +579,7 @@ static void Http_Server_Socket_thread(void *arg)
         goto __exit;
     }
 
-    /* ÉêÇëÒ»¸ösocketÊı¾İ½á¹¹ */
+    /* ç”³è¯·ä¸€ä¸ªsocketæ•°æ®ç»“æ„ */
     sock = socket(AF_INET, SOCK_STREAM, 0);
 
     if(sock < 0)
@@ -593,14 +593,14 @@ static void Http_Server_Socket_thread(void *arg)
     server_addr.sin_port = htons(LOCAL_PORT);
     memset(&(server_addr.sin_zero), 0, sizeof(server_addr.sin_zero));
 
-    /* °ó¶¨±¾µØ¶Ë¿ÚĞÅÏ¢ */
+    /* ç»‘å®šæœ¬åœ°ç«¯å£ä¿¡æ¯ */
     if(bind(sock, (struct sockaddr *)&server_addr, sizeof(struct sockaddr)) == -1)
     {
         printf("Unable to bind\n");
         goto __exit;
     }
 
-    /* ÕìÌıĞÅÏ¢ */
+    /* ä¾¦å¬ä¿¡æ¯ */
     if(listen(sock, 5) == -1)
     {
         printf("Listen error\n");
@@ -612,7 +612,7 @@ static void Http_Server_Socket_thread(void *arg)
 //    do
 //    {
 
-//        /* µÈ´ıÁ¬½ÓÇëÇó */
+//        /* ç­‰å¾…è¿æ¥è¯·æ±‚ */
 //        connected = accept(sock, (struct sockaddr *)&client_addr, &sin_size);
 
 
@@ -654,7 +654,7 @@ __exit:
 void Http_Server_Socket_Init(void)
 {
 
-    /* ´´½¨Ïß³Ì */
+    /* åˆ›å»ºçº¿ç¨‹ */
     sys_thread_new("Http_Server_Socket_thread", Http_Server_Socket_thread, NULL, 2048, 4);
 }
 
@@ -812,10 +812,10 @@ void http_server_serve(int conn)
         recv_buffer[4] == '/'
     )
     {
-            /* ·¢ËÍÊı¾İÍ· */
+            /* å‘é€æ•°æ®å¤´ */
             write(conn, http_html_hdr, sizeof(http_html_hdr) - 1);
 
-            /* ·¢ËÍÍøÒ³Êı¾İ */
+            /* å‘é€ç½‘é¡µæ•°æ® */
             write(conn, http_index_html,sizeof(http_index_html) - 1);
     }
 

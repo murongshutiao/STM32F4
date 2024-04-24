@@ -14,8 +14,8 @@
 #define MPU6050_WHO_AM_I        0x75
 #define MPU6050_SMPLRT_DIV      0  //8000Hz
 #define MPU6050_DLPF_CFG        0
-#define MPU6050_GYRO_OUT        0x43     //MPU6050���������ݼĴ�����ַ
-#define MPU6050_ACC_OUT         0x3B     //MPU6050���ٶ����ݼĴ�����ַ
+#define MPU6050_GYRO_OUT        0x43     //MPU6050陀螺仪数据寄存器地址
+#define MPU6050_ACC_OUT         0x3B     //MPU6050加速度数据寄存器地址
 
 
 #define MPU6050_RA_XG_OFFS_TC       0x00 //[7] PWR_MODE, [6:1] XG_OFFS_TC, [0] OTP_BNK_VLD
@@ -374,7 +374,7 @@
 #define I2C_OWN_ADDRESS           0x00
 
 
-//���뼶��ʱ(��Ҫ��ʱ��֧��)��������дDelay��
+//毫秒级延时(需要定时器支持)，或者重写Delay宏
 #define Delay 		HAL_Delay
 
  
@@ -382,7 +382,7 @@
 #define I2Cx_LONG_TIMEOUT             ((uint32_t) (300 * I2Cx_FLAG_TIMEOUT)) //was300
  
  
-/*���Ŷ���*/ 
+/*引脚定义*/ 
 
 #define MPU6050_I2C_SCL_GPIO_PORT         		GPIOB
 #define MPU6050_I2C_SCL_GPIO_CLK_ENABLE()    __HAL_RCC_GPIOB_CLK_ENABLE()
@@ -400,7 +400,7 @@
 #define MPU6050_I2C_FORCE_RESET()      			__HAL_RCC_I2C1_FORCE_RESET()
 #define MPU6050_I2C_RELEASE_RESET()    			__HAL_RCC_I2C1_RELEASE_RESET()
 
-/*��Ϣ���*/
+/*信息输出*/
 #define I2C_DEBUG_ON         1
 #define I2C_DEBUG_FUNC_ON    0
 

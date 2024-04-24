@@ -5,17 +5,17 @@
 #include "./internalflash/bsp_internalflash.h"
 
 /**
- * ÕûÌåÉè¼ÆÈçÏÂ
- * ¿ª»ú5ÃëÄÚµ¥»÷K2½øÈëÒıµ¼Ä£Ê½£¬Ë«»÷¿ÉÑ¡Ôñ°æ±¾ÔËĞĞAPP,·ñÔò°´ÕÕ×îĞÂ°æ±¾ÔËĞĞ¡£
+ * æ•´ä½“è®¾è®¡å¦‚ä¸‹
+ * å¼€æœº5ç§’å†…å•å‡»K2è¿›å…¥å¼•å¯¼æ¨¡å¼ï¼ŒåŒå‡»å¯é€‰æ‹©ç‰ˆæœ¬è¿è¡ŒAPP,å¦åˆ™æŒ‰ç…§æœ€æ–°ç‰ˆæœ¬è¿è¡Œã€‚
 */
 
-// #define STM32F4_Bootloader_Addr 0x1FFF0000  /* ÏµÍ³bootloaderµØÖ· */
+// #define STM32F4_Bootloader_Addr 0x1FFF0000  /* ç³»ç»Ÿbootloaderåœ°å€ */
 // #define STM32F4_Bootloader_RstAddr  (*((uint32_t *)(STM32F4_Bootloader_Addr + 4)))
 
 // typedef  void (*pFunction)(void);
 
-#define IAP_BUFFERSIZE  (128)// * 1024)    /* 128kBytes,Ò»¸öflashÉÈÇø */ 
-#define IAP_WriteBufSize    (512)       /* (512 * 4) BytesµÄĞ´Èëflash»º´æ */  
+#define IAP_BUFFERSIZE  (128)// * 1024)    /* 128kBytes,ä¸€ä¸ªflashæ‰‡åŒº */ 
+#define IAP_WriteBufSize    (512)       /* (512 * 4) Bytesçš„å†™å…¥flashç¼“å­˜ */  
 
 #define APP_ADDR1   ADDR_FLASH_SECTOR_7
 #define APP_ADDR2   ADDR_FLASH_SECTOR_7

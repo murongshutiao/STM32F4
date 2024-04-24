@@ -29,8 +29,8 @@
 extern BOOL xMBMasterRTUTimerExpired(void);
 
 
-static eMBMasterEventType eMasterQueuedEvent;   /* Ö÷»ú×´Ì¬±êÖ¾Î» */
-static BOOL    xMasterEventInQueue;             /* Ö÷»úÊÂ¼ş±ä¸ü±êÖ¾Î» */
+static eMBMasterEventType eMasterQueuedEvent;   /* ä¸»æœºçŠ¶æ€æ ‡å¿—ä½ */
+static BOOL    xMasterEventInQueue;             /* ä¸»æœºäº‹ä»¶å˜æ›´æ ‡å¿—ä½ */
 /* ----------------------- Start implementation -----------------------------*/
 BOOL xMBMasterPortEventInit( void )
 {
@@ -39,7 +39,7 @@ BOOL xMBMasterPortEventInit( void )
     return TRUE;
 }
 
-/* Ö÷™Cmodbus î‘BÅäÖÃ */
+/* ä¸»æ©Ÿmodbusç‹€æ…‹é…ç½® */
 BOOL xMBMasterPortEventPost( eMBMasterEventType eEvent )
 {
 	eMasterQueuedEvent = eEvent;
@@ -57,7 +57,7 @@ BOOL xMBMasterPortEventPost( eMBMasterEventType eEvent )
     return TRUE;
 }
 
-/* Ö÷™Cmodbus î‘B«@È¡ */
+/* ä¸»æ©Ÿmodbusç‹€æ…‹ç²å– */
 BOOL xMBMasterPortEventGet( eMBMasterEventType * eEvent )
 {
     if(xMasterEventInQueue != TRUE)
@@ -215,7 +215,7 @@ void vMBMasterCBRequestScuuess( void )
 
 }
 
-/* µÈ´ımodbusÖ÷ÇëÇóÍê³É²¢·µ»Ø½á¹û */
+/* ç­‰å¾…modbusä¸»è¯·æ±‚å®Œæˆå¹¶è¿”å›ç»“æœ */
 eMBMasterReqErrCode eMBMasterWaitRequestFinish( void ) 
 {
     eMBMasterReqErrCode    eErrStatus = MB_MRE_NO_ERR;
@@ -224,18 +224,18 @@ eMBMasterReqErrCode eMBMasterWaitRequestFinish( void )
 
     switch (eMasterQueuedEvent)
     {
-        case EV_MASTER_PROCESS_SUCESS:  /* ÇëÇó´¦Àí³É¹¦ */
+        case EV_MASTER_PROCESS_SUCESS:  /* è¯·æ±‚å¤„ç†æˆåŠŸ */
             break;
             
-        case EV_MASTER_ERROR_RESPOND_TIMEOUT:  /* ÇëÇó´¦Àí³¬Ê± */
+        case EV_MASTER_ERROR_RESPOND_TIMEOUT:  /* è¯·æ±‚å¤„ç†è¶…æ—¶ */
             eErrStatus = MB_MRE_TIMEDOUT;
             break;
         
-        case EV_MASTER_ERROR_RECEIVE_DATA:  /* ½ÓÊÕÊı¾İ´íÎó */ 
+        case EV_MASTER_ERROR_RECEIVE_DATA:  /* æ¥æ”¶æ•°æ®é”™è¯¯ */ 
             eErrStatus = MB_MRE_REV_DATA;
             break;
         
-        case EV_MASTER_ERROR_EXECUTE_FUNCTION:  /* Ö´ĞĞº¯Êı´íÎó */
+        case EV_MASTER_ERROR_EXECUTE_FUNCTION:  /* æ‰§è¡Œå‡½æ•°é”™è¯¯ */
             eErrStatus = MB_MRE_EXE_FUN;
             break;
     }

@@ -294,7 +294,7 @@ struct netif *netif_add(struct netif *netif,
     LWIP_ERROR("netif_add: No init function given", init != NULL, return NULL);
 
 #if LWIP_IPV4
-    /* ÒÔÏÂ3¸ö²ÎÊý,Îª¿Õ¶¼ÅäÖÃÎªNULL */
+    /* ä»¥ä¸‹3ä¸ªå‚æ•°,ä¸ºç©ºéƒ½é…ç½®ä¸ºNULL */
     if (ipaddr == NULL) 
     {
         ipaddr = ip_2_ip4(IP4_ADDR_ANY);    
@@ -308,7 +308,7 @@ struct netif *netif_add(struct netif *netif,
         gw = ip_2_ip4(IP4_ADDR_ANY);
     }
 
-    /* 1.Çå¿ÕipµØÖ·£¬×ÓÍøÑÚÂë£¬Íø¹Ø */
+    /* 1.æ¸…ç©ºipåœ°å€ï¼Œå­ç½‘æŽ©ç ï¼Œç½‘å…³ */
     ip_addr_set_zero_ip4(&netif->ip_addr);
     ip_addr_set_zero_ip4(&netif->netmask);
     ip_addr_set_zero_ip4(&netif->gw);
@@ -353,7 +353,7 @@ struct netif *netif_add(struct netif *netif,
   netif->mld_mac_filter = NULL;
 #endif /* LWIP_IPV6 && LWIP_IPV6_MLD */
 
-    /* 2.ÅäÖÃÏà¹Ø×Ö¶ÎÐÅÏ¢ */
+    /* 2.é…ç½®ç›¸å…³å­—æ®µä¿¡æ¯ */
     netif->state = state;
     netif->num = netif_num;
     netif->input = input;
@@ -371,11 +371,11 @@ struct netif *netif_add(struct netif *netif,
 #endif /* ENABLE_LOOPBACK */
 
 #if LWIP_IPV4
-    /* 3.ÉèÖÃÍø¿¨IPµØÖ·£¬×ÓÍøÑÚÂë£¬Íø¹ØµÈÐÅÏ¢ */
+    /* 3.è®¾ç½®ç½‘å¡IPåœ°å€ï¼Œå­ç½‘æŽ©ç ï¼Œç½‘å…³ç­‰ä¿¡æ¯ */
     netif_set_addr(netif, ipaddr, netmask, gw);   
 #endif /* LWIP_IPV4 */
 
-    /* 4.³õÊ¼»¯ÒÔÌ«Íø½Ó¿Úº¯Êý */
+    /* 4.åˆå§‹åŒ–ä»¥å¤ªç½‘æŽ¥å£å‡½æ•° */
     if (init(netif) != ERR_OK) 
     {
         return NULL;
@@ -425,11 +425,11 @@ struct netif *netif_add(struct netif *netif,
     } 
     else 
     {
-        /* 5.³õÊ¼»¯Íø¿¨³É¹¦£¬±éÀúµ±Ç°Éè±¸ÓµÓÐ¶àÉÙÍø¿¨ */
+        /* 5.åˆå§‹åŒ–ç½‘å¡æˆåŠŸï¼ŒéåŽ†å½“å‰è®¾å¤‡æ‹¥æœ‰å¤šå°‘ç½‘å¡ */
         netif_num = (u8_t)(netif->num + 1);
     }
 
-    /* 6.Ìí¼ÓÍø¿¨µ½Á´±í */
+    /* 6.æ·»åŠ ç½‘å¡åˆ°é“¾è¡¨ */
     netif->next = netif_list;
     netif_list = netif;
 #endif /* "LWIP_SINGLE_NETIF */

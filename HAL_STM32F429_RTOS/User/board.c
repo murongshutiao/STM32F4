@@ -25,16 +25,16 @@ void BSP_Init(void)
 
     //NVIC_SetVectorTable(FLASH_BASE,0x40000);
 
-    /* ÏµÍ³Ê±ÖÓ³õÊ¼»¯³É216 MHz */
+    /* ç³»ç»Ÿæ—¶é’Ÿåˆå§‹åŒ–æˆ216 MHz */
     SystemClock_Config();
     
     GPIO_CLK_Init();
 
-    /* LED ¶Ë¿Ú³õÊ¼»¯ */
+    /* LED ç«¯å£åˆå§‹åŒ– */
     LED_GPIO_Config();
     // Button_GPIO_Config();
     Debug_Uart_Init();
-    Debug_Uart_SendString("ÕâÊÇMPU6050²âÊÔ³ÌĞò\n");
+    Debug_Uart_SendString("è¿™æ˜¯MPU6050æµ‹è¯•ç¨‹åº\n");
 
     // Flash_SPI_Init();
 
@@ -63,7 +63,7 @@ void BSP_Init(void)
     // MultiButton_Init();
     // MPU6050_Init();
     // MPU6050_Test();
-    //WIFI_PDN_INIT();    /* ¸úSD¿¨Ïà¹Ø */
+    //WIFI_PDN_INIT();    /* è·ŸSDå¡ç›¸å…³ */
     
 //    CAN_Config();
 //    CAN_SetMsg();
@@ -81,7 +81,7 @@ extern struct netif gnetif;
 
 void App_Task(void)
 {
-    /* ¿ØÖÆLEDµÆ */
+    /* æ§åˆ¶LEDç¯ */
     while (1)
     {
         multi_timer_yield();

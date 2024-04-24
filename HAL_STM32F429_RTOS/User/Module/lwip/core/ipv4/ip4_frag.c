@@ -735,7 +735,7 @@ ipfrag_free_pbuf_custom(struct pbuf *p)
  * @param dest destination ip address to which to send
  *
  * @return ERR_OK if sent successfully, err_t otherwise
- * @note  IP±¨ÎÄ½øĞĞ·ÖÆ¬´¦Àí,ÕâÀï¼ÙÉèÊı¾İÖ¡³¬¹ı1500£¬Ö»ÓĞÒ»¸öipÊ×²¿
+ * @note  IPæŠ¥æ–‡è¿›è¡Œåˆ†ç‰‡å¤„ç†,è¿™é‡Œå‡è®¾æ•°æ®å¸§è¶…è¿‡1500ï¼Œåªæœ‰ä¸€ä¸ªipé¦–éƒ¨
  */
 err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
 {
@@ -747,7 +747,7 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
 #endif
     struct ip_hdr *original_iphdr;
     struct ip_hdr *iphdr;
-    const u16_t nfb = (u16_t)((netif->mtu - IP_HLEN) / 8);  /* µ¥¸öipÊı¾İ±¨µÄ¿É´«Êäµ¥Ôª */
+    const u16_t nfb = (u16_t)((netif->mtu - IP_HLEN) / 8);  /* å•ä¸ªipæ•°æ®æŠ¥çš„å¯ä¼ è¾“å•å…ƒ */
     u16_t left, fragsize;
     u16_t ofo;
     int last;
@@ -757,7 +757,7 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
 
     original_iphdr = (struct ip_hdr *)p->payload;
     iphdr = original_iphdr;
-    if (IPH_HL_BYTES(iphdr) != IP_HLEN)   /* ²é¿´ÊÇ·ñ´æÔÚÑ¡Ïî×Ö½Ú,´æÔÚÔò²»·ÖÆ¬ */
+    if (IPH_HL_BYTES(iphdr) != IP_HLEN)   /* æŸ¥çœ‹æ˜¯å¦å­˜åœ¨é€‰é¡¹å­—èŠ‚,å­˜åœ¨åˆ™ä¸åˆ†ç‰‡ */
     {
         /* ip4_frag() does not support IP options */
         return ERR_VAL;
@@ -766,11 +766,11 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
 
     /* Save original offset */
     tmp = lwip_ntohs(IPH_OFFSET(iphdr));
-    ofo = tmp & IP_OFFMASK; /* »ñÈ¡·ÖÆ¬Æ«ÒÆÁ¿ */
+    ofo = tmp & IP_OFFMASK; /* è·å–åˆ†ç‰‡åç§»é‡ */
     /* already fragmented? if so, the last fragment we create must have MF, too */
     mf_set = tmp & IP_MF;
 
-    /* pbuf³¤¶È- Ê×²¿³¤¶È = Ê£Óà³¤¶È */
+    /* pbufé•¿åº¦- é¦–éƒ¨é•¿åº¦ = å‰©ä½™é•¿åº¦ */
     left = (u16_t)(p->tot_len - IP_HLEN); 
 
     while (left) 
@@ -802,7 +802,7 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
      * The rest will be PBUF_REFs mirroring the pbuf chain to be fragged,
      * but limited to the size of an mtu.
      */
-    /* ÉêÇëÒ»¸ö±¨ÎÄÍ·¿Õ¼ä */
+    /* ç”³è¯·ä¸€ä¸ªæŠ¥æ–‡å¤´ç©ºé—´ */
     rambuf = pbuf_alloc(PBUF_LINK, IP_HLEN, PBUF_RAM);
 
     if (rambuf == NULL) 
@@ -811,7 +811,7 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
     }
     LWIP_ASSERT("this needs a pbuf in one piece!",
                 (rambuf->len >= (IP_HLEN)));
-    /* ½«±¨ÎÄÍ·×°µ½·ÖÆ¬µÄipÊı¾İ±¨ÉÏ */
+    /* å°†æŠ¥æ–‡å¤´è£…åˆ°åˆ†ç‰‡çš„ipæ•°æ®æŠ¥ä¸Š */
     SMEMCPY(rambuf->payload, original_iphdr, IP_HLEN);
     iphdr = (struct ip_hdr *)rambuf->payload;
 
@@ -887,7 +887,7 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
     }
 #endif /* CHECKSUM_GEN_IP */
 
-    /* ·¢ËÍipÊı¾İ±¨ */
+    /* å‘é€ipæ•°æ®æŠ¥ */
     netif->output(netif, rambuf, dest);
     IPFRAG_STATS_INC(ip_frag.xmit);
 
@@ -900,7 +900,7 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest)
 
     pbuf_free(rambuf);
     left = (u16_t)(left - fragsize);
-    ofo = (u16_t)(ofo + nfb);   /* ¸üĞÂ·ÖÆ¬Æ«ÒÆÁ¿ */
+    ofo = (u16_t)(ofo + nfb);   /* æ›´æ–°åˆ†ç‰‡åç§»é‡ */
   }
   MIB2_STATS_INC(mib2.ipfragoks);
   return ERR_OK;

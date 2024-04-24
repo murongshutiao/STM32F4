@@ -234,7 +234,7 @@ HAL_StatusTypeDef HAL_ETH_Init(ETH_HandleTypeDef *heth)
     }
   }
   
-  /*-------------------------------- ÒÔÌ«Íøphy³õÊ¼»¯ ----------------------*/
+  /*-------------------------------- ä»¥å¤ªç½‘phyåˆå§‹åŒ– ----------------------*/
   /* Get the ETHERNET MACMIIAR value */
   tmpreg1 = (heth->Instance)->MACMIIAR;
   /* Clear CSR Clock Range CR[2:0] bits */
@@ -274,7 +274,7 @@ HAL_StatusTypeDef HAL_ETH_Init(ETH_HandleTypeDef *heth)
   (heth->Instance)->MACMIIAR = (uint32_t)tmpreg1;
   
   /*-------------------- PHY initialization and configuration ----------------*/
-  /* ¶ÔETH PHYĞ¾Æ¬µÄBCR¼Ä´æÆ÷Ğ´Èë¸´Î»Ö¸Áî */
+  /* å¯¹ETH PHYèŠ¯ç‰‡çš„BCRå¯„å­˜å™¨å†™å…¥å¤ä½æŒ‡ä»¤ */
   if((HAL_ETH_WritePHYRegister(heth, PHY_BCR, PHY_RESET)) != HAL_OK)
   {
     /* In case of write timeout */
@@ -300,7 +300,7 @@ HAL_StatusTypeDef HAL_ETH_Init(ETH_HandleTypeDef *heth)
     
     /* We wait for linked status */
     do
-    { /* ¶ÁETHµÄBSR¼Ä´æÆ÷Öµ */
+    { /* è¯»ETHçš„BSRå¯„å­˜å™¨å€¼ */
       HAL_ETH_ReadPHYRegister(heth, PHY_BSR, &phyreg);
       
       /* Check for the Timeout */
@@ -319,10 +319,10 @@ HAL_StatusTypeDef HAL_ETH_Init(ETH_HandleTypeDef *heth)
     
         return HAL_TIMEOUT;
       }
-    } while (((phyreg & PHY_LINKED_STATUS) != PHY_LINKED_STATUS));  /* µÈ´ıÁ¬½ÓÍê³É */
+    } while (((phyreg & PHY_LINKED_STATUS) != PHY_LINKED_STATUS));  /* ç­‰å¾…è¿æ¥å®Œæˆ */
 
     
-    /* Ê¹ÄÜETH PHYĞ¾Æ¬µÄ Auto-Negotiation */
+    /* ä½¿èƒ½ETH PHYèŠ¯ç‰‡çš„ Auto-Negotiation */
     if((HAL_ETH_WritePHYRegister(heth, PHY_BCR, PHY_AUTONEGOTIATION)) != HAL_OK)
     {
       /* In case of write timeout */
@@ -343,7 +343,7 @@ HAL_StatusTypeDef HAL_ETH_Init(ETH_HandleTypeDef *heth)
     
     /* Wait until the auto-negotiation will be completed */
     do
-    { /* ¶ÁETH PHYĞ¾Æ¬µÄBSR¼Ä´æÆ÷ */
+    { /* è¯»ETH PHYèŠ¯ç‰‡çš„BSRå¯„å­˜å™¨ */
       HAL_ETH_ReadPHYRegister(heth, PHY_BSR, &phyreg);
       
       /* Check for the Timeout */

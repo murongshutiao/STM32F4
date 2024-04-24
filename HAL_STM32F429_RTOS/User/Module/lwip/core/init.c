@@ -347,8 +347,8 @@ void lwip_init(void)
     sys_init();
 #endif /* !NO_SYS */
 
-    mem_init();     /* 内存堆初始化 */
-    memp_init();    /* 内存池初始化 */
+    mem_init();     /* 鍐呭瓨鍫嗗垵濮嬪寲 */
+    memp_init();    /* 鍐呭瓨姹犲垵濮嬪寲 */
     pbuf_init();
     netif_init();
 #if LWIP_IPV4

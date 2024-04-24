@@ -5,7 +5,7 @@
 #define MASTER_I2C_ADDRESS  0x20
 
 
-/* I2C主机 */
+/* I2C脰梅禄煤 */
 #define Master_I2C                             I2C2
 #define Master_I2C_CLK_ENABLE()                __HAL_RCC_I2C2_CLK_ENABLE()
 
@@ -23,7 +23,7 @@
 #define Master_I2C_FORCE_RESET()               __HAL_RCC_I2C2_FORCE_RESET()
 #define Master_I2C_RELEASE_RESET()             __HAL_RCC_I2C2_RELEASE_RESET()
 
-/* I2C从机 */
+/* I2C麓脫禄煤 */
 #define Slave_I2C                             I2C2
 #define Slave_I2C_CLK_ENABLE()                __HAL_RCC_I2C2_CLK_ENABLE()
 

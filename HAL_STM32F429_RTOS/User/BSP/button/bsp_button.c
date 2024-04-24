@@ -6,11 +6,11 @@
 
 /**
 
-  * @brief  ÅäÖÃ°´¼üÓÃµ½µÄI/O¿Ú
+  * @brief  é…ç½®æŒ‰é”®ç”¨åˆ°çš„I/Oå£
 
-  * @param  ÎÞ
+  * @param  æ— 
 
-  * @retval ÎÞ
+  * @retval æ— 
 
   */
 
@@ -22,30 +22,30 @@ void Button_GPIO_Config(void)
 
 
 
-    /*¿ªÆô°´¼üGPIO¿ÚµÄÊ±ÖÓ*/
+    /*å¼€å¯æŒ‰é”®GPIOå£çš„æ—¶é’Ÿ*/
     Button1_GPIO_CLK_ENABLE();
     Button2_GPIO_CLK_ENABLE();
 
-    /*Ñ¡Ôñ°´¼üµÄÒý½Å*/	
+    /*é€‰æ‹©æŒ‰é”®çš„å¼•è„š*/	
     GPIO_InitStructure.Pin = Button1_PIN; 
 
 
 
-    /*ÉèÖÃÒý½ÅÎªÊäÈëÄ£Ê½*/
+    /*è®¾ç½®å¼•è„šä¸ºè¾“å…¥æ¨¡å¼*/
     GPIO_InitStructure.Mode = GPIO_MODE_INPUT; 
 
 
-    /*ÉèÖÃÒý½Å²»ÉÏÀ­Ò²²»ÏÂÀ­*/
+    /*è®¾ç½®å¼•è„šä¸ä¸Šæ‹‰ä¹Ÿä¸ä¸‹æ‹‰*/
     GPIO_InitStructure.Pull = GPIO_NOPULL;
 
-    /*Ê¹ÓÃÉÏÃæµÄ½á¹¹Ìå³õÊ¼»¯°´¼ü*/
+    /*ä½¿ç”¨ä¸Šé¢çš„ç»“æž„ä½“åˆå§‹åŒ–æŒ‰é”®*/
     HAL_GPIO_Init(Button1_GPIO_PORT, &GPIO_InitStructure);
 
-    /*Ñ¡Ôñ°´¼üµÄÒý½Å*/
+    /*é€‰æ‹©æŒ‰é”®çš„å¼•è„š*/
     GPIO_InitStructure.Pin = Button2_PIN; 
 
 
-    /*Ê¹ÓÃÉÏÃæµÄ½á¹¹Ìå³õÊ¼»¯°´¼ü*/
+    /*ä½¿ç”¨ä¸Šé¢çš„ç»“æž„ä½“åˆå§‹åŒ–æŒ‰é”®*/
     HAL_GPIO_Init(Button2_GPIO_PORT, &GPIO_InitStructure);
 
  
@@ -55,19 +55,19 @@ void Button_GPIO_Config(void)
 
 /**
 
-  * @brief   ¼ì²âÊÇ·ñÓÐ°´¼ü°´ÏÂ
+  * @brief   æ£€æµ‹æ˜¯å¦æœ‰æŒ‰é”®æŒ‰ä¸‹
 
-  * @param   ¾ßÌåµÄ¶Ë¿ÚºÍ¶Ë¿ÚÎ»
+  * @param   å…·ä½“çš„ç«¯å£å’Œç«¯å£ä½
 
-  *		@arg GPIOx: x¿ÉÒÔÊÇ£¨A...G£© 
+  *		@arg GPIOx: xå¯ä»¥æ˜¯ï¼ˆA...Gï¼‰ 
 
-  *		@arg GPIO_PIN ¿ÉÒÔÊÇGPIO_PIN_x£¨x¿ÉÒÔÊÇ1...16£©
+  *		@arg GPIO_PIN å¯ä»¥æ˜¯GPIO_PIN_xï¼ˆxå¯ä»¥æ˜¯1...16ï¼‰
 
-  * @retval  °´¼üµÄ×´Ì¬
+  * @retval  æŒ‰é”®çš„çŠ¶æ€
 
-  *		@arg Button_ON:°´¼ü°´ÏÂ
+  *		@arg Button_ON:æŒ‰é”®æŒ‰ä¸‹
 
-  *		@arg Button_OFF:°´¼üÃ»°´ÏÂ
+  *		@arg Button_OFF:æŒ‰é”®æ²¡æŒ‰ä¸‹
 
   */
 
@@ -75,13 +75,13 @@ uint8_t Button_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin)
 
 {			
 
-	/*¼ì²âÊÇ·ñÓÐ°´¼ü°´ÏÂ */
+	/*æ£€æµ‹æ˜¯å¦æœ‰æŒ‰é”®æŒ‰ä¸‹ */
 
 	if(HAL_GPIO_ReadPin(GPIOx,GPIO_Pin) == Button_ON )  
 
 	{	 
 
-		/*µÈ´ý°´¼üÊÍ·Å */
+		/*ç­‰å¾…æŒ‰é”®é‡Šæ”¾ */
 
 		while(HAL_GPIO_ReadPin(GPIOx,GPIO_Pin) == Button_ON);   
 

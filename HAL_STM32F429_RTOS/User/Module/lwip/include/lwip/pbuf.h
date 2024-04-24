@@ -87,13 +87,13 @@ extern "C" {
  * Enumeration of pbuf layers
  */
 typedef enum {
-  /** ´«Êä²ãÊ×²¿Õ¼ÓÃÄÚ´æ´óĞ¡ */
+  /** ä¼ è¾“å±‚é¦–éƒ¨å ç”¨å†…å­˜å¤§å° */
   PBUF_TRANSPORT = PBUF_LINK_ENCAPSULATION_HLEN + PBUF_LINK_HLEN + PBUF_IP_HLEN + PBUF_TRANSPORT_HLEN,
 
-  /** IP²ãÊ×²¿Õ¼ÓÃÄÚ´æ´óĞ¡ */
+  /** IPå±‚é¦–éƒ¨å ç”¨å†…å­˜å¤§å° */
   PBUF_IP = PBUF_LINK_ENCAPSULATION_HLEN + PBUF_LINK_HLEN + PBUF_IP_HLEN,
 
-  /** Á´Â·²ã²ãÊ×²¿Õ¼ÓÃÄÚ´æ´óĞ¡ */
+  /** é“¾è·¯å±‚å±‚é¦–éƒ¨å ç”¨å†…å­˜å¤§å° */
   PBUF_LINK = PBUF_LINK_ENCAPSULATION_HLEN + PBUF_LINK_HLEN,
   /** Includes spare room for additional encapsulation header before ethernet
    * headers (e.g. 802.11).
@@ -180,10 +180,10 @@ typedef enum {
 /** Main packet buffer struct */
 struct pbuf 
 {
-    /** Á´½ÓÏÂÒ»¸öpbuf */
+    /** é“¾æ¥ä¸‹ä¸€ä¸ªpbuf */
     struct pbuf *next;
 
-    /** Ö¸ÏòÊı¾İµÄÖ¸Õë */
+    /** æŒ‡å‘æ•°æ®çš„æŒ‡é’ˆ */
     void *payload;
 
     /**
@@ -195,10 +195,10 @@ struct pbuf
      */
     u16_t tot_len;
 
-    /** µ±Ç°pbufÓĞĞ§Êı¾İ³¤¶È */
+    /** å½“å‰pbufæœ‰æ•ˆæ•°æ®é•¿åº¦ */
     u16_t len;
 
-    /** pbufµÄÀàĞÍ */
+    /** pbufçš„ç±»å‹ */
     u8_t type_internal;
 
     /** misc flags */
@@ -209,10 +209,10 @@ struct pbuf
      * that refer to this pbuf. This can be pointers from an application,
      * the stack itself, or pbuf->next pointers from a chain.
      */
-    LWIP_PBUF_REF_T ref;    /* ´ËpbufÖ¸Õë±»ÒıÓÃµÄ´ÎÊı */
+    LWIP_PBUF_REF_T ref;    /* æ­¤pbufæŒ‡é’ˆè¢«å¼•ç”¨çš„æ¬¡æ•° */
 
     /** For incoming packets, this contains the input netif's index */
-    u8_t if_idx;            /* ÍøÂç½Ó¿ÚµÄË÷Òı,¼´netif½á¹¹ÌåµÄnum×Ö¶Î */
+    u8_t if_idx;            /* ç½‘ç»œæ¥å£çš„ç´¢å¼•,å³netifç»“æ„ä½“çš„numå­—æ®µ */
 
     /** In case the user needs to store data custom data on a pbuf */
     LWIP_PBUF_CUSTOM_DATA

@@ -3,16 +3,16 @@
 #include "board.h"
 // #include "./fonts/fonts.h"
 
-/* LCD ≤„œÒÀÿ∏Ò Ω*/
-#define ARGB8888 	LTDC_PIXEL_FORMAT_ARGB8888  /*!< ARGB8888 LTDCœÒÀÿ∏Ò Ω */
-#define RGB888 		LTDC_PIXEL_FORMAT_RGB888    /*!< RGB888 LTDCœÒÀÿ∏Ò Ω   */
-#define RGB565 		LTDC_PIXEL_FORMAT_RGB565    /*!< RGB565 LTDCœÒÀÿ∏Ò Ω   */
-#define ARGB1555 	LTDC_PIXEL_FORMAT_ARGB1555  /*!< ARGB1555 LTDCœÒÀÿ∏Ò Ω */
-#define ARGB4444 	LTDC_PIXEL_FORMAT_ARGB4444  /*!< ARGB4444 LTDCœÒÀÿ∏Ò Ω */
+/* LCD Â±ÇÂÉèÁ¥†Ê†ºÂºè*/
+#define ARGB8888 	LTDC_PIXEL_FORMAT_ARGB8888  /*!< ARGB8888 LTDCÂÉèÁ¥†Ê†ºÂºè */
+#define RGB888 		LTDC_PIXEL_FORMAT_RGB888    /*!< RGB888 LTDCÂÉèÁ¥†Ê†ºÂºè   */
+#define RGB565 		LTDC_PIXEL_FORMAT_RGB565    /*!< RGB565 LTDCÂÉèÁ¥†Ê†ºÂºè   */
+#define ARGB1555 	LTDC_PIXEL_FORMAT_ARGB1555  /*!< ARGB1555 LTDCÂÉèÁ¥†Ê†ºÂºè */
+#define ARGB4444 	LTDC_PIXEL_FORMAT_ARGB4444  /*!< ARGB4444 LTDCÂÉèÁ¥†Ê†ºÂºè */
 
 
-/*********************** RGB888 LCDœ‡πÿ ***********************/
-//∫Ï…´ ˝æ›œﬂ
+/*********************** RGB888 LCDÁõ∏ÂÖ≥ ***********************/
+//Á∫¢Ëâ≤Êï∞ÊçÆÁ∫ø
 #define LTDC_R0_GPIO_PORT        	GPIOH
 #define LTDC_R0_GPIO_CLK_ENABLE()   __GPIOH_CLK_ENABLE()
 #define LTDC_R0_GPIO_PIN         	GPIO_PIN_2
@@ -52,7 +52,7 @@
 #define LTDC_R7_GPIO_CLK_ENABLE()	__GPIOG_CLK_ENABLE()
 #define LTDC_R7_GPIO_PIN         	GPIO_PIN_6
 #define LTDC_R7_AF			        GPIO_AF14_LTDC
-//¬Ã…´ ˝æ›œﬂ
+//ÁªøËâ≤Êï∞ÊçÆÁ∫ø
 #define LTDC_G0_GPIO_PORT        	GPIOE
 #define LTDC_G0_GPIO_CLK_ENABLE()	__GPIOE_CLK_ENABLE()
 #define LTDC_G0_GPIO_PIN         	GPIO_PIN_5
@@ -93,7 +93,7 @@
 #define LTDC_G7_GPIO_PIN         	GPIO_PIN_2
 #define LTDC_G7_AF			        GPIO_AF14_LTDC
 
-//¿∂…´ ˝æ›œﬂ
+//ËìùËâ≤Êï∞ÊçÆÁ∫ø
 #define LTDC_B0_GPIO_PORT        	GPIOE
 #define LTDC_B0_GPIO_CLK_ENABLE()  	__GPIOE_CLK_ENABLE()
 #define LTDC_B0_GPIO_PIN         	GPIO_PIN_4
@@ -134,90 +134,90 @@
 #define LTDC_B7_GPIO_PIN         	GPIO_PIN_9
 #define LTDC_B7_AF			        GPIO_AF14_LTDC
 
-//øÿ÷∆–≈∫≈œﬂ
-/*œÒÀÿ ±÷”CLK*/
+//ÊéßÂà∂‰ø°Âè∑Á∫ø
+/*ÂÉèÁ¥†Êó∂ÈíüCLK*/
 #define LTDC_CLK_GPIO_PORT              GPIOG
 #define LTDC_CLK_GPIO_CLK_ENABLE()      __GPIOG_CLK_ENABLE()
 #define LTDC_CLK_GPIO_PIN               GPIO_PIN_7
 #define LTDC_CLK_AF			            GPIO_AF14_LTDC
-/*ÀÆ∆ΩÕ¨≤Ω–≈∫≈HSYNC*/
+/*Ê∞¥Âπ≥ÂêåÊ≠•‰ø°Âè∑HSYNC*/
 #define LTDC_HSYNC_GPIO_PORT            GPIOI
 #define LTDC_HSYNC_GPIO_CLK_ENABLE()    __GPIOI_CLK_ENABLE()
 #define LTDC_HSYNC_GPIO_PIN             GPIO_PIN_10
 #define LTDC_HSYNC_AF			        GPIO_AF14_LTDC
-/*¥π÷±Õ¨≤Ω–≈∫≈VSYNC*/
+/*ÂûÇÁõ¥ÂêåÊ≠•‰ø°Âè∑VSYNC*/
 #define LTDC_VSYNC_GPIO_PORT            GPIOI
 #define LTDC_VSYNC_GPIO_CLK_ENABLE()    __GPIOI_CLK_ENABLE()
 #define LTDC_VSYNC_GPIO_PIN             GPIO_PIN_9
 #define LTDC_VSYNC_AF			        GPIO_AF14_LTDC
 
-/* ˝æ› πƒ‹–≈∫≈DE*/
+/*Êï∞ÊçÆ‰ΩøËÉΩ‰ø°Âè∑DE*/
 #define LTDC_DE_GPIO_PORT               GPIOF
 #define LTDC_DE_GPIO_CLK_ENABLE()       __GPIOF_CLK_ENABLE()
 #define LTDC_DE_GPIO_PIN                GPIO_PIN_10
 #define LTDC_DE_AF			            GPIO_AF14_LTDC
-/*“∫æß∆¡ πƒ‹–≈∫≈DISP£¨∏ﬂµÁ∆Ω πƒ‹*/
+/*Ê∂≤Êô∂Â±è‰ΩøËÉΩ‰ø°Âè∑DISPÔºåÈ´òÁîµÂπ≥‰ΩøËÉΩ*/
 #define LTDC_DISP_GPIO_PORT             GPIOD
 #define LTDC_DISP_GPIO_CLK_ENABLE()     __GPIOD_CLK_ENABLE()
 #define LTDC_DISP_GPIO_PIN              GPIO_PIN_4
-/*“∫æß∆¡±≥π‚–≈∫≈£¨∏ﬂµÁ∆Ω πƒ‹*/
+/*Ê∂≤Êô∂Â±èËÉåÂÖâ‰ø°Âè∑ÔºåÈ´òÁîµÂπ≥‰ΩøËÉΩ*/
 #define LTDC_BL_GPIO_PORT               GPIOD
 #define LTDC_BL_GPIO_CLK_ENABLE()       __GPIOD_CLK_ENABLE()
 #define LTDC_BL_GPIO_PIN                GPIO_PIN_7
 
 
 /** 
-  * @brief  LCD“∫æß≤Œ ˝
+  * @brief  LCDÊ∂≤Êô∂ÂèÇÊï∞
   */   
 typedef struct
 {
-  /*∏˘æ›“∫æß ˝æ› ÷≤·µƒ≤Œ ˝≈‰÷√*/
-  uint8_t hbp;  //HSYNC∫ÛµƒŒﬁ–ßœÒÀÿ
-  uint8_t vbp;  //VSYNC∫ÛµƒŒﬁ–ß–– ˝
+  /*Ê†πÊçÆÊ∂≤Êô∂Êï∞ÊçÆÊâãÂÜåÁöÑÂèÇÊï∞ÈÖçÁΩÆ*/
+  uint8_t hbp;  //HSYNCÂêéÁöÑÊó†ÊïàÂÉèÁ¥†
+  uint8_t vbp;  //VSYNCÂêéÁöÑÊó†ÊïàË°åÊï∞
 
-  uint8_t hsw;  	//HSYNCøÌ∂»
-  uint8_t vsw;   //VSYNCøÌ∂»
+  uint8_t hsw;  	//HSYNCÂÆΩÂ∫¶
+  uint8_t vsw;   //VSYNCÂÆΩÂ∫¶
 
-  uint8_t hfp;  	//HSYNC«∞µƒŒﬁ–ßœÒÀÿ
-  uint8_t vfp;  	//VSYNC«∞µƒŒﬁ–ß–– ˝
+  uint8_t hfp;  	//HSYNCÂâçÁöÑÊó†ÊïàÂÉèÁ¥†
+  uint8_t vfp;  	//VSYNCÂâçÁöÑÊó†ÊïàË°åÊï∞
   
-  uint8_t comment_clock_2byte; //rgb565/argb4444µ»À´◊÷Ω⁄œÒÀÿ ±Õ∆ºˆ π”√µƒ“∫æß ±÷”∆µ¬ 
-  uint8_t comment_clock_4byte; //Argb8888µ»Àƒ◊÷Ω⁄œÒÀÿ ±Õ∆ºˆ π”√µƒ“∫æß ±÷”∆µ¬ 
+  uint8_t comment_clock_2byte; //rgb565/argb4444Á≠âÂèåÂ≠óËäÇÂÉèÁ¥†Êó∂Êé®Ëçê‰ΩøÁî®ÁöÑÊ∂≤Êô∂Êó∂ÈíüÈ¢ëÁéá
+  uint8_t comment_clock_4byte; //Argb8888Á≠âÂõõÂ≠óËäÇÂÉèÁ¥†Êó∂Êé®Ëçê‰ΩøÁî®ÁöÑÊ∂≤Êô∂Êó∂ÈíüÈ¢ëÁéá
 
-  uint16_t lcd_pixel_width; //“∫æß∑÷±Ê¬ £¨øÌ
-  uint16_t lcd_pixel_height;//“∫æß∑÷±Ê¬ £¨∏ﬂ
+  uint16_t lcd_pixel_width; //Ê∂≤Êô∂ÂàÜËæ®ÁéáÔºåÂÆΩ
+  uint16_t lcd_pixel_height;//Ê∂≤Êô∂ÂàÜËæ®ÁéáÔºåÈ´ò
 
 }LCD_PARAM_TypeDef;
 
-/* LCD ŒÔ¿ÌœÒÀÿ¥Û–° (øÌ∂»∫Õ∏ﬂ∂») */
+/* LCD Áâ©ÁêÜÂÉèÁ¥†Â§ßÂ∞è (ÂÆΩÂ∫¶ÂíåÈ´òÂ∫¶) */
 #define  LCD_PIXEL_WIDTH          lcd_param[cur_lcd].lcd_pixel_width
 #define  LCD_PIXEL_HEIGHT         lcd_param[cur_lcd].lcd_pixel_height
 
-/*∏˘æ›“∫æß ˝æ› ÷≤·µƒ≤Œ ˝≈‰÷√*/
-#define HBP  lcd_param[cur_lcd].hbp		//HSYNC∫ÛµƒŒﬁ–ßœÒÀÿ
-#define VBP  lcd_param[cur_lcd].vbp		//VSYNC∫ÛµƒŒﬁ–ß–– ˝
+/*Ê†πÊçÆÊ∂≤Êô∂Êï∞ÊçÆÊâãÂÜåÁöÑÂèÇÊï∞ÈÖçÁΩÆ*/
+#define HBP  lcd_param[cur_lcd].hbp		//HSYNCÂêéÁöÑÊó†ÊïàÂÉèÁ¥†
+#define VBP  lcd_param[cur_lcd].vbp		//VSYNCÂêéÁöÑÊó†ÊïàË°åÊï∞
 
-#define HSW  lcd_param[cur_lcd].hsw		//HSYNCøÌ∂»
-#define VSW  lcd_param[cur_lcd].vsw		//VSYNCøÌ∂»
+#define HSW  lcd_param[cur_lcd].hsw		//HSYNCÂÆΩÂ∫¶
+#define VSW  lcd_param[cur_lcd].vsw		//VSYNCÂÆΩÂ∫¶
 
-#define HFP  lcd_param[cur_lcd].hfp		//HSYNC«∞µƒŒﬁ–ßœÒÀÿ
-#define VFP  lcd_param[cur_lcd].vfp		//VSYNC«∞µƒŒﬁ–ß–– ˝
+#define HFP  lcd_param[cur_lcd].hfp		//HSYNCÂâçÁöÑÊó†ÊïàÂÉèÁ¥†
+#define VFP  lcd_param[cur_lcd].vfp		//VSYNCÂâçÁöÑÊó†ÊïàË°åÊï∞
 
 /** 
-  * @brief  LCD“∫æß¿‡–Õ
+  * @brief  LCDÊ∂≤Êô∂Á±ªÂûã
   */   
 typedef enum
 { 
-  INCH_5  = 0x00, /* “∞ª5¥Á∆¡ */
-  INCH_7,     /* “∞ª7¥Á∆¡ */
-  INCH_4_3,  /* “∞ª4.3¥Á∆¡ */
+  INCH_5  = 0x00, /* ÈáéÁÅ´5ÂØ∏Â±è */
+  INCH_7,     /* ÈáéÁÅ´7ÂØ∏Â±è */
+  INCH_4_3,  /* ÈáéÁÅ´4.3ÂØ∏Â±è */
   
-  LCD_TYPE_NUM /* LCD¿‡–Õ◊‹ ˝*/
+  LCD_TYPE_NUM /* LCDÁ±ªÂûãÊÄªÊï∞*/
 }LCD_TypeDef;
 
-/* µ±«∞ π”√µƒLCD£¨ƒ¨»œŒ™5¥Á∆¡ */
+/* ÂΩìÂâç‰ΩøÁî®ÁöÑLCDÔºåÈªòËÆ§‰∏∫5ÂØ∏Â±è */
 extern LCD_TypeDef cur_lcd;
-/* ≤ªÕ¨“∫æß∆¡µƒ≤Œ ˝ */
+/* ‰∏çÂêåÊ∂≤Êô∂Â±èÁöÑÂèÇÊï∞ */
 extern const LCD_PARAM_TypeDef lcd_param[];
 
 
@@ -235,13 +235,13 @@ typedef struct
 }Point, * pPoint; 
 
 /** 
-  * @brief  ◊÷ÃÂ∂‘∆Îƒ£ Ω  
+  * @brief  Â≠ó‰ΩìÂØπÈΩêÊ®°Âºè  
   */ 
 typedef enum
 {
-  CENTER_MODE             = 0x01,    /* æ”÷–∂‘∆Î */
-  RIGHT_MODE              = 0x02,    /* ”“∂‘∆Î   */
-  LEFT_MODE               = 0x03     /* ◊Û∂‘∆Î   */
+  CENTER_MODE             = 0x01,    /* Â±Ö‰∏≠ÂØπÈΩê */
+  RIGHT_MODE              = 0x02,    /* Âè≥ÂØπÈΩê   */
+  LEFT_MODE               = 0x03     /* Â∑¶ÂØπÈΩê   */
 }Text_AlignModeTypdef;
 
 #define MAX_LAYER_NUMBER       ((uint32_t)2)

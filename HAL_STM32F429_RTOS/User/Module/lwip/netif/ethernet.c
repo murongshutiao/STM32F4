@@ -60,7 +60,7 @@
 #include LWIP_HOOK_FILENAME
 #endif
 
-/* ¹ã²¥MACµØÖ· */
+/* å¹¿æ’­MACåœ°å€ */
 const struct eth_addr ethbroadcast = {{0xff, 0xff, 0xff, 0xff, 0xff, 0xff}};
 const struct eth_addr ethzero = {{0, 0, 0, 0, 0, 0}};
 
@@ -89,7 +89,7 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif)
 
     LWIP_ASSERT_CORE_LOCKED();
 
-    /* Ð£ÑéÊý¾Ý³¤¶È */
+    /* æ ¡éªŒæ•°æ®é•¿åº¦ */
     if (p->len <= SIZEOF_ETH_HDR) 
     {
         /* a packet with only an ethernet header (or less) is not valid for us */
@@ -104,7 +104,7 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif)
         p->if_idx = netif_get_index(netif);
     }
 
-    /* Ö¸ÏòÒÔÌ«ÍøÖ¡Í·²¿ */
+    /* æŒ‡å‘ä»¥å¤ªç½‘å¸§å¤´éƒ¨ */
     ethhdr = (struct eth_hdr *)p->payload;  
     LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE,
                 ("ethernet_input: dest:%"X8_F":%"X8_F":%"X8_F":%"X8_F":%"X8_F":%"X8_F", src:%"X8_F":%"X8_F":%"X8_F":%"X8_F":%"X8_F":%"X8_F", type:%"X16_F"\n",
@@ -114,7 +114,7 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif)
                 (unsigned char)ethhdr->src.addr[3],  (unsigned char)ethhdr->src.addr[4],  (unsigned char)ethhdr->src.addr[5],
                 lwip_htons(ethhdr->type)));
 
-    /* ´ÓÒÔÌ«ÍøÖ¡Í·»ñÈ¡Ð­ÒéÀàÐÍ */
+    /* ä»Žä»¥å¤ªç½‘å¸§å¤´èŽ·å–åè®®ç±»åž‹ */
     type = ethhdr->type;
 
 #if ETHARP_SUPPORT_VLAN
@@ -158,14 +158,14 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif)
 
     if (ethhdr->dest.addr[0] & 1) 
     {
-        /* ¶à²¥»ò¹ã²¥Êý¾Ý°ü */
+        /* å¤šæ’­æˆ–å¹¿æ’­æ•°æ®åŒ… */
         if (ethhdr->dest.addr[0] == LL_IP4_MULTICAST_ADDR_0) 
         {
 #if LWIP_IPV4
             if ((ethhdr->dest.addr[1] == LL_IP4_MULTICAST_ADDR_1) &&
                 (ethhdr->dest.addr[2] == LL_IP4_MULTICAST_ADDR_2)) 
             {
-                /* ½«pbuf±ê¼ÇÎªÁ´Â·²ã¶à²¥ */
+                /* å°†pbufæ ‡è®°ä¸ºé“¾è·¯å±‚å¤šæ’­ */
                 p->flags |= PBUF_FLAG_LLMCAST;
             }
 #endif /* LWIP_IPV4 */
@@ -174,13 +174,13 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif)
         else if ((ethhdr->dest.addr[0] == LL_IP6_MULTICAST_ADDR_0) &&
                 (ethhdr->dest.addr[1] == LL_IP6_MULTICAST_ADDR_1)) 
         {
-            /* ½«pbuf±ê¼ÇÎªÁ´Â·²ã¹ã²¥ */
+            /* å°†pbufæ ‡è®°ä¸ºé“¾è·¯å±‚å¹¿æ’­ */
             p->flags |= PBUF_FLAG_LLMCAST;
         }
 #endif /* LWIP_IPV6 */
         else if (eth_addr_cmp(&ethhdr->dest, &ethbroadcast)) 
         {
-            /* ½«pbuf±ê¼ÇÎªÁ´Â·²ã¹ã²¥ */
+            /* å°†pbufæ ‡è®°ä¸ºé“¾è·¯å±‚å¹¿æ’­ */
             p->flags |= PBUF_FLAG_LLBCAST;
         }
     }
@@ -189,12 +189,12 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif)
     {
 #if LWIP_IPV4 && LWIP_ARP
         /* IP packet? */
-        case PP_HTONS(ETHTYPE_IP):  /* IPÊý¾Ý°ü */
+        case PP_HTONS(ETHTYPE_IP):  /* IPæ•°æ®åŒ… */
             if (!(netif->flags & NETIF_FLAG_ETHARP)) 
             {
                 goto free_and_return;
             }
-            /* È¥µôÒÔÌ«ÍøÖ¡µÄÍ·²¿ */
+            /* åŽ»æŽ‰ä»¥å¤ªç½‘å¸§çš„å¤´éƒ¨ */
             if (pbuf_remove_header(p, next_hdr_offset)) 
             {
                 LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_LEVEL_WARNING,
@@ -205,12 +205,12 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif)
             } 
             else 
             {
-                /* ´«µ½IPÐ­ÒéÈ¥´¦Àí */
+                /* ä¼ åˆ°IPåè®®åŽ»å¤„ç† */
                 ip4_input(p, netif);
             }
             break;
 
-        case PP_HTONS(ETHTYPE_ARP): /* ARPÐ­Òé°ü */
+        case PP_HTONS(ETHTYPE_ARP): /* ARPåè®®åŒ… */
             if (!(netif->flags & NETIF_FLAG_ETHARP)) 
             {
                 goto free_and_return;

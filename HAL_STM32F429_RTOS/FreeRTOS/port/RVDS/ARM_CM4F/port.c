@@ -237,22 +237,22 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 
 	/* Offset added to account for the way the MCU uses the stack on entry/exit
 	of interrupts, and to ensure alignment. */
-	pxTopOfStack--;	/* ÎªÁËÈ·±£Õ»Ë«×Ö¶ÔÆë? */
+	pxTopOfStack--;	/* ä¸ºäº†ç¡®ä¿æ ˆåŒå­—å¯¹é½? */
 
-	*pxTopOfStack = portINITIAL_XPSR;	/* ·ÅÖÃxPSR¼Ä´æÆ÷Öµ,±ãÓÚ¼ÓÔØ£¬ÒÔTHUMBÄ£Ê½ÔËĞĞ */
+	*pxTopOfStack = portINITIAL_XPSR;	/* æ”¾ç½®xPSRå¯„å­˜å™¨å€¼,ä¾¿äºåŠ è½½ï¼Œä»¥THUMBæ¨¡å¼è¿è¡Œ */
 	pxTopOfStack--;
-	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* ·ÅÖÃÈÎÎñµÄÈë¿Úº¯ÊıµØÖ· */
+	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* æ”¾ç½®ä»»åŠ¡çš„å…¥å£å‡½æ•°åœ°å€ */
 	pxTopOfStack--;
-	*pxTopOfStack = ( StackType_t ) prvTaskExitError;	/* ÈÎÎñ·µ»ØµØÖ·,Í¨³£ÈÎÎñ²»»á·µ»Ø,ÓĞ·µ»ØËµÃ÷ÓĞ´íÎó,Ìø×ªµ½ËùÊ¾º¯ÊıµØÖ· */
+	*pxTopOfStack = ( StackType_t ) prvTaskExitError;	/* ä»»åŠ¡è¿”å›åœ°å€,é€šå¸¸ä»»åŠ¡ä¸ä¼šè¿”å›,æœ‰è¿”å›è¯´æ˜æœ‰é”™è¯¯,è·³è½¬åˆ°æ‰€ç¤ºå‡½æ•°åœ°å€ */
 
 	/* Save code space by skipping register initialisation. */
 	pxTopOfStack -= 5;	/* R12, R3, R2 and R1. */
-	*pxTopOfStack = ( StackType_t ) pvParameters;	/* R0,·ÅÖÃÈÎÎñ´«ÈëµÄ²ÎÊı */
+	*pxTopOfStack = ( StackType_t ) pvParameters;	/* R0,æ”¾ç½®ä»»åŠ¡ä¼ å…¥çš„å‚æ•° */
 
 	/* A save method is being used that requires each task to maintain its
 	own exec return value. */
 	pxTopOfStack--;
-	*pxTopOfStack = portINITIAL_EXEC_RETURN;	/* LR?·µ»ØÏß³ÌÄ£Ê½,²»Ê¹ÓÃ¸¡µãÉÏÏÂÎÄ */
+	*pxTopOfStack = portINITIAL_EXEC_RETURN;	/* LR?è¿”å›çº¿ç¨‹æ¨¡å¼,ä¸ä½¿ç”¨æµ®ç‚¹ä¸Šä¸‹æ–‡ */
 
 	pxTopOfStack -= 8;	/* R11, R10, R9, R8, R7, R6, R5 and R4. */
 
@@ -279,16 +279,16 @@ __asm void vPortSVCHandler( void )
 	PRESERVE8
 
 	/* Get the location of the current TCB. */
-	ldr	r3, =pxCurrentTCB	/* ¼ÓÔØµ±Ç°ÈÎÎñµ½R3¼Ä´æÆ÷ */
+	ldr	r3, =pxCurrentTCB	/* åŠ è½½å½“å‰ä»»åŠ¡åˆ°R3å¯„å­˜å™¨ */
 	ldr r1, [r3]
-	ldr r0, [r1]			/* ¼ÓÔØµ±Ç°ÈÎÎñ¿ØÖÆ¿éµ½R0,¼´Õ»¶¥Ö¸Õë */
+	ldr r0, [r1]			/* åŠ è½½å½“å‰ä»»åŠ¡æ§åˆ¶å—åˆ°R0,å³æ ˆé¡¶æŒ‡é’ˆ */
 	/* Pop the core registers. */
-	ldmia r0!, {r4-r11, r14}	/* ½«R0(ÈÎÎñÕ»¶¥)µØÖ·µÄÊı¾İÁ¬Ğø·Åµ½R4-R11,R14ÖĞ,²¢¸üĞÂR0µØÖ· */
-	msr psp, r0				/* ½«¸üĞÂµÄR0Õ»µØÖ·´æ·Åµ½PSP */
+	ldmia r0!, {r4-r11, r14}	/* å°†R0(ä»»åŠ¡æ ˆé¡¶)åœ°å€çš„æ•°æ®è¿ç»­æ”¾åˆ°R4-R11,R14ä¸­,å¹¶æ›´æ–°R0åœ°å€ */
+	msr psp, r0				/* å°†æ›´æ–°çš„R0æ ˆåœ°å€å­˜æ”¾åˆ°PSP */
 	isb
 	mov r0, #0
-	msr	basepri, r0			/* ´ò¿ªËùÓĞÖĞ¶Ï */
-	bx r14					/* Ìø×ªµ½LR¼Ä´æÆ÷£¬½øÈëPSPÕ» */
+	msr	basepri, r0			/* æ‰“å¼€æ‰€æœ‰ä¸­æ–­ */
+	bx r14					/* è·³è½¬åˆ°LRå¯„å­˜å™¨ï¼Œè¿›å…¥PSPæ ˆ */
 }
 /*-----------------------------------------------------------*/
 
@@ -296,18 +296,18 @@ __asm void prvStartFirstTask( void )
 {
 	PRESERVE8
 
-	/* Í¨¹ıSCB_VTORÕâ¸ö¼Ä´æÆ÷µØÖ·»ñÈ¡ÏòÁ¿±íÆğÊ¼µØÖ·. */
+	/* é€šè¿‡SCB_VTORè¿™ä¸ªå¯„å­˜å™¨åœ°å€è·å–å‘é‡è¡¨èµ·å§‹åœ°å€. */
 	ldr r0, =0xE000ED08
 	ldr r0, [r0]
 	ldr r0, [r0]
-	/* ½«ÏòÁ¿±íÆğÊ¼µØÖ··ÅÈëMSPÖĞ. */
+	/* å°†å‘é‡è¡¨èµ·å§‹åœ°å€æ”¾å…¥MSPä¸­. */
 	msr msp, r0
-	/* Ê¹ÄÜÈ«¾ÖÖĞ¶Ï. */
+	/* ä½¿èƒ½å…¨å±€ä¸­æ–­. */
 	cpsie i
 	cpsie f
 	dsb
 	isb
-	/* ´¥·¢SVCÖĞ¶Ï²¢½øÈë. */
+	/* è§¦å‘SVCä¸­æ–­å¹¶è¿›å…¥. */
 	svc 0
 	nop
 	nop
@@ -393,11 +393,11 @@ BaseType_t xPortStartScheduler( void )
 	}
 	#endif /* conifgASSERT_DEFINED */
 
-	/* ½«PendSV ºÍ SysTick µÄÖĞ¶ÏÓÅÏÈ¼¶ÅäÖÃÎª×îµÍ. */
+	/* å°†PendSV å’Œ SysTick çš„ä¸­æ–­ä¼˜å…ˆçº§é…ç½®ä¸ºæœ€ä½. */
 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
 	portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
 
-	/* ÅäÖÃSysTick Timer¶¨Ê±Æ÷. */
+	/* é…ç½®SysTick Timerå®šæ—¶å™¨. */
 	vPortSetupTimerInterrupt();
 
 	/* Initialise the critical nesting count ready for the first task. */
@@ -409,7 +409,7 @@ BaseType_t xPortStartScheduler( void )
 	/* Lazy save always. */
 	*( portFPCCR ) |= portASPEN_AND_LSPEN_BITS;
 
-	/* ½øÈëÔËĞĞµÚÒ»¸öÈÎÎñ,¸Ãº¯ÊıÓÉ»ã±à±àĞ´,Í¨¹ı´¥·¢SVCÖĞ¶Ï. */
+	/* è¿›å…¥è¿è¡Œç¬¬ä¸€ä¸ªä»»åŠ¡,è¯¥å‡½æ•°ç”±æ±‡ç¼–ç¼–å†™,é€šè¿‡è§¦å‘SVCä¸­æ–­. */
 	prvStartFirstTask();
 
 	/* Should not get here! */
@@ -461,10 +461,10 @@ __asm void xPortPendSVHandler( void )
 
 	PRESERVE8
 
-	mrs r0, psp			/* ½«PSPµÄÖµ´æµ½R0 */
+	mrs r0, psp			/* å°†PSPçš„å€¼å­˜åˆ°R0 */
 	isb
 
-	ldr	r3, =pxCurrentTCB	/* ½«µ±Ç°ÈÎÎñ¿ØÖÆ¿é·ÅÈëR3 */
+	ldr	r3, =pxCurrentTCB	/* å°†å½“å‰ä»»åŠ¡æ§åˆ¶å—æ”¾å…¥R3 */
 	ldr	r2, [r3]
 
 	/* Is the task using the FPU context?  If so, push high vfp registers. */
@@ -473,18 +473,18 @@ __asm void xPortPendSVHandler( void )
 	vstmdbeq r0!, {s16-s31}
 
 	/* Save the core registers. */
-	stmdb r0!, {r4-r11, r14}	/* R4-R11,R14±£´æµ½µ±Ç°ÈÎÎñÕ»(ÇĞ»»Ç°µÄÈÎÎñ)ÖĞ,R0~R3ÔÚ½øÈëÖĞ¶ÏÇ°ÒÑ¾­ÈëÕ» */
+	stmdb r0!, {r4-r11, r14}	/* R4-R11,R14ä¿å­˜åˆ°å½“å‰ä»»åŠ¡æ ˆ(åˆ‡æ¢å‰çš„ä»»åŠ¡)ä¸­,R0~R3åœ¨è¿›å…¥ä¸­æ–­å‰å·²ç»å…¥æ ˆ */
 
-	/* R0¼Ä´æÆ÷¾­¹ıÒÔÉÏµÄ±ä»¯,¸üĞÂµ½pxCurrentTCBµÄTopOfStackÖĞ. */
+	/* R0å¯„å­˜å™¨ç»è¿‡ä»¥ä¸Šçš„å˜åŒ–,æ›´æ–°åˆ°pxCurrentTCBçš„TopOfStackä¸­. */
 	str r0, [r2]
 
-	stmdb sp!, {r3}		/* µ±Ç°R3´æ·ÅÈÎÎñ¿ØÖÆ¿é,½«R3ÁÙÊ±Ñ¹ÈëÕ»ÖĞ,ÒòÎªÏÂÃæµÄÈÎÎñÇĞ»»º¯Êıµ÷ÓÃ¿ÉÄÜ»á¸Ä±äR3µÄÖµ¡£ */
-	mov r0, #configMAX_SYSCALL_INTERRUPT_PRIORITY	/* ¹ØÖĞ¶Ï,±ÜÃâ²Ù×÷È«¾ÖÖ¸ÕëÊ±ÊÜÓ°Ïì */
+	stmdb sp!, {r3}		/* å½“å‰R3å­˜æ”¾ä»»åŠ¡æ§åˆ¶å—,å°†R3ä¸´æ—¶å‹å…¥æ ˆä¸­,å› ä¸ºä¸‹é¢çš„ä»»åŠ¡åˆ‡æ¢å‡½æ•°è°ƒç”¨å¯èƒ½ä¼šæ”¹å˜R3çš„å€¼ã€‚ */
+	mov r0, #configMAX_SYSCALL_INTERRUPT_PRIORITY	/* å…³ä¸­æ–­,é¿å…æ“ä½œå…¨å±€æŒ‡é’ˆæ—¶å—å½±å“ */
 	msr basepri, r0		
 	dsb
 	isb
-	bl vTaskSwitchContext	/* Ìø×ªµ½ÈÎÎñÇĞ»»º¯Êı */
-	mov r0, #0				/* ÖØĞÂ´ò¿ªÖĞ¶Ï */
+	bl vTaskSwitchContext	/* è·³è½¬åˆ°ä»»åŠ¡åˆ‡æ¢å‡½æ•° */
+	mov r0, #0				/* é‡æ–°æ‰“å¼€ä¸­æ–­ */
 	msr basepri, r0
 	ldmia sp!, {r3}
 
@@ -492,7 +492,7 @@ __asm void xPortPendSVHandler( void )
 	ldr r1, [r3]
 	ldr r0, [r1]
 
-	/* ´ÓÖ÷¶ÑÕ»»Ö¸´¼Ä´æÆ÷Öµ. */
+	/* ä»ä¸»å †æ ˆæ¢å¤å¯„å­˜å™¨å€¼. */
 	ldmia r0!, {r4-r11, r14}
 
 	/* Is the task using the FPU context?  If so, pop the high vfp registers
@@ -501,7 +501,7 @@ __asm void xPortPendSVHandler( void )
 	it eq
 	vldmiaeq r0!, {s16-s31}
 
-	msr psp, r0		/* ÍË³öÊ±PSPÎªÈÎÎñÕ»µÄÕ»¶¥ */
+	msr psp, r0		/* é€€å‡ºæ—¶PSPä¸ºä»»åŠ¡æ ˆçš„æ ˆé¡¶ */
 	isb
 	#ifdef WORKAROUND_PMU_CM001 /* XMC4000 specific errata */
 		#if WORKAROUND_PMU_CM001 == 1
@@ -522,17 +522,17 @@ void xPortSysTickHandler( void )
 	save and then restore the interrupt mask value as its value is already
 	known - therefore the slightly faster vPortRaiseBASEPRI() function is used
 	in place of portSET_INTERRUPT_MASK_FROM_ISR(). */
-	vPortRaiseBASEPRI();	/* ¹ØÖĞ¶Ï */
+	vPortRaiseBASEPRI();	/* å…³ä¸­æ–­ */
 	{
 		/* Increment the RTOS tick. */
-		if( xTaskIncrementTick() != pdFALSE )	/* ¸üĞÂÊ±»ù */
+		if( xTaskIncrementTick() != pdFALSE )	/* æ›´æ–°æ—¶åŸº */
 		{
 			/* A context switch is required.  Context switching is performed in
 			the PendSV interrupt.  Pend the PendSV interrupt. */
 			portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
 		}
 	}
-	vPortClearBASEPRIFromISR();	/* ¿ªÖĞ¶Ï */
+	vPortClearBASEPRIFromISR();	/* å¼€ä¸­æ–­ */
 }
 /*-----------------------------------------------------------*/
 
@@ -709,8 +709,8 @@ void xPortSysTickHandler( void )
 		#endif /* configUSE_TICKLESS_IDLE */
 
 		/* Configure SysTick to interrupt at the requested rate. */
-		portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;	/* ÅäÖÃÖØ×°ÔØ¼Ä´æÆ÷ */
-		portNVIC_SYSTICK_CTRL_REG = ( portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTICK_ENABLE_BIT );	/* Ê¹ÄÜSysTick¶¨Ê±Æ÷ */
+		portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;	/* é…ç½®é‡è£…è½½å¯„å­˜å™¨ */
+		portNVIC_SYSTICK_CTRL_REG = ( portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTICK_ENABLE_BIT );	/* ä½¿èƒ½SysTickå®šæ—¶å™¨ */
 	}
 
 #endif /* configOVERRIDE_DEFAULT_TICK_CONFIGURATION */

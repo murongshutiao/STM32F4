@@ -17,7 +17,7 @@
 
 #if SHELL_USING_CMD_EXPORT == 1
 /**
- * @brief Ä¬ÈÏÓÃ»§
+ * @brief é»˜è®¤ç”¨æˆ·
  */
 const char shellCmdDefaultUser[] = SHELL_DEFAULT_USER;
 const char shellPasswordDefaultUser[] = SHELL_DEFAULT_USER_PASSWORD;
@@ -48,35 +48,35 @@ SHELL_USED const ShellCommand shellUserDefault SHELL_SECTION("shellCommand") =
 
 
 /**
- * @brief shell ³£Á¿ÎÄ±¾Ë÷Òı
+ * @brief shell å¸¸é‡æ–‡æœ¬ç´¢å¼•
  */
 enum
 {
 #if SHELL_SHOW_INFO == 1
-    SHELL_TEXT_INFO,                                    /**< shellĞÅÏ¢ */
+    SHELL_TEXT_INFO,                                    /**< shellä¿¡æ¯ */
 #endif
-    SHELL_TEXT_CMD_TOO_LONG,                            /**< ÃüÁî¹ı³¤ */
-    SHELL_TEXT_CMD_LIST,                                /**< ¿ÉÖ´ĞĞÃüÁîÁĞ±í±êÌâ */
-    SHELL_TEXT_VAR_LIST,                                /**< ±äÁ¿ÁĞ±í±êÌâ */
-    SHELL_TEXT_USER_LIST,                               /**< ÓÃ»§ÁĞ±í±êÌâ */
-    SHELL_TEXT_KEY_LIST,                                /**< °´¼üÁĞ±í±êÌâ */
-    SHELL_TEXT_CMD_NOT_FOUND,                           /**< ÃüÁîÎ´ÕÒµ½ */
-    SHELL_TEXT_POINT_CANNOT_MODIFY,                     /**< Ö¸Õë±äÁ¿²»ÔÊĞíĞŞ¸Ä */
-    SHELL_TEXT_VAR_READ_ONLY_CANNOT_MODIFY,             /**< Ö»¶Á±äÁ¿²»ÔÊĞíĞŞ¸Ä */
-    SHELL_TEXT_NOT_VAR,                                 /**< ÃüÁî²»ÊÇ±äÁ¿ */
-    SHELL_TEXT_VAR_NOT_FOUND,                           /**< ±äÁ¿Î´ÕÒµ½ */
-    SHELL_TEXT_HELP_HEADER,                             /**< helpÍ· */
-    SHELL_TEXT_PASSWORD_HINT,                           /**< ÃÜÂëÊäÈëÌáÊ¾ */
-    SHELL_TEXT_PASSWORD_ERROR,                          /**< ÃÜÂë´íÎó */
-    SHELL_TEXT_CLEAR_CONSOLE,                           /**< Çå¿Õ¿ØÖÆÌ¨ */
-    SHELL_TEXT_CLEAR_LINE,                              /**< Çå¿Õµ±Ç°ĞĞ */
-    SHELL_TEXT_TYPE_CMD,                                /**< ÃüÁîÀàĞÍ */
-    SHELL_TEXT_TYPE_VAR,                                /**< ±äÁ¿ÀàĞÍ */
-    SHELL_TEXT_TYPE_USER,                               /**< ÓÃ»§ÀàĞÍ */
-    SHELL_TEXT_TYPE_KEY,                                /**< °´¼üÀàĞÍ */
-    SHELL_TEXT_TYPE_NONE,                               /**< ·Ç·¨ÀàĞÍ */
+    SHELL_TEXT_CMD_TOO_LONG,                            /**< å‘½ä»¤è¿‡é•¿ */
+    SHELL_TEXT_CMD_LIST,                                /**< å¯æ‰§è¡Œå‘½ä»¤åˆ—è¡¨æ ‡é¢˜ */
+    SHELL_TEXT_VAR_LIST,                                /**< å˜é‡åˆ—è¡¨æ ‡é¢˜ */
+    SHELL_TEXT_USER_LIST,                               /**< ç”¨æˆ·åˆ—è¡¨æ ‡é¢˜ */
+    SHELL_TEXT_KEY_LIST,                                /**< æŒ‰é”®åˆ—è¡¨æ ‡é¢˜ */
+    SHELL_TEXT_CMD_NOT_FOUND,                           /**< å‘½ä»¤æœªæ‰¾åˆ° */
+    SHELL_TEXT_POINT_CANNOT_MODIFY,                     /**< æŒ‡é’ˆå˜é‡ä¸å…è®¸ä¿®æ”¹ */
+    SHELL_TEXT_VAR_READ_ONLY_CANNOT_MODIFY,             /**< åªè¯»å˜é‡ä¸å…è®¸ä¿®æ”¹ */
+    SHELL_TEXT_NOT_VAR,                                 /**< å‘½ä»¤ä¸æ˜¯å˜é‡ */
+    SHELL_TEXT_VAR_NOT_FOUND,                           /**< å˜é‡æœªæ‰¾åˆ° */
+    SHELL_TEXT_HELP_HEADER,                             /**< helpå¤´ */
+    SHELL_TEXT_PASSWORD_HINT,                           /**< å¯†ç è¾“å…¥æç¤º */
+    SHELL_TEXT_PASSWORD_ERROR,                          /**< å¯†ç é”™è¯¯ */
+    SHELL_TEXT_CLEAR_CONSOLE,                           /**< æ¸…ç©ºæ§åˆ¶å° */
+    SHELL_TEXT_CLEAR_LINE,                              /**< æ¸…ç©ºå½“å‰è¡Œ */
+    SHELL_TEXT_TYPE_CMD,                                /**< å‘½ä»¤ç±»å‹ */
+    SHELL_TEXT_TYPE_VAR,                                /**< å˜é‡ç±»å‹ */
+    SHELL_TEXT_TYPE_USER,                               /**< ç”¨æˆ·ç±»å‹ */
+    SHELL_TEXT_TYPE_KEY,                                /**< æŒ‰é”®ç±»å‹ */
+    SHELL_TEXT_TYPE_NONE,                               /**< éæ³•ç±»å‹ */
 #if SHELL_EXEC_UNDEF_FUNC == 1
-    SHELL_TEXT_PARAM_ERROR,                             /**< ²ÎÊı´íÎó */
+    SHELL_TEXT_PARAM_ERROR,                             /**< å‚æ•°é”™è¯¯ */
 #endif
 };
 
@@ -144,7 +144,7 @@ static const char *shellText[] =
 
 
 /**
- * @brief shell¶ÔÏó±í
+ * @brief shellå¯¹è±¡è¡¨
  */
 static Shell *shellList[SHELL_MAX_NUMBER] = {NULL};
 
@@ -161,9 +161,9 @@ ShellCommand* shellSeekCommand(Shell *shell,
 static void shellWriteCommandHelp(Shell *shell, char *cmd);
 
 /**
- * @brief shell ³õÊ¼»¯
+ * @brief shell åˆå§‹åŒ–
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellInit(Shell *shell, char *buffer, unsigned short size)
 {
@@ -221,9 +221,9 @@ void shellInit(Shell *shell, char *buffer, unsigned short size)
 
 
 /**
- * @brief Ìí¼Óshell
+ * @brief æ·»åŠ shell
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 static void shellAdd(Shell *shell)
 {
@@ -238,9 +238,9 @@ static void shellAdd(Shell *shell)
 }
 
 /**
- * @brief ÒÆ³ıshell
+ * @brief ç§»é™¤shell
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  * 
  */
 void shellRemove(Shell *shell)
@@ -256,9 +256,9 @@ void shellRemove(Shell *shell)
 }
 
 /**
- * @brief »ñÈ¡µ±Ç°»î¶¯shell
+ * @brief è·å–å½“å‰æ´»åŠ¨shell
  * 
- * @return Shell* µ±Ç°»î¶¯shell¶ÔÏó
+ * @return Shell* å½“å‰æ´»åŠ¨shellå¯¹è±¡
  */
 Shell* shellGetCurrent(void)
 {
@@ -274,10 +274,10 @@ Shell* shellGetCurrent(void)
 
 
 /**
- * @brief shellĞ´×Ö·û
+ * @brief shellå†™å­—ç¬¦
  * 
- * @param shell shell¶ÔÏó
- * @param data ×Ö·ûÊı¾İ
+ * @param shell shellå¯¹è±¡
+ * @param data å­—ç¬¦æ•°æ®
  */
 static void shellWriteByte(Shell *shell, char data)
 {
@@ -286,12 +286,12 @@ static void shellWriteByte(Shell *shell, char data)
 
 
 /**
- * @brief shell Ğ´×Ö·û´®
+ * @brief shell å†™å­—ç¬¦ä¸²
  * 
- * @param shell shell¶ÔÏó
- * @param string ×Ö·û´®Êı¾İ
+ * @param shell shellå¯¹è±¡
+ * @param string å­—ç¬¦ä¸²æ•°æ®
  * 
- * @return unsigned short Ğ´Èë×Ö·ûµÄÊıÁ¿
+ * @return unsigned short å†™å…¥å­—ç¬¦çš„æ•°é‡
  */
 unsigned short shellWriteString(Shell *shell, const char *string)
 {
@@ -307,12 +307,12 @@ unsigned short shellWriteString(Shell *shell, const char *string)
 
 
 /**
- * @brief shell Ğ´ÃüÁîÃèÊö×Ö·û´®
+ * @brief shell å†™å‘½ä»¤æè¿°å­—ç¬¦ä¸²
  * 
- * @param shell shell¶ÔÏó
- * @param string ×Ö·û´®Êı¾İ
+ * @param shell shellå¯¹è±¡
+ * @param string å­—ç¬¦ä¸²æ•°æ®
  * 
- * @return unsigned short Ğ´Èë×Ö·ûµÄÊıÁ¿
+ * @return unsigned short å†™å…¥å­—ç¬¦çš„æ•°é‡
  */
 static unsigned short shellWriteCommandDesc(Shell *shell, const char *string)
 {
@@ -339,10 +339,10 @@ static unsigned short shellWriteCommandDesc(Shell *shell, const char *string)
 
 
 /**
- * @brief shellĞ´ÃüÁîÌáÊ¾·û
+ * @brief shellå†™å‘½ä»¤æç¤ºç¬¦
  * 
- * @param shell shell¶ÔÏó
- * @param newline ĞÂĞĞ
+ * @param shell shellå¯¹è±¡
+ * @param newline æ–°è¡Œ
  * 
  */
 static void shellWritePrompt(Shell *shell, unsigned char newline)
@@ -367,11 +367,11 @@ static void shellWritePrompt(Shell *shell, unsigned char newline)
 
 #if SHELL_PRINT_BUFFER > 0
 /**
- * @brief shell¸ñÊ½»¯Êä³ö
+ * @brief shellæ ¼å¼åŒ–è¾“å‡º
  * 
- * @param shell shell¶ÔÏó
- * @param fmt ¸ñÊ½»¯×Ö·û´®
- * @param ... ²ÎÊı
+ * @param shell shellå¯¹è±¡
+ * @param fmt æ ¼å¼åŒ–å­—ç¬¦ä¸²
+ * @param ... å‚æ•°
  */
 void shellPrint(Shell *shell, const char *fmt, ...)
 {
@@ -391,11 +391,11 @@ void shellPrint(Shell *shell, const char *fmt, ...)
 
 #if SHELL_SCAN_BUFFER > 0
 /**
- * @brief shell¸ñÊ½»¯ÊäÈë
+ * @brief shellæ ¼å¼åŒ–è¾“å…¥
  * 
- * @param shell shell¶ÔÏó
- * @param fmt ¸ñÊ½»¯×Ö·û´®
- * @param ... ²ÎÊı
+ * @param shell shellå¯¹è±¡
+ * @param fmt æ ¼å¼åŒ–å­—ç¬¦ä¸²
+ * @param ... å‚æ•°
  */
 void shellScan(Shell *shell, char *fmt, ...)
 {
@@ -426,13 +426,13 @@ void shellScan(Shell *shell, char *fmt, ...)
 
 
 /**
- * @brief shell ¼ì²éÃüÁîÈ¨ÏŞ
+ * @brief shell æ£€æŸ¥å‘½ä»¤æƒé™
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  * @param command ShellCommand
  * 
- * @return signed char 0 µ±Ç°ÓÃ»§¾ßÓĞ¸ÃÃüÁîÈ¨ÏŞ
- * @return signec char -1 µ±Ç°ÓÃ»§²»¾ßÓĞ¸ÃÃüÁîÈ¨ÏŞ
+ * @return signed char 0 å½“å‰ç”¨æˆ·å…·æœ‰è¯¥å‘½ä»¤æƒé™
+ * @return signec char -1 å½“å‰ç”¨æˆ·ä¸å…·æœ‰è¯¥å‘½ä»¤æƒé™
  */
 signed char shellCheckPermission(Shell *shell, ShellCommand *command)
 {
@@ -448,12 +448,12 @@ signed char shellCheckPermission(Shell *shell, ShellCommand *command)
 
 
 /**
- * @brief int×ª16½øÖÆ×Ö·û´®
+ * @brief intè½¬16è¿›åˆ¶å­—ç¬¦ä¸²
  * 
- * @param value ÊıÖµ
- * @param buffer »º³å
+ * @param value æ•°å€¼
+ * @param buffer ç¼“å†²
  * 
- * @return signed char ×ª»»ºóÓĞĞ§Êı¾İ³¤¶È
+ * @return signed char è½¬æ¢åæœ‰æ•ˆæ•°æ®é•¿åº¦
  */
 signed char shellToHex(unsigned int value, char *buffer)
 {
@@ -471,12 +471,12 @@ signed char shellToHex(unsigned int value, char *buffer)
 
 
 /**
-* @brief int×ª10½øÖÆ×Ö·û´®
+* @brief intè½¬10è¿›åˆ¶å­—ç¬¦ä¸²
  * 
- * @param value ÊıÖµ
- * @param buffer »º³å
+ * @param value æ•°å€¼
+ * @param buffer ç¼“å†²
  * 
- * @return signed char ×ª»»ºóÓĞĞ§Êı¾İ³¤¶È
+ * @return signed char è½¬æ¢åæœ‰æ•ˆæ•°æ®é•¿åº¦
  */
 signed char shellToDec(int value, char *buffer)
 {
@@ -504,11 +504,11 @@ signed char shellToDec(int value, char *buffer)
 
 
 /**
- * @brief shell×Ö·û´®¸´ÖÆ
+ * @brief shellå­—ç¬¦ä¸²å¤åˆ¶
  * 
- * @param dest Ä¿±ê×Ö·û´®
- * @param src Ô´×Ö·û´®
- * @return unsigned short ×Ö·û´®³¤¶È
+ * @param dest ç›®æ ‡å­—ç¬¦ä¸²
+ * @param src æºå­—ç¬¦ä¸²
+ * @return unsigned short å­—ç¬¦ä¸²é•¿åº¦
  */
 static unsigned short shellStringCopy(char *dest, char* src)
 {
@@ -524,11 +524,11 @@ static unsigned short shellStringCopy(char *dest, char* src)
 
 
 /**
- * @brief shell×Ö·û´®±È½Ï
+ * @brief shellå­—ç¬¦ä¸²æ¯”è¾ƒ
  * 
- * @param dest Ä¿±ê×Ö·û´®
- * @param src Ô´×Ö·û´®
- * @return unsigned short Æ¥Åä³¤¶È
+ * @param dest ç›®æ ‡å­—ç¬¦ä¸²
+ * @param src æºå­—ç¬¦ä¸²
+ * @return unsigned short åŒ¹é…é•¿åº¦
  */
 static unsigned short shellStringCompare(char* dest, char *src)
 {
@@ -549,10 +549,10 @@ static unsigned short shellStringCompare(char* dest, char *src)
 
 
 /**
- * @brief shell»ñÈ¡ÃüÁîÃû
+ * @brief shellè·å–å‘½ä»¤å
  * 
- * @param command ÃüÁî
- * @return const char* ÃüÁîÃû
+ * @param command å‘½ä»¤
+ * @return const char* å‘½ä»¤å
  */
 static const char* shellGetCommandName(ShellCommand *command)
 {
@@ -582,10 +582,10 @@ static const char* shellGetCommandName(ShellCommand *command)
 
 
 /**
- * @brief shell»ñÈ¡ÃüÁîÃèÊö
+ * @brief shellè·å–å‘½ä»¤æè¿°
  * 
- * @param command ÃüÁî
- * @return const char* ÃüÁîÃèÊö
+ * @param command å‘½ä»¤
+ * @return const char* å‘½ä»¤æè¿°
  */
 static const char* shellGetCommandDesc(ShellCommand *command)
 {
@@ -608,10 +608,10 @@ static const char* shellGetCommandDesc(ShellCommand *command)
 }
 
 /**
- * @brief shell ÁĞ³öÃüÁîÌõÄ¿
+ * @brief shell åˆ—å‡ºå‘½ä»¤æ¡ç›®
  * 
- * @param shell shell¶ÔÏó
- * @param item ÃüÁîÌõÄ¿
+ * @param shell shellå¯¹è±¡
+ * @param item å‘½ä»¤æ¡ç›®
  */
 void shellListItem(Shell *shell, ShellCommand *item)
 {
@@ -656,9 +656,9 @@ void shellListItem(Shell *shell, ShellCommand *item)
 
 
 /**
- * @brief shellÁĞ³ö¿ÉÖ´ĞĞÃüÁî
+ * @brief shellåˆ—å‡ºå¯æ‰§è¡Œå‘½ä»¤
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellListCommand(Shell *shell)
 {
@@ -676,9 +676,9 @@ void shellListCommand(Shell *shell)
 
 
 /**
- * @brief shellÁĞ³ö±äÁ¿
+ * @brief shellåˆ—å‡ºå˜é‡
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellListVar(Shell *shell)
 {
@@ -697,9 +697,9 @@ void shellListVar(Shell *shell)
 
 
 /**
- * @brief shellÁĞ³öÓÃ»§
+ * @brief shellåˆ—å‡ºç”¨æˆ·
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellListUser(Shell *shell)
 {
@@ -718,9 +718,9 @@ void shellListUser(Shell *shell)
 
 
 /**
- * @brief shellÁĞ³ö°´¼ü
+ * @brief shellåˆ—å‡ºæŒ‰é”®
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellListKey(Shell *shell)
 {
@@ -739,9 +739,9 @@ void shellListKey(Shell *shell)
 
 
 /**
- * @brief shellÁĞ³öËùÓĞÃüÁî
+ * @brief shellåˆ—å‡ºæ‰€æœ‰å‘½ä»¤
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellListAll(Shell *shell)
 {
@@ -759,10 +759,10 @@ void shellListAll(Shell *shell)
 
 
 /**
- * @brief shellÉ¾³ıÃüÁîĞĞÊı¾İ
+ * @brief shellåˆ é™¤å‘½ä»¤è¡Œæ•°æ®
  * 
- * @param shell shell¶ÔÏó
- * @param length É¾³ı³¤¶È
+ * @param shell shellå¯¹è±¡
+ * @param length åˆ é™¤é•¿åº¦
  */
 void shellDeleteCommandLine(Shell *shell, unsigned char length)
 {
@@ -774,9 +774,9 @@ void shellDeleteCommandLine(Shell *shell, unsigned char length)
 
 
 /**
- * @brief shell Çå¿ÕÃüÁîĞĞÊäÈë
+ * @brief shell æ¸…ç©ºå‘½ä»¤è¡Œè¾“å…¥
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellClearCommandLine(Shell *shell)
 {
@@ -789,14 +789,14 @@ void shellClearCommandLine(Shell *shell)
 
 
 /**
- * @brief shell²åÈëÒ»¸ö×Ö·ûµ½¹â±êÎ»ÖÃ
+ * @brief shellæ’å…¥ä¸€ä¸ªå­—ç¬¦åˆ°å…‰æ ‡ä½ç½®
  * 
- * @param shell shell¶ÔÏó
- * @param data ×Ö·ûÊı¾İ
+ * @param shell shellå¯¹è±¡
+ * @param data å­—ç¬¦æ•°æ®
  */
 void shellInsertByte(Shell *shell, char data)
 {
-    /* ÅĞ¶ÏÊäÈëÊı¾İÊÇ·ñ¹ı³¤ */
+    /* åˆ¤æ–­è¾“å…¥æ•°æ®æ˜¯å¦è¿‡é•¿ */
     if (shell->parser.length >= shell->parser.bufferSize - 1)
     {
         shellWriteString(shell, shellText[SHELL_TEXT_CMD_TOO_LONG]);
@@ -805,7 +805,7 @@ void shellInsertByte(Shell *shell, char data)
         return;
     }
 
-    /* ²åÈëÊı¾İ */
+    /* æ’å…¥æ•°æ® */
     if (shell->parser.cursor == shell->parser.length)
     {
         shell->parser.buffer[shell->parser.length++] = data;
@@ -835,10 +835,10 @@ void shellInsertByte(Shell *shell, char data)
 
 
 /**
- * @brief shell É¾³ı×Ö½Ú
+ * @brief shell åˆ é™¤å­—èŠ‚
  * 
- * @param shell shell¶ÔÏó
- * @param direction É¾³ı·½Ïò {@code 1}É¾³ı¹â±êÇ°×Ö·û {@code -1}É¾³ı¹â±ê´¦×Ö·û
+ * @param shell shellå¯¹è±¡
+ * @param direction åˆ é™¤æ–¹å‘ {@code 1}åˆ é™¤å…‰æ ‡å‰å­—ç¬¦ {@code -1}åˆ é™¤å…‰æ ‡å¤„å­—ç¬¦
  */
 void shellDeleteByte(Shell *shell, signed char direction)
 {
@@ -884,9 +884,9 @@ void shellDeleteByte(Shell *shell, signed char direction)
 
 
 /**
- * @brief shell ½âÎö²ÎÊı
+ * @brief shell è§£æå‚æ•°
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 static void shellParserParam(Shell *shell)
 {
@@ -934,9 +934,9 @@ static void shellParserParam(Shell *shell)
 
 
 /**
- * @brief shellÈ¥³ı×Ö·û´®²ÎÊıÍ·Î²µÄË«ÒıºÅ
+ * @brief shellå»é™¤å­—ç¬¦ä¸²å‚æ•°å¤´å°¾çš„åŒå¼•å·
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 static void shellRemoveParamQuotes(Shell *shell)
 {
@@ -958,13 +958,13 @@ static void shellRemoveParamQuotes(Shell *shell)
 
 
 /**
- * @brief shellÆ¥ÅäÃüÁî
+ * @brief shellåŒ¹é…å‘½ä»¤
  * 
- * @param shell shell¶ÔÏó
- * @param cmd ÃüÁî
- * @param base Æ¥ÅäÃüÁî±í»ùÖ·
- * @param compareLength Æ¥Åä×Ö·û´®³¤¶È
- * @return ShellCommand* Æ¥Åäµ½µÄÃüÁî
+ * @param shell shellå¯¹è±¡
+ * @param cmd å‘½ä»¤
+ * @param base åŒ¹é…å‘½ä»¤è¡¨åŸºå€
+ * @param compareLength åŒ¹é…å­—ç¬¦ä¸²é•¿åº¦
+ * @return ShellCommand* åŒ¹é…åˆ°çš„å‘½ä»¤
  */
 ShellCommand* shellSeekCommand(Shell *shell,
                                const char *cmd,
@@ -1002,11 +1002,11 @@ ShellCommand* shellSeekCommand(Shell *shell,
 
 
 /**
- * @brief shell »ñÈ¡±äÁ¿Öµ
+ * @brief shell è·å–å˜é‡å€¼
  * 
- * @param shell shell¶ÔÏó
- * @param command ÃüÁî
- * @return int ±äÁ¿Öµ
+ * @param shell shellå¯¹è±¡
+ * @param command å‘½ä»¤
+ * @return int å˜é‡å€¼
  */
 int shellGetVarValue(Shell *shell, ShellCommand *command)
 {
@@ -1039,12 +1039,12 @@ int shellGetVarValue(Shell *shell, ShellCommand *command)
 
 
 /**
- * @brief shellÉèÖÃ±äÁ¿Öµ
+ * @brief shellè®¾ç½®å˜é‡å€¼
  * 
- * @param shell shell¶ÔÏó
- * @param command ÃüÁî
- * @param value Öµ
- * @return int ·µ»Ø±äÁ¿Öµ
+ * @param shell shellå¯¹è±¡
+ * @param command å‘½ä»¤
+ * @param value å€¼
+ * @return int è¿”å›å˜é‡å€¼
  */
 int shellSetVarValue(Shell *shell, ShellCommand *command, int value)
 {
@@ -1094,11 +1094,11 @@ int shellSetVarValue(Shell *shell, ShellCommand *command, int value)
 
 
 /**
- * @brief shell±äÁ¿Êä³ö
+ * @brief shellå˜é‡è¾“å‡º
  * 
- * @param shell shell¶ÔÏó
- * @param command ÃüÁî
- * @return int ·µ»Ø±äÁ¿Öµ
+ * @param shell shellå¯¹è±¡
+ * @param command å‘½ä»¤
+ * @return int è¿”å›å˜é‡å€¼
  */
 static int shellShowVar(Shell *shell, ShellCommand *command)
 {
@@ -1137,11 +1137,11 @@ static int shellShowVar(Shell *shell, ShellCommand *command)
 
 
 /**
- * @brief shellÉèÖÃ±äÁ¿
+ * @brief shellè®¾ç½®å˜é‡
  * 
- * @param name ±äÁ¿Ãû
- * @param value ±äÁ¿Öµ
- * @return int ·µ»Ø±äÁ¿Öµ
+ * @param name å˜é‡å
+ * @param value å˜é‡å€¼
+ * @return int è¿”å›å˜é‡å€¼
  */
 int shellSetVar(char *name, int value)
 {
@@ -1174,12 +1174,12 @@ setVar, shellSetVar, set var);
 
 
 /**
- * @brief shellÔËĞĞÃüÁî
+ * @brief shellè¿è¡Œå‘½ä»¤
  * 
- * @param shell shell¶ÔÏó
- * @param command ÃüÁî
+ * @param shell shellå¯¹è±¡
+ * @param command å‘½ä»¤
  * 
- * @return unsigned int ÃüÁî·µ»ØÖµ
+ * @return unsigned int å‘½ä»¤è¿”å›å€¼
  */
 unsigned int shellRunCommand(Shell *shell, ShellCommand *command)
 {
@@ -1222,9 +1222,9 @@ unsigned int shellRunCommand(Shell *shell, ShellCommand *command)
 
 
 /**
- * @brief shellĞ£ÑéÃÜÂë
+ * @brief shellæ ¡éªŒå¯†ç 
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 static void shellCheckPassword(Shell *shell)
 {
@@ -1245,10 +1245,10 @@ static void shellCheckPassword(Shell *shell)
 
 
 /**
- * @brief shellÉèÖÃÓÃ»§
+ * @brief shellè®¾ç½®ç”¨æˆ·
  * 
- * @param shell shell¶ÔÏó
- * @param user ÓÃ»§
+ * @param shell shellå¯¹è±¡
+ * @param user ç”¨æˆ·
  */
 void shellSetUser(Shell *shell, const ShellCommand *user)
 {
@@ -1272,10 +1272,10 @@ void shellSetUser(Shell *shell, const ShellCommand *user)
 
 
 /**
- * @brief shellĞ´·µ»ØÖµ
+ * @brief shellå†™è¿”å›å€¼
  * 
- * @param shell shell¶ÔÏó
- * @param value ·µ»ØÖµ
+ * @param shell shellå¯¹è±¡
+ * @param value è¿”å›å€¼
  */
 static void shellWriteReturnValue(Shell *shell, int value)
 {
@@ -1298,9 +1298,9 @@ static void shellWriteReturnValue(Shell *shell, int value)
 
 #if SHELL_HISTORY_MAX_NUMBER > 0
 /**
- * @brief shellÀúÊ·¼ÇÂ¼Ìí¼Ó
+ * @brief shellå†å²è®°å½•æ·»åŠ 
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 static void shellHistoryAdd(Shell *shell)
 {
@@ -1329,10 +1329,10 @@ static void shellHistoryAdd(Shell *shell)
 
 
 /**
- * @brief shellÀúÊ·¼ÇÂ¼²éÕÒ
+ * @brief shellå†å²è®°å½•æŸ¥æ‰¾
  * 
- * @param shell shell¶ÔÏó
- * @param dir ·½Ïò {@code <0}ÍùÉÏ²éÕÒ {@code >0}ÍùÏÂ²éÕÒ
+ * @param shell shellå¯¹è±¡
+ * @param dir æ–¹å‘ {@code <0}å¾€ä¸ŠæŸ¥æ‰¾ {@code >0}å¾€ä¸‹æŸ¥æ‰¾
  */
 static void shellHistory(Shell *shell, signed char dir)
 {
@@ -1380,10 +1380,10 @@ static void shellHistory(Shell *shell, signed char dir)
 
 
 /**
- * @brief shell ³£¹æÊäÈë
+ * @brief shell å¸¸è§„è¾“å…¥
  * 
- * @param shell shell ¶ÔÏó
- * @param data ÊäÈë×Ö·û
+ * @param shell shell å¯¹è±¡
+ * @param data è¾“å…¥å­—ç¬¦
  */
 void shellNormalInput(Shell *shell, char data)
 {
@@ -1393,9 +1393,9 @@ void shellNormalInput(Shell *shell, char data)
 
 
 /**
- * @brief shellÔËĞĞÃüÁî
+ * @brief shellè¿è¡Œå‘½ä»¤
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellExec(Shell *shell)
 {
@@ -1442,9 +1442,9 @@ void shellExec(Shell *shell)
 
 #if SHELL_HISTORY_MAX_NUMBER > 0
 /**
- * @brief shellÉÏ·½Ïò¼üÊäÈë
+ * @brief shellä¸Šæ–¹å‘é”®è¾“å…¥
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellUp(Shell *shell)
 {
@@ -1454,9 +1454,9 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0), 0x1B5B4100, shellUp, up);
 
 
 /**
- * @brief shellÏÂ·½Ïò¼üÊäÈë
+ * @brief shellä¸‹æ–¹å‘é”®è¾“å…¥
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellDown(Shell *shell)
 {
@@ -1467,9 +1467,9 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0), 0x1B5B4200, shellDown, down);
 
 
 /**
- * @brief shellÓÒ·½Ïò¼üÊäÈë
+ * @brief shellå³æ–¹å‘é”®è¾“å…¥
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellRight(Shell *shell)
 {
@@ -1483,9 +1483,9 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0)|SHELL_CMD_ENABLE_UNCHECKED,
 
 
 /**
- * @brief shell×ó·½Ïò¼üÊäÈë
+ * @brief shellå·¦æ–¹å‘é”®è¾“å…¥
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellLeft(Shell *shell)
 {
@@ -1500,9 +1500,9 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0)|SHELL_CMD_ENABLE_UNCHECKED,
 
 
 /**
- * @brief shell Tab°´¼ü´¦Àí
+ * @brief shell TabæŒ‰é”®å¤„ç†
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellTab(Shell *shell)
 {
@@ -1602,9 +1602,9 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0), 0x09000000, shellTab, tab);
 
 
 /**
- * @brief shell ÍË¸ñ
+ * @brief shell é€€æ ¼
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellBackspace(Shell *shell)
 {
@@ -1617,9 +1617,9 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0)|SHELL_CMD_ENABLE_UNCHECKED,
 
 
 /**
- * @brief shell É¾³ı
+ * @brief shell åˆ é™¤
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellDelete(Shell *shell)
 {
@@ -1630,9 +1630,9 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0)|SHELL_CMD_ENABLE_UNCHECKED,
 
 
 /**
- * @brief shell »Ø³µ´¦Àí
+ * @brief shell å›è½¦å¤„ç†
  * 
- * @param shell shell¶ÔÏó
+ * @param shell shellå¯¹è±¡
  */
 void shellEnter(Shell *shell)
 {
@@ -1653,10 +1653,10 @@ SHELL_EXPORT_KEY(SHELL_CMD_PERMISSION(0)|SHELL_CMD_ENABLE_UNCHECKED,
 #endif
 
 /**
- * @brief shell Ğ´ÃüÁî°ïÖúĞÅÏ¢
+ * @brief shell å†™å‘½ä»¤å¸®åŠ©ä¿¡æ¯
  * 
- * @param shell shell¶ÔÏó
- * @param cmd ÃüÁî×Ö·û´®
+ * @param shell shellå¯¹è±¡
+ * @param cmd å‘½ä»¤å­—ç¬¦ä¸²
  */
 static void shellWriteCommandHelp(Shell *shell, char *cmd)
 {
@@ -1681,8 +1681,8 @@ static void shellWriteCommandHelp(Shell *shell, char *cmd)
 /**
  * @brief shell help
  * 
- * @param argc ²ÎÊı¸öÊı
- * @param argv ²ÎÊı
+ * @param argc å‚æ•°ä¸ªæ•°
+ * @param argv å‚æ•°
  */
 void shellHelp(int argc, char *argv[])
 {
@@ -1702,10 +1702,10 @@ SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN)|SHELL_CMD_DISABLE_RE
 help, shellHelp, show command info\r\nhelp [cmd]);
 
 /**
- * @brief shell ÊäÈë´¦Àí
+ * @brief shell è¾“å…¥å¤„ç†
  * 
- * @param shell shell¶ÔÏó
- * @param data ÊäÈëÊı¾İ
+ * @param shell shellå¯¹è±¡
+ * @param data è¾“å…¥æ•°æ®
  */
 void shellHandler(Shell *shell, char data)
 {
@@ -1724,7 +1724,7 @@ void shellHandler(Shell *shell, char data)
     }
 #endif
 
-    /* ¸ù¾İ¼ÇÂ¼µÄ°´¼ü¼üÖµ¼ÆËãµ±Ç°×Ö½ÚÔÚ°´¼ü¼üÖµÖĞµÄÆ«ÒÆ */
+    /* æ ¹æ®è®°å½•çš„æŒ‰é”®é”®å€¼è®¡ç®—å½“å‰å­—èŠ‚åœ¨æŒ‰é”®é”®å€¼ä¸­çš„åç§» */
     char keyByteOffset = 24;
     int keyFilter = 0x00000000;
     if ((shell->parser.keyValue & 0x0000FF00) != 0x00000000)
@@ -1743,15 +1743,15 @@ void shellHandler(Shell *shell, char data)
         keyFilter = 0xFF000000;
     }
 
-    /* ±éÀúShellCommandÁĞ±í£¬³¢ÊÔ½øĞĞ°´¼ü¼üÖµÆ¥Åä */
+    /* éå†ShellCommandåˆ—è¡¨ï¼Œå°è¯•è¿›è¡ŒæŒ‰é”®é”®å€¼åŒ¹é… */
     ShellCommand *base = (ShellCommand *)shell->commandList.base;
     for (short i = 0; i < shell->commandList.count; i++)
     {
-        /* ÅĞ¶ÏÊÇ·ñÊÇ°´¼ü¶¨Òå²¢ÑéÖ¤È¨ÏŞ */
+        /* åˆ¤æ–­æ˜¯å¦æ˜¯æŒ‰é”®å®šä¹‰å¹¶éªŒè¯æƒé™ */
         if (base[i].attr.attrs.type == SHELL_TYPE_KEY
             && shellCheckPermission(shell, &(base[i])) == 0)
         {
-            /* ¶ÔÊäÈëµÄ×Ö½ÚÍ¬°´¼ü¼üÖµ½øĞĞÆ¥Åä */
+            /* å¯¹è¾“å…¥çš„å­—èŠ‚åŒæŒ‰é”®é”®å€¼è¿›è¡ŒåŒ¹é… */
             if ((base[i].data.key.value & keyFilter) == shell->parser.keyValue
                 && (base[i].data.key.value & (0xFF << keyByteOffset))
                     == (data << keyByteOffset))
@@ -1815,9 +1815,9 @@ void shellWriteEndLine(Shell *shell, char *buffer, int len)
 
 
 /**
- * @brief shell ÈÎÎñ
+ * @brief shell ä»»åŠ¡
  * 
- * @param param ²ÎÊı(shell¶ÔÏó)
+ * @param param å‚æ•°(shellå¯¹è±¡)
  * 
  */
 void shellTask(void *param)
@@ -1839,7 +1839,7 @@ void shellTask(void *param)
 
 
 /**
- * @brief shell Êä³öÓÃ»§ÁĞ±í(shellµ÷ÓÃ)
+ * @brief shell è¾“å‡ºç”¨æˆ·åˆ—è¡¨(shellè°ƒç”¨)
  */
 void shellUsers(void)
 {
@@ -1855,7 +1855,7 @@ users, shellUsers, list all user);
 
 
 /**
- * @brief shell Êä³öÃüÁîÁĞ±í(shellµ÷ÓÃ)
+ * @brief shell è¾“å‡ºå‘½ä»¤åˆ—è¡¨(shellè°ƒç”¨)
  */
 void shellCmds(void)
 {
@@ -1871,7 +1871,7 @@ cmds, shellCmds, list all cmd);
 
 
 /**
- * @brief shell Êä³ö±äÁ¿ÁĞ±í(shellµ÷ÓÃ)
+ * @brief shell è¾“å‡ºå˜é‡åˆ—è¡¨(shellè°ƒç”¨)
  */
 void shellVars(void)
 {
@@ -1887,7 +1887,7 @@ vars, shellVars, list all var);
 
 
 /**
- * @brief shell Êä³ö°´¼üÁĞ±í(shellµ÷ÓÃ)
+ * @brief shell è¾“å‡ºæŒ‰é”®åˆ—è¡¨(shellè°ƒç”¨)
  */
 void shellKeys(void)
 {
@@ -1903,7 +1903,7 @@ keys, shellKeys, list all key);
 
 
 /**
- * @brief shell Çå¿Õ¿ØÖÆÌ¨(shellµ÷ÓÃ)
+ * @brief shell æ¸…ç©ºæ§åˆ¶å°(shellè°ƒç”¨)
  */
 void shellClear(void)
 {
@@ -1919,11 +1919,11 @@ clear, shellClear, clear console);
 
 
 /**
- * @brief shellÖ´ĞĞÃüÁî
+ * @brief shellæ‰§è¡Œå‘½ä»¤
  * 
- * @param shell shell¶ÔÏó
- * @param cmd ÃüÁî×Ö·û´®
- * @return int ·µ»ØÖµ
+ * @param shell shellå¯¹è±¡
+ * @param cmd å‘½ä»¤å­—ç¬¦ä¸²
+ * @return int è¿”å›å€¼
  */
 int shellRun(Shell *shell, const char *cmd)
 {
@@ -1946,11 +1946,11 @@ int shellRun(Shell *shell, const char *cmd)
 
 #if SHELL_EXEC_UNDEF_FUNC == 1
 /**
- * @brief shellÖ´ĞĞÎ´¶¨Òåº¯Êı
+ * @brief shellæ‰§è¡Œæœªå®šä¹‰å‡½æ•°
  * 
- * @param argc ²ÎÊı¸öÊı
- * @param argv ²ÎÊı
- * @return int ·µ»ØÖµ
+ * @param argc å‚æ•°ä¸ªæ•°
+ * @param argv å‚æ•°
+ * @return int è¿”å›å€¼
  */
 int shellExecute(int argc, char *argv[])
 {
@@ -1978,10 +1978,10 @@ exec, shellExecute, execute function undefined);
 
 #if SHELL_KEEP_RETURN_VALUE == 1
 /**
- * @brief shell·µ»ØÖµ»ñÈ¡
- *        »ñÈ¡ÉÏÒ»´ÎÖ´ĞĞµÄÃüÁîµÄ·µ»ØÖµ
+ * @brief shellè¿”å›å€¼è·å–
+ *        è·å–ä¸Šä¸€æ¬¡æ‰§è¡Œçš„å‘½ä»¤çš„è¿”å›å€¼
  * 
- * @return int ·µ»ØÖµ
+ * @return int è¿”å›å€¼
  */
 static int shellRetValGet()
 {

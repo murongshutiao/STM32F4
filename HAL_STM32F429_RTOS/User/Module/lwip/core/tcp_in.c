@@ -141,7 +141,7 @@ tcp_input(struct pbuf *p, struct netif *inp)
   tcp_debug_print(tcphdr);
 #endif
 
-  /* ¼ì²éTCP±¨ÎÄÍ·³¤¶È */
+  /* æ£€æŸ¥TCPæŠ¥æ–‡å¤´é•¿åº¦ */
   if (p->len < TCP_HLEN) {
     /* drop short packets */
     LWIP_DEBUGF(TCP_INPUT_DEBUG, ("tcp_input: short packet (%"U16_F" bytes) discarded\n", p->tot_len));
@@ -149,7 +149,7 @@ tcp_input(struct pbuf *p, struct netif *inp)
     goto dropped;
   }
 
-  /* ²»´¦Àí¹ã²¥,¶à²¥±¨ÎÄ */
+  /* ä¸å¤„ç†å¹¿æ’­,å¤šæ’­æŠ¥æ–‡ */
   if (ip_addr_isbroadcast(ip_current_dest_addr(), ip_current_netif()) ||
       ip_addr_ismulticast(ip_current_dest_addr())) {
     TCP_STATS_INC(tcp.proterr);
@@ -171,7 +171,7 @@ tcp_input(struct pbuf *p, struct netif *inp)
   }
 #endif /* CHECKSUM_CHECK_TCP */
 
-  /* ¼ì²éTCP±¨ÎÄ¶ÎÊ×²¿³¤¶È */
+  /* æ£€æŸ¥TCPæŠ¥æ–‡æ®µé¦–éƒ¨é•¿åº¦ */
   hdrlen_bytes = TCPH_HDRLEN_BYTES(tcphdr);
   if ((hdrlen_bytes < TCP_HLEN) || (hdrlen_bytes > p->tot_len)) {
     LWIP_DEBUGF(TCP_INPUT_DEBUG, ("tcp_input: invalid header length (%"U16_F")\n", (u16_t)hdrlen_bytes));
@@ -225,15 +225,15 @@ tcp_input(struct pbuf *p, struct netif *inp)
   }
 
   /* Convert fields in TCP header to host byte order. */
-  tcphdr->src = lwip_ntohs(tcphdr->src);    /* »ñÈ¡Ô´¶Ë¿Ú */
-  tcphdr->dest = lwip_ntohs(tcphdr->dest);  /* »ñÈ¡Ä¿µÄ¶Ë¿Ú */
-  seqno = tcphdr->seqno = lwip_ntohl(tcphdr->seqno);  /* »ñÈ¡ĞòÁĞºÅ */
-  ackno = tcphdr->ackno = lwip_ntohl(tcphdr->ackno);  /* »ñÈ¡ACK±êÖ¾ */
+  tcphdr->src = lwip_ntohs(tcphdr->src);    /* è·å–æºç«¯å£ */
+  tcphdr->dest = lwip_ntohs(tcphdr->dest);  /* è·å–ç›®çš„ç«¯å£ */
+  seqno = tcphdr->seqno = lwip_ntohl(tcphdr->seqno);  /* è·å–åºåˆ—å· */
+  ackno = tcphdr->ackno = lwip_ntohl(tcphdr->ackno);  /* è·å–ACKæ ‡å¿— */
   tcphdr->wnd = lwip_ntohs(tcphdr->wnd);
 
   flags = TCPH_FLAGS(tcphdr);
   tcplen = p->tot_len;
-  if (flags & (TCP_FIN | TCP_SYN)) {  /* ²é¿´ÎÕÊÖ±êÖ¾ */
+  if (flags & (TCP_FIN | TCP_SYN)) {  /* æŸ¥çœ‹æ¡æ‰‹æ ‡å¿— */
     tcplen++;
     if (tcplen < p->tot_len) {
       /* u16_t overflow, cannot handle this */

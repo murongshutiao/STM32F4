@@ -294,9 +294,9 @@ eMBErrorCode eMBMasterRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USH
 
 
 /**
-  * @brief  ²âÊÔ³ÌĞò
-  * @param  ¹¦ÄÜÑ¡Ôñ
-  * @retval ÎŞ
+  * @brief  æµ‹è¯•ç¨‹åº
+  * @param  åŠŸèƒ½é€‰æ‹©
+  * @retval æ— 
   */
 void test(char MB)
 {
@@ -304,33 +304,33 @@ void test(char MB)
 	UCHAR	Coils[4]={1,0,1,0};
 	
 	
-	/* ×¢£º¸÷²Ù×÷µÄAPIÔÚmb_m.hÖĞ */
+	/* æ³¨ï¼šå„æ“ä½œçš„APIåœ¨mb_m.hä¸­ */
 	switch(MB)
 	{
 		case MB_USER_HOLD: 
-					/* Ğ´¶à¸ö±£³Ö¼Ä´æÆ÷Öµ */
-					eMBMasterReqWriteMultipleHoldingRegister(MB_SAMPLE_TEST_SLAVE_ADDR, //´Ó»úÉè±¸µØÖ·
-                                                            MB_REG_START, 							//Êı¾İÆğÊ¼Î»ÖÃ
-                                                            MB_SEND_REG_NUM, 					//Ğ´Êı¾İ×ÜÊı
-                                                            Hlod_buff, 								//Êı¾İ
-                                                            WAITING_FOREVER);					//ÓÀ¾ÃµÈ´ı
+					/* å†™å¤šä¸ªä¿æŒå¯„å­˜å™¨å€¼ */
+					eMBMasterReqWriteMultipleHoldingRegister(MB_SAMPLE_TEST_SLAVE_ADDR, //ä»æœºè®¾å¤‡åœ°å€
+                                                            MB_REG_START, 							//æ•°æ®èµ·å§‹ä½ç½®
+                                                            MB_SEND_REG_NUM, 					//å†™æ•°æ®æ€»æ•°
+                                                            Hlod_buff, 								//æ•°æ®
+                                                            WAITING_FOREVER);					//æ°¸ä¹…ç­‰å¾…
 		            break;
 		
 		case MB_USER_COILS:
-					/* Ğ´¶à¸öÏßÈ¦ */
-					eMBMasterReqWriteMultipleCoils(MB_SAMPLE_TEST_SLAVE_ADDR, //´Ó»úÉè±¸µØÖ·
-                                                            MB_REG_START, 							//Êı¾İÆğÊ¼Î»ÖÃ
-                                                            MB_SEND_REG_NUM, 					//Ğ´Êı¾İ×ÜÊı
-                                                            Coils, 										//Êı¾İ
-                                                            WAITING_FOREVER);					//ÓÀ¾ÃµÈ´ı
+					/* å†™å¤šä¸ªçº¿åœˆ */
+					eMBMasterReqWriteMultipleCoils(MB_SAMPLE_TEST_SLAVE_ADDR, //ä»æœºè®¾å¤‡åœ°å€
+                                                            MB_REG_START, 							//æ•°æ®èµ·å§‹ä½ç½®
+                                                            MB_SEND_REG_NUM, 					//å†™æ•°æ®æ€»æ•°
+                                                            Coils, 										//æ•°æ®
+                                                            WAITING_FOREVER);					//æ°¸ä¹…ç­‰å¾…
 		            break;
 		
 		case MB_USER_INPUT_REG:
-					/* ¶ÁÊäÈë¼Ä´æÆ÷ */
-					eMBMasterReqReadInputRegister(MB_SAMPLE_TEST_SLAVE_ADDR,	//´Ó»úÉè±¸µØÖ·
-                                                            MB_REG_START,               //Êı¾İÆğÊ¼Î»ÖÃ
-                                                            MB_READ_REG_NUM,						//¶ÁÊı¾İ×ÜÊı
-                                                            WAITING_FOREVER);						//ÓÀ¾ÃµÈ´ı
+					/* è¯»è¾“å…¥å¯„å­˜å™¨ */
+					eMBMasterReqReadInputRegister(MB_SAMPLE_TEST_SLAVE_ADDR,	//ä»æœºè®¾å¤‡åœ°å€
+                                                            MB_REG_START,               //æ•°æ®èµ·å§‹ä½ç½®
+                                                            MB_READ_REG_NUM,						//è¯»æ•°æ®æ€»æ•°
+                                                            WAITING_FOREVER);						//æ°¸ä¹…ç­‰å¾…
 		            break;
 	}
 }
@@ -344,7 +344,7 @@ void MBMaster_Test(void)
     
         test(MB_USER_INPUT_REG);
         
-        eMBMasterPoll();    /* İ†Ôƒ²é¿´Ö÷™C î‘B */
+        eMBMasterPoll();    /* è¼ªè©¢æŸ¥çœ‹ä¸»æ©Ÿç‹€æ…‹ */
 }
 
 #endif

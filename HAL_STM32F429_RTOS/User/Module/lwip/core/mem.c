@@ -350,11 +350,11 @@ mem_free(void *rmem)
 struct mem 
 {
     /** index (-> ram[next]) of the next struct */
-    mem_size_t next;        /* Ä¿µÄµØÖ·µÄÆ«ÒÆÁ¿ */
+    mem_size_t next;        /* ç›®çš„åœ°å€çš„åç§»é‡ */
     /** index (-> ram[prev]) of the previous struct */
     mem_size_t prev;
     /** 1: this area is used; 0: this area is unused */
-    u8_t used;              /* ±ê¼Ç¸ÃÄÚ´æ¿éÊÇ·ñ±»Ê¹ÓÃ */
+    u8_t used;              /* æ ‡è®°è¯¥å†…å­˜å—æ˜¯å¦è¢«ä½¿ç”¨ */
 #if MEM_OVERFLOW_CHECK
     /** this keeps track of the user allocation size for guard checks */
     mem_size_t user_size;
@@ -365,7 +365,7 @@ struct mem
  * MIN_SIZE can be overridden to suit your needs. Smaller values save space,
  * larger values could prevent too small blocks to fragment the RAM too much. */
 #ifndef MIN_SIZE
-#define MIN_SIZE             12             /* ÉêÇëÄÚ´æµÄ×îĞ¡×Ö½Ú */
+#define MIN_SIZE             12             /* ç”³è¯·å†…å­˜çš„æœ€å°å­—èŠ‚ */
 #endif /* MIN_SIZE */
 /* some alignment macros: we define them here for better source code layout */
 #define MIN_SIZE_ALIGNED     LWIP_MEM_ALIGN_SIZE(MIN_SIZE)
@@ -378,12 +378,12 @@ struct mem
  * how that space is calculated). */
 #ifndef LWIP_RAM_HEAP_POINTER
 /** the heap. we need one struct mem at the end and some room for alignment */
-LWIP_DECLARE_MEMORY_ALIGNED(ram_heap, MEM_SIZE_ALIGNED + (2U * SIZEOF_STRUCT_MEM)); /* ¶¨ÒåÄÚ´æ¶ÑµÄ´óĞ¡ */
-#define LWIP_RAM_HEAP_POINTER ram_heap      /* ÄÚ´æ¶Ñ¿Õ¼ä£¬¸úÉÏ±ßÒ»Ñù */
+LWIP_DECLARE_MEMORY_ALIGNED(ram_heap, MEM_SIZE_ALIGNED + (2U * SIZEOF_STRUCT_MEM)); /* å®šä¹‰å†…å­˜å †çš„å¤§å° */
+#define LWIP_RAM_HEAP_POINTER ram_heap      /* å†…å­˜å †ç©ºé—´ï¼Œè·Ÿä¸Šè¾¹ä¸€æ · */
 #endif /* LWIP_RAM_HEAP_POINTER */
 
 /** pointer to the heap (ram_heap): for alignment, ram is now a pointer instead of an array */
-static u8_t *ram;       /* ÄÚ´æ¶Ñ¶ÔÆëºóµÄÆğÊ¼µØÖ· */
+static u8_t *ram;       /* å†…å­˜å †å¯¹é½åçš„èµ·å§‹åœ°å€ */
 /** the last entry, always unused! */
 static struct mem *ram_end;
 
@@ -420,7 +420,7 @@ static volatile u8_t mem_free_count;
 #endif /* LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT */
 
 /** pointer to the lowest free block, this is used for faster search */
-static struct mem * LWIP_MEM_LFREE_VOLATILE lfree;  /* ¿ÕÏĞÄÚ´æ¿éÁ´±íÖ¸Õë */
+static struct mem * LWIP_MEM_LFREE_VOLATILE lfree;  /* ç©ºé—²å†…å­˜å—é“¾è¡¨æŒ‡é’ˆ */
 
 #if MEM_SANITY_CHECK
 static void mem_sanity(void);
@@ -521,7 +521,7 @@ void mem_init(void)
     LWIP_ASSERT("Sanity check alignment",
                 (SIZEOF_STRUCT_MEM & (MEM_ALIGNMENT - 1)) == 0);
 
-    /* ÄÚ´æ¿Õ¼ä¶ÔÆë */
+    /* å†…å­˜ç©ºé—´å¯¹é½ */
     ram = (u8_t *)LWIP_MEM_ALIGN(LWIP_RAM_HEAP_POINTER);
     /* initialize the start of the heap */
     mem = (struct mem *)(void *)ram;
@@ -843,7 +843,7 @@ void *mem_malloc(mem_size_t size_in)
         return NULL;
     }
 
-    /* ÉêÇëÄÚ´æ²¢µØÖ·¶ÔÆë */
+    /* ç”³è¯·å†…å­˜å¹¶åœ°å€å¯¹é½ */
     size = (mem_size_t)LWIP_MEM_ALIGN_SIZE(size_in);    
 
     if (size < MIN_SIZE_ALIGNED) 
@@ -871,7 +871,7 @@ void *mem_malloc(mem_size_t size_in)
         local_mem_free_count = 0;
 #endif /* LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT */
 
-        /* ±éÀú¿ÕÏĞÁ´±í£¬ÕÒµ½Ò»¸öºÏÊÊµÄ */
+        /* éå†ç©ºé—²é“¾è¡¨ï¼Œæ‰¾åˆ°ä¸€ä¸ªåˆé€‚çš„ */
         for (ptr = mem_to_ptr(lfree); ptr < MEM_SIZE_ALIGNED - size;
             ptr = ptr_to_mem(ptr)->next) 
         {

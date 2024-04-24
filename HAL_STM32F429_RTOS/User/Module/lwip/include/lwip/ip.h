@@ -106,9 +106,9 @@ struct ip_pcb {
 /** Global variables of this module, kept in a struct for efficient access using base+index. */
 struct ip_globals
 {
-  /* µ±Ç°Íø¿¨. */
+  /* å½“å‰ç½‘å¡. */
   struct netif *current_netif;
-  /* µ±Ç°½ÓÊÕµ½±¨ÎÄµÄÍø¿¨ */
+  /* å½“å‰æ¥æ”¶åˆ°æŠ¥æ–‡çš„ç½‘å¡ */
   struct netif *current_input_netif;
 #if LWIP_IPV4
   /** Header of the input packet currently being processed. */
@@ -118,11 +118,11 @@ struct ip_globals
   /** Header of the input IPv6 packet currently being processed. */
   struct ip6_hdr *current_ip6_header;
 #endif /* LWIP_IPV6 */
-  /*´ÓipÊı¾İ±¨»ñÈ¡µÄip×Ü³¤¶È */
+  /*ä»ipæ•°æ®æŠ¥è·å–çš„ipæ€»é•¿åº¦ */
   u16_t current_ip_header_tot_len;
-  /* µ±Ç°ipÊ×²¿»ñÈ¡µÄÔ´µØÖ· */
+  /* å½“å‰ipé¦–éƒ¨è·å–çš„æºåœ°å€ */
   ip_addr_t current_iphdr_src;
-  /* µ±Ç°ipÊ×²¿»ñÈ¡µÄÄ¿µÄµØÖ· */
+  /* å½“å‰ipé¦–éƒ¨è·å–çš„ç›®çš„åœ°å€ */
   ip_addr_t current_iphdr_dest;
 };
 extern struct ip_globals ip_data;

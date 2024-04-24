@@ -10,34 +10,34 @@
 #include "./led/bsp_led.h"
 
 
-#define NUM_CONFIG_CGI_URIS     2       /* CGIµÄURIÊıÁ¿ */
-#define NUM_CONFIG_SSI_TAGS     4       /* SSIµÄTAGÊıÁ¿ */
+#define NUM_CONFIG_CGI_URIS     2       /* CGIçš„URIæ•°é‡ */
+#define NUM_CONFIG_SSI_TAGS     4       /* SSIçš„TAGæ•°é‡ */
 
 
-/* ¿ØÖÆLEDºÍBEEPµÄCGI handler */
+/* æ§åˆ¶LEDå’ŒBEEPçš„CGI handler */
 const char *LEDS_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[]);
 const char *BEEP_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[]);
 
-static const char *ppcTAGs[] = /* SSIµÄTag */
+static const char *ppcTAGs[] = /* SSIçš„Tag */
 {
-    "t", /* ADCÖµ */
-    "w", /* ÎÂ¶ÈÖµ */
-    "h", /* Ê±¼ä */
-    "y"  /* ÈÕÆÚ */
+    "t", /* ADCå€¼ */
+    "w", /* æ¸©åº¦å€¼ */
+    "h", /* æ—¶é—´ */
+    "y"  /* æ—¥æœŸ */
 };
 
-static const tCGI ppcURLs[] = /* cgi³ÌĞò */
+static const tCGI ppcURLs[] = /* cgiç¨‹åº */
 {
     {"/leds.cgi", LEDS_CGI_Handler},    
     {"/beep.cgi", BEEP_CGI_Handler},
 };
 
 /**
- * @breif       µ±web¿Í»§¶ËÇëÇóä¯ÀÀÆ÷µÄÊ±ºò,Ê¹ÓÃ´Ëº¯Êı±»CGI handlerµ÷ÓÃ
+ * @breif       å½“webå®¢æˆ·ç«¯è¯·æ±‚æµè§ˆå™¨çš„æ—¶å€™,ä½¿ç”¨æ­¤å‡½æ•°è¢«CGI handlerè°ƒç”¨
  * @param       pcToFind    :
  * @param       pcParam     :
  * @param       iNumParams  :
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 static int FindCGIParameter(const char *pcToFind, char *pcParam[], int iNumParams)
 {
@@ -47,7 +47,7 @@ static int FindCGIParameter(const char *pcToFind, char *pcParam[], int iNumParam
     {
         if (strcmp(pcToFind, pcParam[iLoop]) == 0)
         {
-            return (iLoop);     /* ·µ»ØiLOOP */
+            return (iLoop);     /* è¿”å›iLOOP */
         }
     }
 
@@ -55,19 +55,19 @@ static int FindCGIParameter(const char *pcToFind, char *pcParam[], int iNumParam
 }
 
 /**
- * @breif       SSIHandlerÖĞĞèÒªÓÃµ½µÄ´¦ÀíADCµÄº¯Êı
+ * @breif       SSIHandlerä¸­éœ€è¦ç”¨åˆ°çš„å¤„ç†ADCçš„å‡½æ•°
  * @param       pcInsert    :
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 void ADC_Handler(char *pcInsert)
 {
 //    char Digit1 = 0, Digit2 = 0, Digit3 = 0, Digit4 = 0;
 //    uint32_t ADCVal = 0;
 
-//    /* »ñÈ¡ADCµÄÖµ */
-//    ADCVal = adc_get_result_average(5, 10); /* »ñÈ¡ADC1_CH5µÄµçÑ¹Öµ */
+//    /* è·å–ADCçš„å€¼ */
+//    ADCVal = adc_get_result_average(5, 10); /* è·å–ADC1_CH5çš„ç”µå‹å€¼ */
 
-//    /* ×ª»»ÎªµçÑ¹ ADCVval * 0.8mv */
+//    /* è½¬æ¢ä¸ºç”µå‹ ADCVval * 0.8mv */
 //    ADCVal = (uint32_t)(ADCVal * 0.8);
 
 //    Digit1 = ADCVal / 1000;
@@ -75,7 +75,7 @@ void ADC_Handler(char *pcInsert)
 //    Digit3 = (ADCVal - ((Digit1 * 1000) + (Digit2 * 100))) / 10;
 //    Digit4 = ADCVal - ((Digit1 * 1000) + (Digit2 * 100) + (Digit3 * 10));
 
-//    /* ×¼±¸Ìí¼Óµ½htmlÖĞµÄÊı¾İ */
+//    /* å‡†å¤‡æ·»åŠ åˆ°htmlä¸­çš„æ•°æ® */
 //    *pcInsert       = (char)(Digit1 + 0x30);
 //    *(pcInsert + 1) = (char)(Digit2 + 0x30);
 //    *(pcInsert + 2) = (char)(Digit3 + 0x30);
@@ -83,24 +83,24 @@ void ADC_Handler(char *pcInsert)
 }
 
 /**
- * @breif       SSIHandlerÖĞĞèÒªÓÃµ½µÄ´¦ÀíÄÚ²¿ÎÂ¶È´«¸ĞÆ÷µÄº¯Êı
+ * @breif       SSIHandlerä¸­éœ€è¦ç”¨åˆ°çš„å¤„ç†å†…éƒ¨æ¸©åº¦ä¼ æ„Ÿå™¨çš„å‡½æ•°
  * @param       pcInsert    :
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 void Temperate_Handler(char *pcInsert)
 {
 //    char Digit1 = 0, Digit2 = 0, Digit3 = 0, Digit4 = 0, Digit5 = 0;
 //    short Temperate = 0;
 
-//    /* »ñÈ¡ÄÚ²¿ÎÂ¶ÈÖµ */
-//    Temperate = adc_get_result(ADC_CHANNEL_0); /* »ñÈ¡ÎÂ¶ÈÖµ ´Ë´¦À©´óÁË100±¶ */
+//    /* è·å–å†…éƒ¨æ¸©åº¦å€¼ */
+//    Temperate = adc_get_result(ADC_CHANNEL_0); /* è·å–æ¸©åº¦å€¼ æ­¤å¤„æ‰©å¤§äº†100å€ */
 //    Digit1 = Temperate / 10000;
 //    Digit2 = (Temperate % 10000) / 1000;
 //    Digit3 = (Temperate % 1000) / 100 ;
 //    Digit4 = (Temperate % 100) / 10;
 //    Digit5 = Temperate % 10;
 
-//    /* Ìí¼Óµ½htmlÖĞµÄÊı¾İ */
+//    /* æ·»åŠ åˆ°htmlä¸­çš„æ•°æ® */
 //    *pcInsert = (char)(Digit1 + 0x30);
 //    *(pcInsert + 1) = (char)(Digit2 + 0x30);
 //    *(pcInsert + 2) = (char)(Digit3 + 0x30);
@@ -110,9 +110,9 @@ void Temperate_Handler(char *pcInsert)
 }
 
 /**
- * @breif       SSIHandlerÖĞĞèÒªÓÃµ½µÄ´¦ÀíRTCÊ±¼äµÄº¯Êı
+ * @breif       SSIHandlerä¸­éœ€è¦ç”¨åˆ°çš„å¤„ç†RTCæ—¶é—´çš„å‡½æ•°
  * @param       pcInsert    :
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 void RTCTime_Handler(char *pcInsert)
 {
@@ -135,9 +135,9 @@ void RTCTime_Handler(char *pcInsert)
 }
 
 /**
- * @breif       SSIHandlerÖĞĞèÒªÓÃµ½µÄ´¦ÀíRTCÈÕÆÚµÄº¯Êı
+ * @breif       SSIHandlerä¸­éœ€è¦ç”¨åˆ°çš„å¤„ç†RTCæ—¥æœŸçš„å‡½æ•°
  * @param       pcInsert    :
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 void RTCdate_Handler(char *pcInsert)
 {
@@ -170,11 +170,11 @@ void RTCdate_Handler(char *pcInsert)
 }
 
 /**
- * @breif       SSIµÄHandler¾ä±ú
+ * @breif       SSIçš„Handlerå¥æŸ„
  * @param       iIndex      :
  * @param       pcInsert    :
  * @param       iInsertLen  :
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 static u16_t SSIHandler(int iIndex, char *pcInsert, int iInsertLen)
 {
@@ -201,38 +201,38 @@ static u16_t SSIHandler(int iIndex, char *pcInsert, int iInsertLen)
 }
 
 /**
- * @breif       CGI LED¿ØÖÆ¾ä±ú
- * @param       iIndex      : CGI¾ä±úË÷ÒıºÅ
- * @param       iNumParams  : URI²ÎÊıµÄÊıÁ¿
- * @param       pcParam     : ²ÎÊıÃûÁĞ±í 
- * @param       pcValue     : ²ÎÊıÖµ
- * @retval      Ìø×ªµÄÍøÒ³
+ * @breif       CGI LEDæ§åˆ¶å¥æŸ„
+ * @param       iIndex      : CGIå¥æŸ„ç´¢å¼•å·
+ * @param       iNumParams  : URIå‚æ•°çš„æ•°é‡
+ * @param       pcParam     : å‚æ•°ååˆ—è¡¨ 
+ * @param       pcValue     : å‚æ•°å€¼
+ * @retval      è·³è½¬çš„ç½‘é¡µ
  */
 const char *LEDS_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
-    uint8_t i = 0; /* ×¢Òâ¸ù¾İ×Ô¼ºµÄGETµÄ²ÎÊıµÄ¶àÉÙÀ´Ñ¡ÔñiÖµ·¶Î§ */
+    uint8_t i = 0; /* æ³¨æ„æ ¹æ®è‡ªå·±çš„GETçš„å‚æ•°çš„å¤šå°‘æ¥é€‰æ‹©iå€¼èŒƒå›´ */
 
-    iIndex = FindCGIParameter("LED1", pcParam, iNumParams);   /* ÕÒµ½ledµÄË÷ÒıºÅ */
+    iIndex = FindCGIParameter("LED1", pcParam, iNumParams);   /* æ‰¾åˆ°ledçš„ç´¢å¼•å· */
 
-    /* Ö»ÓĞÒ»¸öCGI¾ä±ú iIndex=0 */
+    /* åªæœ‰ä¸€ä¸ªCGIå¥æŸ„ iIndex=0 */
     if (iIndex != -1)
     {
-        // LED1(1);    /* ¹Ø±ÕËùÓĞµÄLED1µÆ */
+        // LED1(1);    /* å…³é—­æ‰€æœ‰çš„LED1ç¯ */
         LED_RGBOFF;
 
-        for (i = 0; i < iNumParams; i++)                /* ¼ì²éCGI²ÎÊı: example GET /leds.cgi?led=2&led=4 */
+        for (i = 0; i < iNumParams; i++)                /* æ£€æŸ¥CGIå‚æ•°: example GET /leds.cgi?led=2&led=4 */
         {
-            if (strcmp(pcParam[i], "LED1") == 0)        /* ¼ì²é²ÎÊı"led" */
+            if (strcmp(pcParam[i], "LED1") == 0)        /* æ£€æŸ¥å‚æ•°"led" */
             {
-                if (strcmp(pcValue[i], "LED1ON") == 0)  /* ¸Ä±äLED1×´Ì¬ */
+                if (strcmp(pcValue[i], "LED1ON") == 0)  /* æ”¹å˜LED1çŠ¶æ€ */
                 {
-                    // LED1(0);    /* ´ò¿ªLED1 */
+                    // LED1(0);    /* æ‰“å¼€LED1 */
                     LED1_ON;
                     
                 }
                 else if (strcmp(pcValue[i], "LED1OFF") == 0)
                 {
-                    // LED1(1);    /* ¹Ø±ÕLED1 */
+                    // LED1(1);    /* å…³é—­LED1 */
                     LED1_OFF;
                 }
             }
@@ -241,49 +241,49 @@ const char *LEDS_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char *
 
     if (HAL_GPIO_ReadPin(LED1_GPIO_PORT,LED1_PIN) == 0)
     {
-        return "/STM32F407LED_ON_BEEP_OFF.shtml";   /* LED1¿ª,BEEP¹Ø */
+        return "/STM32F407LED_ON_BEEP_OFF.shtml";   /* LED1å¼€,BEEPå…³ */
     }
     else if (HAL_GPIO_ReadPin(LED1_GPIO_PORT,LED1_PIN) == 0)
     {
-        return "/STM32F407LED_ON_BEEP_ON.shtml";    /* LED1¿ª,BEEP¿ª */
+        return "/STM32F407LED_ON_BEEP_ON.shtml";    /* LED1å¼€,BEEPå¼€ */
     }
     else if (HAL_GPIO_ReadPin(LED1_GPIO_PORT,LED1_PIN) == 1)
     {
-        return "/STM32F407LED_OFF_BEEP_ON.shtml";   /* LED1¹Ø,BEEP¿ª */
+        return "/STM32F407LED_OFF_BEEP_ON.shtml";   /* LED1å…³,BEEPå¼€ */
     }
     else
     {
-        return "/STM32F407LED_OFF_BEEP_OFF.shtml";  /*  LED1¹Ø,BEEP¹Ø */
+        return "/STM32F407LED_OFF_BEEP_OFF.shtml";  /*  LED1å…³,BEEPå…³ */
     }
 }
 
 /**
- * @breif       BEEPµÄCGI¿ØÖÆ¾ä±ú
- * @param       iIndex      : CGI¾ä±úË÷ÒıºÅ
+ * @breif       BEEPçš„CGIæ§åˆ¶å¥æŸ„
+ * @param       iIndex      : CGIå¥æŸ„ç´¢å¼•å·
  * @param       iNumParams  :
  * @param       pcParam     :
  * @param       pcValue     :
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 const char *BEEP_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
     uint8_t i = 0;
 
-    iIndex = FindCGIParameter("BEEP", pcParam, iNumParams);   /* ÕÒµ½BEEPµÄË÷ÒıºÅ */
+    iIndex = FindCGIParameter("BEEP", pcParam, iNumParams);   /* æ‰¾åˆ°BEEPçš„ç´¢å¼•å· */
 
-//    if (iIndex != -1)   /* ÕÒµ½BEEPË÷ÒıºÅ */
+//    if (iIndex != -1)   /* æ‰¾åˆ°BEEPç´¢å¼•å· */
 //    {
-//        pcf8574_write_bit(BEEP_IO,0);        /* ¹Ø±Õ */
+//        pcf8574_write_bit(BEEP_IO,0);        /* å…³é—­ */
 
 //        for (i = 0; i < iNumParams; i++)
 //        {
-//            if (strcmp(pcParam[i], "BEEP") == 0)             /* ²éÕÒCGI²ÎÊı */
+//            if (strcmp(pcParam[i], "BEEP") == 0)             /* æŸ¥æ‰¾CGIå‚æ•° */
 //            {
-//                if (strcmp(pcValue[i], "BEEPON") == 0)       /* ´ò¿ªBEEP */
+//                if (strcmp(pcValue[i], "BEEPON") == 0)       /* æ‰“å¼€BEEP */
 //                {
 //                    pcf8574_write_bit(BEEP_IO,0);
 //                }
-//                else if (strcmp(pcValue[i], "BEEPOFF") == 0) /* ¹Ø±ÕBEEP */
+//                else if (strcmp(pcValue[i], "BEEPOFF") == 0) /* å…³é—­BEEP */
 //                {
 //                    pcf8574_write_bit(BEEP_IO,1);
 //                }
@@ -293,40 +293,40 @@ const char *BEEP_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char *
 
 //    if (HAL_GPIO_ReadPin(LED1_GPIO_PORT,LED1_GPIO_PIN) == 0 && pcf8574_read_bit(BEEP_IO) == 0)
 //    {
-//        return "/STM32F407LED_ON_BEEP_OFF.shtml";   /* LED1¿ª,BEEP¹Ø */
+//        return "/STM32F407LED_ON_BEEP_OFF.shtml";   /* LED1å¼€,BEEPå…³ */
 //    }
 //    else if (HAL_GPIO_ReadPin(LED1_GPIO_PORT,LED1_GPIO_PIN) == 0 && pcf8574_read_bit(BEEP_IO) == 1)
 //    {
-//        return "/STM32F407LED_ON_BEEP_ON.shtml";    /* LED1¿ª,BEEP¿ª */
+//        return "/STM32F407LED_ON_BEEP_ON.shtml";    /* LED1å¼€,BEEPå¼€ */
 //    }
 //    else if (HAL_GPIO_ReadPin(LED1_GPIO_PORT,LED1_GPIO_PIN) == 1 && pcf8574_read_bit(BEEP_IO) == 1)
 //    {
-//        return "/STM32F407LED_OFF_BEEP_ON.shtml";   /* LED1¹Ø,BEEP¿ª */
+//        return "/STM32F407LED_OFF_BEEP_ON.shtml";   /* LED1å…³,BEEPå¼€ */
 //    }
 //    else
 //    {
-//        return "/STM32F407LED_OFF_BEEP_OFF.shtml";  /* LED1¹Ø,BEEP¹Ø */
+//        return "/STM32F407LED_OFF_BEEP_OFF.shtml";  /* LED1å…³,BEEPå…³ */
 //    }
 }
 
 /**
- * @breif       SSI¾ä±ú³õÊ¼»¯
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @breif       SSIå¥æŸ„åˆå§‹åŒ–
+ * @param       æ— 
+ * @retval      æ— 
  */
 void httpd_ssi_init(void)
 {
-    http_set_ssi_handler(SSIHandler, ppcTAGs, NUM_CONFIG_SSI_TAGS);   /* ÅäÖÃSSI¾ä±ú */
+    http_set_ssi_handler(SSIHandler, ppcTAGs, NUM_CONFIG_SSI_TAGS);   /* é…ç½®SSIå¥æŸ„ */
 }
 
 /**
- * @breif       CGI¾ä±ú³õÊ¼»¯
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @breif       CGIå¥æŸ„åˆå§‹åŒ–
+ * @param       æ— 
+ * @retval      æ— 
  */
 void httpd_cgi_init(void)
 {
-    http_set_cgi_handlers(ppcURLs, NUM_CONFIG_CGI_URIS);      /* ÅäÖÃCGI¾ä±ú */
+    http_set_cgi_handlers(ppcURLs, NUM_CONFIG_CGI_URIS);      /* é…ç½®CGIå¥æŸ„ */
 }
 
 

@@ -60,8 +60,8 @@ extern "C" {
 struct netbuf 
 {
     struct pbuf *p, *ptr;
-    ip_addr_t addr;         /* ·¢ËÍ·½IPµØÖ· */
-    u16_t port;             /* ·¢ËÍ·½¶Ë¿ÚºÅ */
+    ip_addr_t addr;         /* å‘é€æ–¹IPåœ°å€ */
+    u16_t port;             /* å‘é€æ–¹ç«¯å£å· */
 #if LWIP_NETBUF_RECVINFO || LWIP_CHECKSUM_ON_COPY
     u8_t flags;
     u16_t toport_chksum;

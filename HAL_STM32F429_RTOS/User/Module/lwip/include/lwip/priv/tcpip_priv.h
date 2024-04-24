@@ -114,17 +114,17 @@ enum tcpip_msg_type
 {
 #if !LWIP_TCPIP_CORE_LOCKING
     TCPIP_MSG_API,
-    TCPIP_MSG_API_CALL,             /* API�������� */
+    TCPIP_MSG_API_CALL,             /* API函数调用 */
 #endif /* !LWIP_TCPIP_CORE_LOCKING */
 #if !LWIP_TCPIP_CORE_LOCKING_INPUT
-    TCPIP_MSG_INPKT,                /* �ײ����ݰ����� */
+    TCPIP_MSG_INPKT,                /* 底层数据包输入 */
 #endif /* !LWIP_TCPIP_CORE_LOCKING_INPUT */
 #if LWIP_TCPIP_TIMEOUT && LWIP_TIMERS
-    TCPIP_MSG_TIMEOUT,              /* ע�ᳬʱ�¼� */
-    TCPIP_MSG_UNTIMEOUT,            /* ɾ����ʱ�¼� */
+    TCPIP_MSG_TIMEOUT,              /* 注册超时事件 */
+    TCPIP_MSG_UNTIMEOUT,            /* 删除超时事件 */
 #endif /* LWIP_TCPIP_TIMEOUT && LWIP_TIMERS */
     TCPIP_MSG_CALLBACK,
-    TCPIP_MSG_CALLBACK_STATIC       /* ִ�лص����� */
+    TCPIP_MSG_CALLBACK_STATIC       /* 执行回调函数 */
 };
 
 struct tcpip_msg 

@@ -154,39 +154,39 @@ eMBException eMBMasterFuncWriteHoldingRegister( UCHAR * pucFrame, USHORT * usLen
 #if MB_FUNC_WRITE_MULTIPLE_HOLDING_ENABLED > 0
 
 /**
- * @brief Ğ´¶à¸ö±£³Ö¼Ä´æÆ÷(0x10)
- * @param ucSndAddr:´Ó»úµØÖ·
- *        usRegAddr:¼Ä´æÆ÷ÆğÊ¼µØÖ·
- *        usNRegs:¼Ä´æÆ÷ÊıÁ¿
- *        pusDataBuffer:¶Á»ØÀ´µÄÊı¾İÖ¸Õë
- *        lTimeOut:³¬Ê±Ê±¼ä:(-1 will waiting forever)
+ * @brief å†™å¤šä¸ªä¿æŒå¯„å­˜å™¨(0x10)
+ * @param ucSndAddr:ä»æœºåœ°å€
+ *        usRegAddr:å¯„å­˜å™¨èµ·å§‹åœ°å€
+ *        usNRegs:å¯„å­˜å™¨æ•°é‡
+ *        pusDataBuffer:è¯»å›æ¥çš„æ•°æ®æŒ‡é’ˆ
+ *        lTimeOut:è¶…æ—¶æ—¶é—´:(-1 will waiting forever)
  * @return error code
  */
 eMBMasterReqErrCode eMBMasterReqWriteMultipleHoldingRegister(UCHAR ucSndAddr,
 		USHORT usRegAddr, USHORT usNRegs, USHORT *pusDataBuffer, LONG lTimeOut)
 {
-    UCHAR                 *ucMBFrame;   /* Ö¸Õë£¬ÓÃÀ´»ñÈ¡PDUÊı¾İµØÖ·²¢ĞŞ¸ÄPDUÊı¾İ */
+    UCHAR                 *ucMBFrame;   /* æŒ‡é’ˆï¼Œç”¨æ¥è·å–PDUæ•°æ®åœ°å€å¹¶ä¿®æ”¹PDUæ•°æ® */
     USHORT                 usRegIndex = 0;
     eMBMasterReqErrCode    eErrStatus = MB_MRE_NO_ERR;
 
-    if ( ucSndAddr > MB_MASTER_TOTAL_SLAVE_NUM ) /* ÅĞ¶ÏµØÖ··¶Î§ */
+    if ( ucSndAddr > MB_MASTER_TOTAL_SLAVE_NUM ) /* åˆ¤æ–­åœ°å€èŒƒå›´ */
     {
         eErrStatus = MB_MRE_ILL_ARG;
     }
-    else if (xMBMasterRunResTake(lTimeOut) == FALSE) /* ÅĞ¶ÏÏµÍ³Ê±¼ä×ÊÔ´£¬·Ç²Ù×÷ÏµÍ³ÎŞĞèÀí»á */
+    else if (xMBMasterRunResTake(lTimeOut) == FALSE) /* åˆ¤æ–­ç³»ç»Ÿæ—¶é—´èµ„æºï¼Œéæ“ä½œç³»ç»Ÿæ— éœ€ç†ä¼š */
     {
         eErrStatus = MB_MRE_MASTER_BUSY;
     }
     else
     {
-		vMBMasterGetPDUSndBuf(&ucMBFrame);  /* »ñÈ¡PDUÊı¾İµØÖ· */
-		vMBMasterSetDestAddress(ucSndAddr); /* ÉèÖÃ½ÚµãµØÖ· */
-		ucMBFrame[MB_PDU_FUNC_OFF]                     = MB_FUNC_WRITE_MULTIPLE_REGISTERS;  /* ÉèÖÃ¹¦ÄÜÂë */
-		ucMBFrame[MB_PDU_REQ_WRITE_MUL_ADDR_OFF]       = usRegAddr >> 8;                    /* ÉèÖÃ¼Ä´æÆ÷µØÖ· */
+		vMBMasterGetPDUSndBuf(&ucMBFrame);  /* è·å–PDUæ•°æ®åœ°å€ */
+		vMBMasterSetDestAddress(ucSndAddr); /* è®¾ç½®èŠ‚ç‚¹åœ°å€ */
+		ucMBFrame[MB_PDU_FUNC_OFF]                     = MB_FUNC_WRITE_MULTIPLE_REGISTERS;  /* è®¾ç½®åŠŸèƒ½ç  */
+		ucMBFrame[MB_PDU_REQ_WRITE_MUL_ADDR_OFF]       = usRegAddr >> 8;                    /* è®¾ç½®å¯„å­˜å™¨åœ°å€ */
 		ucMBFrame[MB_PDU_REQ_WRITE_MUL_ADDR_OFF + 1]   = usRegAddr;
-		ucMBFrame[MB_PDU_REQ_WRITE_MUL_REGCNT_OFF]     = usNRegs >> 8;                      /* ÉèÖÃÒª¶ÁÈ¡µÄ¼Ä´æÆ÷³¤¶È */
+		ucMBFrame[MB_PDU_REQ_WRITE_MUL_REGCNT_OFF]     = usNRegs >> 8;                      /* è®¾ç½®è¦è¯»å–çš„å¯„å­˜å™¨é•¿åº¦ */
 		ucMBFrame[MB_PDU_REQ_WRITE_MUL_REGCNT_OFF + 1] = usNRegs ;
-		ucMBFrame[MB_PDU_REQ_WRITE_MUL_BYTECNT_OFF]    = usNRegs * 2;                       /* ÉèÖÃPDU³¤¶È */
+		ucMBFrame[MB_PDU_REQ_WRITE_MUL_BYTECNT_OFF]    = usNRegs * 2;                       /* è®¾ç½®PDUé•¿åº¦ */
 		ucMBFrame += MB_PDU_REQ_WRITE_MUL_VALUES_OFF;
 
 		while( usNRegs > usRegIndex)
@@ -195,13 +195,13 @@ eMBMasterReqErrCode eMBMasterReqWriteMultipleHoldingRegister(UCHAR ucSndAddr,
 			*ucMBFrame++ = pusDataBuffer[usRegIndex++] ;
 		}
 
-        /* ÉèÖÃPDU³¤¶È */
+        /* è®¾ç½®PDUé•¿åº¦ */
 		vMBMasterSetPDUSndLength(MB_PDU_SIZE_MIN + MB_PDU_REQ_WRITE_MUL_SIZE_MIN + 2 * usNRegs );
 
-        /* ¸üĞÂµ±Ç°ÊÂ¼ş */
+        /* æ›´æ–°å½“å‰äº‹ä»¶ */
 		(void)xMBMasterPortEventPost(EV_MASTER_FRAME_SENT);
 
-        /* »ñÈ¡µ±Ç°ÊÂ¼ş */
+        /* è·å–å½“å‰äº‹ä»¶ */
 		eErrStatus = eMBMasterWaitRequestFinish( );
     }
     return eErrStatus;

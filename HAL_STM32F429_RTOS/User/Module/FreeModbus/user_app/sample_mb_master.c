@@ -14,9 +14,9 @@
 #include "mb_m.h"
 
 #ifdef PKG_MODBUS_MASTER_SAMPLE
-#define SLAVE_ADDR      MB_SAMPLE_TEST_SLAVE_ADDR					//Éè±¸µØÖ· 	1
-#define PORT_NUM        MB_MASTER_USING_PORT_NUM          //´®¿Ú 			2
-#define PORT_BAUDRATE   MB_MASTER_USING_PORT_BAUDRATE     //²¨ÌØÂÊ 		115200
+#define SLAVE_ADDR      MB_SAMPLE_TEST_SLAVE_ADDR					//è®¾å¤‡åœ°å€ 	1
+#define PORT_NUM        MB_MASTER_USING_PORT_NUM          //ä¸²å£ 			2
+#define PORT_BAUDRATE   MB_MASTER_USING_PORT_BAUDRATE     //æ³¢ç‰¹ç‡ 		115200
 #else
 #define SLAVE_ADDR      0x01
 #define PORT_NUM        3
@@ -32,7 +32,7 @@
 
 #define MB_POLL_CYCLE_MS   500
 
-static void send_thread_entry(void *parameter) //Êı¾İ´¦ÀíÏß³Ì
+static void send_thread_entry(void *parameter) //æ•°æ®å¤„ç†çº¿ç¨‹
 {
     eMBMasterReqErrCode error_code = MB_MRE_NO_ERR;
     rt_uint16_t error_count = 0;
@@ -58,7 +58,7 @@ static void send_thread_entry(void *parameter) //Êı¾İ´¦ÀíÏß³Ì
     }
 }
 
-static void mb_master_poll(void *parameter)	//´Ó»úÏß³Ì
+static void mb_master_poll(void *parameter)	//ä»æœºçº¿ç¨‹
 {
     eMBMasterInit(MB_RTU, PORT_NUM, PORT_BAUDRATE, PORT_PARITY);
     eMBMasterEnable();

@@ -10,9 +10,9 @@ I2C_HandleTypeDef  EEPROM_I2C_Handler;
 
 
 /**
-  * @brief  I2C ¹¤×÷Ä£Ê½ÅäÖÃ
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  I2C å·¥ä½œæ¨¡å¼é…ç½®
+  * @param  æ— 
+  * @retval æ— 
   */
 static void I2C_Mode_Config(void)
 {
@@ -85,12 +85,12 @@ void EEPROM_I2C_Init(void)
 
 
 /**
-  * @brief   ½«»º³åÇøÖĞµÄÊı¾İĞ´µ½I2C EEPROMÖĞ
+  * @brief   å°†ç¼“å†²åŒºä¸­çš„æ•°æ®å†™åˆ°I2C EEPROMä¸­
   * @param   
-  *		@arg pBuffer:»º³åÇøÖ¸Õë
-  *		@arg WriteAddr:Ğ´µØÖ·
-  *     @arg NumByteToWrite:Ğ´µÄ×Ö½ÚÊı
-  * @retval  ÎŞ
+  *		@arg pBuffer:ç¼“å†²åŒºæŒ‡é’ˆ
+  *		@arg WriteAddr:å†™åœ°å€
+  *     @arg NumByteToWrite:å†™çš„å­—èŠ‚æ•°
+  * @retval  æ— 
   */
 void EEPROM_WriteBuffer( uint8_t WriteAddr,uint8_t* pBuffer, uint16_t NumByteToWrite)
 {
@@ -162,11 +162,11 @@ void EEPROM_WriteBuffer( uint8_t WriteAddr,uint8_t* pBuffer, uint16_t NumByteToW
 }
 
 /**
-  * @brief   Ğ´Ò»¸ö×Ö½Úµ½I2C EEPROMÖĞ
+  * @brief   å†™ä¸€ä¸ªå­—èŠ‚åˆ°I2C EEPROMä¸­
   * @param   
-  *		@arg pBuffer:»º³åÇøÖ¸Õë
-  *		@arg WriteAddr:Ğ´µØÖ· 
-  * @retval  ÎŞ
+  *		@arg pBuffer:ç¼“å†²åŒºæŒ‡é’ˆ
+  *		@arg WriteAddr:å†™åœ°å€ 
+  * @retval  æ— 
   */
 uint32_t EEPROM_WriteByte( uint8_t WriteAddr,uint8_t* pBuffer)
 {
@@ -197,13 +197,13 @@ uint32_t EEPROM_WriteByte( uint8_t WriteAddr,uint8_t* pBuffer)
 }
 
 /**
-  * @brief   ÔÚEEPROMµÄÒ»¸öĞ´Ñ­»·ÖĞ¿ÉÒÔĞ´¶à¸ö×Ö½Ú£¬µ«Ò»´ÎĞ´ÈëµÄ×Ö½ÚÊı
-  *          ²»ÄÜ³¬¹ıEEPROMÒ³µÄ´óĞ¡£¬AT24C02Ã¿Ò³ÓĞ8¸ö×Ö½Ú
+  * @brief   åœ¨EEPROMçš„ä¸€ä¸ªå†™å¾ªç¯ä¸­å¯ä»¥å†™å¤šä¸ªå­—èŠ‚ï¼Œä½†ä¸€æ¬¡å†™å…¥çš„å­—èŠ‚æ•°
+  *          ä¸èƒ½è¶…è¿‡EEPROMé¡µçš„å¤§å°ï¼ŒAT24C02æ¯é¡µæœ‰8ä¸ªå­—èŠ‚
   * @param   
-  *		@arg pBuffer:»º³åÇøÖ¸Õë
-  *		@arg WriteAddr:Ğ´µØÖ·
-  *     @arg NumByteToWrite:Ğ´µÄ×Ö½ÚÊı
-  * @retval  ÎŞ
+  *		@arg pBuffer:ç¼“å†²åŒºæŒ‡é’ˆ
+  *		@arg WriteAddr:å†™åœ°å€
+  *     @arg NumByteToWrite:å†™çš„å­—èŠ‚æ•°
+  * @retval  æ— 
   */
 uint32_t EEPROM_WritePage(uint8_t WriteAddr,uint8_t* pBuffer, uint8_t NumByteToWrite)
 {
@@ -228,12 +228,12 @@ uint32_t EEPROM_WritePage(uint8_t WriteAddr,uint8_t* pBuffer, uint8_t NumByteToW
 }
 
 /**
-  * @brief   ´ÓEEPROMÀïÃæ¶ÁÈ¡Ò»¿éÊı¾İ 
+  * @brief   ä»EEPROMé‡Œé¢è¯»å–ä¸€å—æ•°æ® 
   * @param   
-  *		@arg pBuffer:´æ·Å´ÓEEPROM¶ÁÈ¡µÄÊı¾İµÄ»º³åÇøÖ¸Õë
-  *		@arg WriteAddr:½ÓÊÕÊı¾İµÄEEPROMµÄµØÖ·
-  *     @arg NumByteToWrite:Òª´ÓEEPROM¶ÁÈ¡µÄ×Ö½ÚÊı
-  * @retval  ÎŞ
+  *		@arg pBuffer:å­˜æ”¾ä»EEPROMè¯»å–çš„æ•°æ®çš„ç¼“å†²åŒºæŒ‡é’ˆ
+  *		@arg WriteAddr:æ¥æ”¶æ•°æ®çš„EEPROMçš„åœ°å€
+  *     @arg NumByteToWrite:è¦ä»EEPROMè¯»å–çš„å­—èŠ‚æ•°
+  * @retval  æ— 
   */
 uint32_t EEPROM_ReadBuffer( uint8_t ReadAddr,uint8_t* pBuffer, uint16_t NumByteToRead)
 {
@@ -250,9 +250,9 @@ void EEPROM_I2C_Test(void)
 {
 	uint16_t i;
 
-	EEPROM_INFO("Ğ´ÈëµÄÊı¾İ");
+	EEPROM_INFO("å†™å…¥çš„æ•°æ®");
 
-	for ( i=0; i<DATA_Size; i++ ) //Ìî³ä»º³å
+	for ( i=0; i<DATA_Size; i++ ) //å¡«å……ç¼“å†²
 	{   
 		I2c_Buf_Write[i] =i;
         EEPROM_INFO("%d ", I2c_Buf_Write[i]);
@@ -260,19 +260,19 @@ void EEPROM_I2C_Test(void)
 EEPROM_INFO("\n\r");            
 	}
 
-	//½«I2c_Buf_WriteÖĞË³ĞòµİÔöµÄÊı¾İĞ´ÈëEERPOMÖĞ 
+	//å°†I2c_Buf_Writeä¸­é¡ºåºé€’å¢çš„æ•°æ®å†™å…¥EERPOMä¸­ 
 	EEPROM_WriteBuffer(EEP_Firstpage, I2c_Buf_Write, DATA_Size);
 
-	EEPROM_INFO("¶Á³öµÄÊı¾İ");
-	//½«EEPROM¶Á³öÊı¾İË³Ğò±£³Öµ½I2c_Buf_ReadÖĞ
+	EEPROM_INFO("è¯»å‡ºçš„æ•°æ®");
+	//å°†EEPROMè¯»å‡ºæ•°æ®é¡ºåºä¿æŒåˆ°I2c_Buf_Readä¸­
 	EEPROM_ReadBuffer( EEP_Firstpage,I2c_Buf_Read, DATA_Size); 
-	//½«I2c_Buf_ReadÖĞµÄÊı¾İÍ¨¹ı´®¿Ú´òÓ¡
+	//å°†I2c_Buf_Readä¸­çš„æ•°æ®é€šè¿‡ä¸²å£æ‰“å°
 	for (i=0; i<DATA_Size; i++)
 	{	
 		if(I2c_Buf_Read[i] != I2c_Buf_Write[i])
 		{
 			EEPROM_INFO("%d ", I2c_Buf_Read[i]);
-			EEPROM_INFO("´íÎó:I2C EEPROMĞ´ÈëÓë¶Á³öµÄÊı¾İ²»Ò»ÖÂ");
+			EEPROM_INFO("é”™è¯¯:I2C EEPROMå†™å…¥ä¸è¯»å‡ºçš„æ•°æ®ä¸ä¸€è‡´");
 			//return 0;
 		}
 		EEPROM_INFO("%d ", I2c_Buf_Read[i]);
@@ -280,7 +280,7 @@ EEPROM_INFO("\n\r");
 		EEPROM_INFO("\n\r");
 
 	}
-	EEPROM_INFO("I2C(AT24C02)¶ÁĞ´²âÊÔ³É¹¦");
+	EEPROM_INFO("I2C(AT24C02)è¯»å†™æµ‹è¯•æˆåŠŸ");
 	//return 1;    
 }
 

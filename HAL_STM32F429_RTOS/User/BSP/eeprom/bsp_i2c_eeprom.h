@@ -6,19 +6,19 @@
 #define  EEP_Firstpage      0x00
 
 
-#define EEPROM_PAGESIZE 	   8    /* AT24C01/02Ã¿Ò³ÓĞ8¸ö×Ö½Ú */
-//#define EEPROM_PAGESIZE      16   /* AT24C04/08A/16AÃ¿Ò³ÓĞ16¸ö×Ö½Ú */	
+#define EEPROM_PAGESIZE 	   8    /* AT24C01/02æ¯é¡µæœ‰8ä¸ªå­—èŠ‚ */
+//#define EEPROM_PAGESIZE      16   /* AT24C04/08A/16Aæ¯é¡µæœ‰16ä¸ªå­—èŠ‚ */	
 
-#define I2C_OWN_ADDRESS7      0X0A   /* Õâ¸öµØÖ·Ö»ÒªÓëSTM32Íâ¹ÒµÄI2CÆ÷¼şµØÖ·²»Ò»Ñù¼´¿É */
+#define I2C_OWN_ADDRESS7      0X0A   /* è¿™ä¸ªåœ°å€åªè¦ä¸STM32å¤–æŒ‚çš„I2Cå™¨ä»¶åœ°å€ä¸ä¸€æ ·å³å¯ */
 
 
-/*µÈ´ı³¬Ê±Ê±¼ä*/
+/*ç­‰å¾…è¶…æ—¶æ—¶é—´*/
 #define I2CT_FLAG_TIMEOUT         ((uint32_t)0x1000)
 #define I2CT_LONG_TIMEOUT         ((uint32_t)(10 * I2CT_FLAG_TIMEOUT))
 #define I2Cx_TIMEOUT_MAX                300
 #define EEPROM_MAX_TRIALS               300
 
-/*ĞÅÏ¢Êä³ö*/
+/*ä¿¡æ¯è¾“å‡º*/
 #define EEPROM_DEBUG_ON         1
 
 #define EEPROM_INFO           Debug_Uart_printf
@@ -42,7 +42,7 @@
 #define EEPROM_ADDRESS        0xA0
 
 
-/* I2CÉè±¸ */
+/* I2Cè®¾å¤‡ */
 #define EEPROM_I2C                             I2C1
 #define EEPROM_I2C_CLK_ENABLE()                __HAL_RCC_I2C1_CLK_ENABLE()
 

@@ -89,14 +89,14 @@ again:
   LWIP_ASSERT_CORE_LOCKED();
 
   sleeptime = sys_timeouts_sleeptime();
-  if (sleeptime == SYS_TIMEOUTS_SLEEPTIME_INFINITE)     /* µ±Ç°ÎŞ³¬Ê±ÊÂ¼ş£¬ÔòÒ»Ö±µÈµ½³¬Ê±ÊÂ¼ş */
+  if (sleeptime == SYS_TIMEOUTS_SLEEPTIME_INFINITE)     /* å½“å‰æ— è¶…æ—¶äº‹ä»¶ï¼Œåˆ™ä¸€ç›´ç­‰åˆ°è¶…æ—¶äº‹ä»¶ */
   {
     UNLOCK_TCPIP_CORE();
     sys_arch_mbox_fetch(mbox, msg, 0);
     LOCK_TCPIP_CORE();
     return;
   } 
-  else if (sleeptime == 0)  /* ÓĞ³¬Ê±ÊÂ¼ş,´¦Àí³¬Ê±ÊÂ¼ş */
+  else if (sleeptime == 0)  /* æœ‰è¶…æ—¶äº‹ä»¶,å¤„ç†è¶…æ—¶äº‹ä»¶ */
   {
     sys_check_timeouts();
     /* We try again to fetch a message from the mbox. */
@@ -144,7 +144,7 @@ static void tcpip_thread(void *arg)
         /* MAIN Loop */
         LWIP_TCPIP_THREAD_ALIVE();
 
-        /* »ñÈ¡ÏûÏ¢ÓÊÏä */
+        /* è·å–æ¶ˆæ¯é‚®ç®± */
         TCPIP_MBOX_FETCH(&tcpip_mbox, (void **)&msg);
 
         if (msg == NULL) 
@@ -154,7 +154,7 @@ static void tcpip_thread(void *arg)
             continue;
         }
 
-        /* ????msg????????§Õ??? */
+        /* ????msg????????Ğ´??? */
         tcpip_thread_handle_msg(msg);
     }
 }
@@ -179,7 +179,7 @@ static void tcpip_thread_handle_msg(struct tcpip_msg *msg)
 #endif /* !LWIP_TCPIP_CORE_LOCKING */
 
 #if !LWIP_TCPIP_CORE_LOCKING_INPUT
-        case TCPIP_MSG_INPKT:   /* ½»¸øARP²ã´¦Àí */
+        case TCPIP_MSG_INPKT:   /* äº¤ç»™ARPå±‚å¤„ç† */
             LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: PACKET %p\n", (void *)msg));
             if (msg->msg.inp.input_fn(msg->msg.inp.p, msg->msg.inp.netif) != ERR_OK) 
             {
@@ -190,12 +190,12 @@ static void tcpip_thread_handle_msg(struct tcpip_msg *msg)
 #endif /* !LWIP_TCPIP_CORE_LOCKING_INPUT */
 
 #if LWIP_TCPIP_TIMEOUT && LWIP_TIMERS
-        case TCPIP_MSG_TIMEOUT:         /* ×¢²á³¬Ê±ÊÂ¼ş */
+        case TCPIP_MSG_TIMEOUT:         /* æ³¨å†Œè¶…æ—¶äº‹ä»¶ */
             LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: TIMEOUT %p\n", (void *)msg));
             sys_timeout(msg->msg.tmo.msecs, msg->msg.tmo.h, msg->msg.tmo.arg);
             memp_free(MEMP_TCPIP_MSG_API, msg);
         break;
-        case TCPIP_MSG_UNTIMEOUT:       /* É¾³ı³¬Ê±ÊÂ¼ş */
+        case TCPIP_MSG_UNTIMEOUT:       /* åˆ é™¤è¶…æ—¶äº‹ä»¶ */
             LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: UNTIMEOUT %p\n", (void *)msg));
             sys_untimeout(msg->msg.tmo.h, msg->msg.tmo.arg);
             memp_free(MEMP_TCPIP_MSG_API, msg);
@@ -274,7 +274,7 @@ err_t tcpip_inpkt(struct pbuf *p, struct netif *inp, netif_input_fn input_fn)
     msg->msg.inp.netif = inp;
     msg->msg.inp.input_fn = input_fn;
 
-    /* ·¢ËÍÓÊÏä */
+    /* å‘é€é‚®ç®± */
     if (sys_mbox_trypost(&tcpip_mbox, msg) != ERR_OK) 
     {
         memp_free(MEMP_TCPIP_MSG_INPKT, msg);
@@ -634,7 +634,7 @@ void tcpip_init(tcpip_init_done_fn initfunc, void *arg)
     }
 #endif /* LWIP_TCPIP_CORE_LOCKING */
 
-    /* ´´½¨ÒÔÌ«Íø½ÓÊÕÏß³Ì */
+    /* åˆ›å»ºä»¥å¤ªç½‘æ¥æ”¶çº¿ç¨‹ */
     sys_thread_new(TCPIP_THREAD_NAME, tcpip_thread, NULL, TCPIP_THREAD_STACKSIZE, TCPIP_THREAD_PRIO);
 }
 

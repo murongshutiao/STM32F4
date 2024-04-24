@@ -1262,7 +1262,7 @@ tcp_output(struct tcp_pcb *pcb)
 
   wnd = LWIP_MIN(pcb->snd_wnd, pcb->cwnd);
 
-  /* 找到控制块中未发送数据缓冲区链表 */
+  /* 鎵惧埌鎺у埗鍧椾腑鏈彂閫佹暟鎹紦鍐插尯閾捐〃 */
   seg = pcb->unsent;
 
   if (seg == NULL) {

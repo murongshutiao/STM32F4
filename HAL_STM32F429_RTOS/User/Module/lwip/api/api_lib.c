@@ -407,7 +407,7 @@ netconn_connect(struct netconn *conn, const ip_addr_t *addr, u16_t port)
  *
  * @param conn the netconn to disconnect
  * @return See @ref err_t
- * @note  只能用来终止UDP协议
+ * @note  鍙兘鐢ㄦ潵缁堟UDP鍗忚
  */
 err_t netconn_disconnect(struct netconn *conn)
 {

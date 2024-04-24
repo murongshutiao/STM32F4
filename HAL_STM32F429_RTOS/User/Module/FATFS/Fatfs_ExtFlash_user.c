@@ -1,10 +1,10 @@
 #include "board.h"
 
 
-FATFS ExtFlash_fs;           /* FatFsÎïÀíÉè±¸¶ÔÏó */
-FIL fnew;           /* ÎÄ¼ş¶ÔÏó */
-FRESULT res_flash;  /* ·µ»Ø½á¹û */
-UINT fnum;          /* ÎÄ¼ş³É¹¦¶ÁĞ´ÊıÁ¿ */
+FATFS ExtFlash_fs;           /* FatFsç‰©ç†è®¾å¤‡å¯¹è±¡ */
+FIL fnew;           /* æ–‡ä»¶å¯¹è±¡ */
+FRESULT res_flash;  /* è¿”å›ç»“æœ */
+UINT fnum;          /* æ–‡ä»¶æˆåŠŸè¯»å†™æ•°é‡ */
 BYTE ReadBuffer[1024] = {0};
 BYTE WriteBuffer[] = "murongshutiao,I love you,fengzhangyi,I love you!";
 
@@ -14,30 +14,30 @@ BYTE WriteBuffer[] = "murongshutiao,I love you,fengzhangyi,I love you!";
 
 static void Fatfs_ExtFlash_WriteFile_Test(void)
 {
-    /* ´ò¿ªÎÄ¼ş£¬Èç¹û²»´æÔÚÔò´´½¨ */
+    /* æ‰“å¼€æ–‡ä»¶ï¼Œå¦‚æœä¸å­˜åœ¨åˆ™åˆ›å»º */
 	res_flash = f_open(&fnew, "1:fatfsfile.txt",FA_CREATE_ALWAYS | FA_WRITE );
 
 	if (res_flash == FR_OK)
 	{
-        /* ÏòÎÄ¼şfnewĞ´ÈëÄÚÈİ*/
+        /* å‘æ–‡ä»¶fnewå†™å…¥å†…å®¹*/
 		res_flash = f_write(&fnew,WriteBuffer,sizeof(WriteBuffer),&fnum);
 
         if(res_flash == FR_OK)
         {
-            /* Ğ´Èë³É¹¦ */
+            /* å†™å…¥æˆåŠŸ */
         }
         else
         {
-            /* Ğ´ÈëÊ§°Ü */
+            /* å†™å…¥å¤±è´¥ */
         }    
 
-        /* ¹Ø±ÕÎÄ¼ş */
+        /* å…³é—­æ–‡ä»¶ */
         f_close(&fnew);
 	}
 	else
 	{	
 		LED_RED;
-		/* ´ò¿ª/´´½¨ÎÄ¼şÊ§°Ü */
+		/* æ‰“å¼€/åˆ›å»ºæ–‡ä»¶å¤±è´¥ */
 	}
 }
 
@@ -53,51 +53,51 @@ static void Fatfs_ExtFlash_ReadFile_Test(void)
 
 		if(res_flash == FR_OK)
 		{
-			/* ÎÄ¼ş¶ÁÈ¡³É¹¦ */
+			/* æ–‡ä»¶è¯»å–æˆåŠŸ */
 		}
 		else
 		{
-			/* ÎÄ¼ş¶ÁÈ¡Ê§°Ü */
+			/* æ–‡ä»¶è¯»å–å¤±è´¥ */
 		}		
 	}
 	else
 	{
-		/* ÎÄ¼ş´ò¿ªÊ§°Ü */
+		/* æ–‡ä»¶æ‰“å¼€å¤±è´¥ */
 	}
 
 	
-	f_close(&fnew);	/* ²»ÔÙ¶ÁĞ´£¬¹Ø±ÕÎÄ¼ş */
+	f_close(&fnew);	/* ä¸å†è¯»å†™ï¼Œå…³é—­æ–‡ä»¶ */
 }
 
-/* Fatfs¸ñÊ½»¯¶ÁĞ´²âÊÔ */
+/* Fatfsæ ¼å¼åŒ–è¯»å†™æµ‹è¯• */
 static void Fatfs_ExtFlash_FormatReadWrite_Test(void)
 {
-	res_flash = f_open(&fnew, "1:FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt",
+	res_flash = f_open(&fnew, "1:FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt",
 								FA_OPEN_ALWAYS|FA_WRITE|FA_READ );
 
 	if (res_flash == FR_OK)
 	{
-		/*  ÎÄ¼ş¶¨Î»£¬ÓÃÀ´È·¶¨ÎÄ¼şĞ´ÈëµÄÎ»ÖÃ */
-		res_flash = f_lseek(&fnew,f_size(&fnew));/* ÎÄ¼ş¶ÔÏó£¬µ±Ç°ÎÄ¼ş´óĞ¡ */
+		/*  æ–‡ä»¶å®šä½ï¼Œç”¨æ¥ç¡®å®šæ–‡ä»¶å†™å…¥çš„ä½ç½® */
+		res_flash = f_lseek(&fnew,f_size(&fnew));/* æ–‡ä»¶å¯¹è±¡ï¼Œå½“å‰æ–‡ä»¶å¤§å° */
 
 		if (res_flash == FR_OK)
 		{
-			/* ¸ñÊ½»¯Ğ´Èë£¬²ÎÊı¸ñÊ½ÀàËÆprintfº¯Êı */
-			f_printf(&fnew,"\nÔÚÔ­À´ÎÄ¼şĞÂÌí¼ÓÒ»ĞĞÄÚÈİ\n");
+			/* æ ¼å¼åŒ–å†™å…¥ï¼Œå‚æ•°æ ¼å¼ç±»ä¼¼printfå‡½æ•° */
+			f_printf(&fnew,"\nåœ¨åŸæ¥æ–‡ä»¶æ–°æ·»åŠ ä¸€è¡Œå†…å®¹\n");
 
-			res_flash = f_lseek(&fnew,0);	/* ÎÄ¼ş¶¨Î»µ½ÎÄ¼şÆğÊ¼Î»ÖÃ */
-			res_flash = f_read(&fnew,ReadBuffer,f_size(&fnew),&fnum);/* ¶ÁÈ¡ÎÄ¼şËùÓĞÄÚÈİµ½»º´æÇø */
+			res_flash = f_lseek(&fnew,0);	/* æ–‡ä»¶å®šä½åˆ°æ–‡ä»¶èµ·å§‹ä½ç½® */
+			res_flash = f_read(&fnew,ReadBuffer,f_size(&fnew),&fnum);/* è¯»å–æ–‡ä»¶æ‰€æœ‰å†…å®¹åˆ°ç¼“å­˜åŒº */
 
 			if(res_flash == FR_OK)
 			{
-				/* ¸ñÊ½»¯¶Á³É¹¦ */
+				/* æ ¼å¼åŒ–è¯»æˆåŠŸ */
 			}
 		}
 		f_close(&fnew); 
 	}
 	else
 	{
-		/* ´ò¿ªÎÄ¼şÊ§°Ü */
+		/* æ‰“å¼€æ–‡ä»¶å¤±è´¥ */
 	}
 }
 
@@ -108,134 +108,134 @@ void Fatfs_ExtFlash_GetMsg_Test(void)
 	FATFS *pfs;
 	DWORD fre_clust, fre_sect, tot_sect;
 	
-	/* »ñÈ¡Éè±¸ĞÅÏ¢ºÍ¿Õ´Ø´óĞ¡,ÅÌ·û£¬¿ÕÏĞ´Ø(ÉÈÇø)Êı,·µ»ØÖ¸ÏòÎÄ¼şÏµÍ³¶ÔÏóÖ¸Õë */
+	/* è·å–è®¾å¤‡ä¿¡æ¯å’Œç©ºç°‡å¤§å°,ç›˜ç¬¦ï¼Œç©ºé—²ç°‡(æ‰‡åŒº)æ•°,è¿”å›æŒ‡å‘æ–‡ä»¶ç³»ç»Ÿå¯¹è±¡æŒ‡é’ˆ */
 	res_flash = f_getfree("1:", &fre_clust, &pfs);
 
-	/* ¼ÆËãµÃµ½×ÜµÄÉÈÇø¸öÊıºÍ¿ÕÉÈÇø¸öÊı£¬µ¥Î»£º×Ö */
+	/* è®¡ç®—å¾—åˆ°æ€»çš„æ‰‡åŒºä¸ªæ•°å’Œç©ºæ‰‡åŒºä¸ªæ•°ï¼Œå•ä½ï¼šå­— */
 	tot_sect = (pfs->n_fatent - 2) * pfs->csize;
 	fre_sect = fre_clust * pfs->csize;
 }
 	
-/* Ä¿Â¼´´½¨ºÍÖØÃüÃû¹¦ÄÜ²âÊÔ */
+/* ç›®å½•åˆ›å»ºå’Œé‡å‘½ååŠŸèƒ½æµ‹è¯• */
 void Fatfs_ExtFlash_DirOperation_Test(void)
 {
 	DIR dir;
 	
-	res_flash = f_opendir(&dir,"1:TestDir");	/* ³¢ÊÔ´ò¿ªÄ¿Â¼ */
+	res_flash = f_opendir(&dir,"1:TestDir");	/* å°è¯•æ‰“å¼€ç›®å½• */
 
 	if(res_flash != FR_OK)
 	{
-		res_flash = f_mkdir("1:TestDir");	/* ´ò¿ªÄ¿Â¼Ê§°Ü£¬¾Í´´½¨Ä¿Â¼ */
+		res_flash = f_mkdir("1:TestDir");	/* æ‰“å¼€ç›®å½•å¤±è´¥ï¼Œå°±åˆ›å»ºç›®å½• */
 	}
 	else
 	{
 		
-		res_flash = f_closedir(&dir);/* Èç¹ûÄ¿Â¼ÒÑ¾­´æÔÚ£¬¹Ø±ÕËü */
+		res_flash = f_closedir(&dir);/* å¦‚æœç›®å½•å·²ç»å­˜åœ¨ï¼Œå…³é—­å®ƒ */
 		
-		f_unlink("1:TestDir");		/* É¾³ıÄ¿Â¼/ÎÄ¼ş */
+		f_unlink("1:TestDir");		/* åˆ é™¤ç›®å½•/æ–‡ä»¶ */
 	}
 
 	if(res_flash == FR_OK)
 	{
-		/* ÖØÃüÃû²¢ÒÆ¶¯ÎÄ¼ş */
-		res_flash = f_rename("1:FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt","1:TestDir/testdir.txt");      
+		/* é‡å‘½åå¹¶ç§»åŠ¨æ–‡ä»¶ */
+		res_flash = f_rename("1:FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt","1:TestDir/testdir.txt");      
 	} 
 
 }
 
 
-/* ÎÄ¼şÏµÍ³Íâ²¿flash²âÊÔ */
+/* æ–‡ä»¶ç³»ç»Ÿå¤–éƒ¨flashæµ‹è¯• */
 void Fatfs_ExtFlash_Test(void)
 {
 	
-	res_flash = f_mount(&ExtFlash_fs,"1:",1);    /* ¹ÒÔØÍâ²¿flash,ÅÌ·û1£¬Á¢¼´¹ÒÔØ */
+	res_flash = f_mount(&ExtFlash_fs,"1:",1);    /* æŒ‚è½½å¤–éƒ¨flash,ç›˜ç¬¦1ï¼Œç«‹å³æŒ‚è½½ */
 
 	if(res_flash == FR_NO_FILESYSTEM)
 	{
-        /* Ã»ÓĞÎÄ¼şÏµÍ³ */
-		res_flash = f_mkfs("1:",0,0);	/* ¸ñÊ½»¯Íâ²¿flash£¬ÅÌ·û1£¬Éè±¸ÎªÓ²ÅÌ£¬Í¨¹ıdisk_ioctl»ñÈ¡´óĞ¡ */						
+        /* æ²¡æœ‰æ–‡ä»¶ç³»ç»Ÿ */
+		res_flash = f_mkfs("1:",0,0);	/* æ ¼å¼åŒ–å¤–éƒ¨flashï¼Œç›˜ç¬¦1ï¼Œè®¾å¤‡ä¸ºç¡¬ç›˜ï¼Œé€šè¿‡disk_ioctlè·å–å¤§å° */						
 		
 		if(res_flash == FR_OK)
 		{
-			res_flash = f_mount(NULL,"1:",1);		/* È¡Ïû¹ÒÔØ */			
-			res_flash = f_mount(&ExtFlash_fs,"1:",1);        /* ÖØĞÂ¹ÒÔØ */
+			res_flash = f_mount(NULL,"1:",1);		/* å–æ¶ˆæŒ‚è½½ */			
+			res_flash = f_mount(&ExtFlash_fs,"1:",1);        /* é‡æ–°æŒ‚è½½ */
 		}
 		else
 		{
-            /* ¸ñÊ½»¯Ê§°Ü */
+            /* æ ¼å¼åŒ–å¤±è´¥ */
 		}
 	}
     else if(res_flash != FR_OK)
     {
-        /* ¹ÒÔØÏµÍ³Ê§°Ü */
+        /* æŒ‚è½½ç³»ç»Ÿå¤±è´¥ */
     }
     else
     {
-        /* ¹ÒÔØÏµÍ³³É¹¦ */
+        /* æŒ‚è½½ç³»ç»ŸæˆåŠŸ */
 		Fatfs_ExtFlash_WriteFile_Test();
 		Fatfs_ExtFlash_ReadFile_Test();
 
-		f_mount(NULL,"1:",1);	/* ²»ÔÙÊ¹ÓÃ£¬È¡Ïû¹ÒÔØ */
+		f_mount(NULL,"1:",1);	/* ä¸å†ä½¿ç”¨ï¼Œå–æ¶ˆæŒ‚è½½ */
     }
 
 }
 
 
 /**
-  * @brief  scan_files µİ¹éÉ¨ÃèFatFsÄÚµÄÎÄ¼ş
-  * @param  path:³õÊ¼É¨ÃèÂ·¾¶
-  * @retval result:ÎÄ¼şÏµÍ³µÄ·µ»ØÖµ
+  * @brief  scan_files é€’å½’æ‰«æFatFså†…çš„æ–‡ä»¶
+  * @param  path:åˆå§‹æ‰«æè·¯å¾„
+  * @retval result:æ–‡ä»¶ç³»ç»Ÿçš„è¿”å›å€¼
   */
 static FRESULT scan_files (char* path) 
 { 
-	FRESULT res; 		//²¿·ÖÔÚµİ¹é¹ı³Ì±»ĞŞ¸ÄµÄ±äÁ¿£¬²»ÓÃÈ«¾Ö±äÁ¿	
+	FRESULT res; 		//éƒ¨åˆ†åœ¨é€’å½’è¿‡ç¨‹è¢«ä¿®æ”¹çš„å˜é‡ï¼Œä¸ç”¨å…¨å±€å˜é‡	
 	FILINFO fno; 
 	DIR dir; 
 	int i;            
-	char *fn;        // ÎÄ¼şÃû	
+	char *fn;        // æ–‡ä»¶å	
 	
 
-#if _USE_LFN /* ³¤ÎÄ¼şÃûÖ§³Ö */
-	/* ¼òÌåÖĞÎÄĞèÒª2¸ö×Ö½Ú±£´æÒ»¸ö¡°×Ö¡±*/
+#if _USE_LFN /* é•¿æ–‡ä»¶åæ”¯æŒ */
+	/* ç®€ä½“ä¸­æ–‡éœ€è¦2ä¸ªå­—èŠ‚ä¿å­˜ä¸€ä¸ªâ€œå­—â€*/
 	static char lfn[_MAX_LFN * 2 + 1]; 	
 	fno.lfname = lfn; 
 	fno.lfsize = sizeof(lfn); 
 #endif 
 
-	res = f_opendir(&dir, path); 	/* ´ò¿ªÄ¿Â¼ */
+	res = f_opendir(&dir, path); 	/* æ‰“å¼€ç›®å½• */
 	if (res == FR_OK) 
 	{ 
 		i = strlen(path); 
 
 		for (;;) 
 		{ 
-			//¶ÁÈ¡Ä¿Â¼ÏÂµÄÄÚÈİ£¬ÔÙ¶Á»á×Ô¶¯¶ÁÏÂÒ»¸öÎÄ¼ş
+			//è¯»å–ç›®å½•ä¸‹çš„å†…å®¹ï¼Œå†è¯»ä¼šè‡ªåŠ¨è¯»ä¸‹ä¸€ä¸ªæ–‡ä»¶
 			res = f_readdir(&dir, &fno); 								
-			//Îª¿ÕÊ±±íÊ¾ËùÓĞÏîÄ¿¶ÁÈ¡Íê±Ï£¬Ìø³ö
+			//ä¸ºç©ºæ—¶è¡¨ç¤ºæ‰€æœ‰é¡¹ç›®è¯»å–å®Œæ¯•ï¼Œè·³å‡º
 			if (res != FR_OK || fno.fname[0] == 0) break; 	
 #if _USE_LFN 
       		fn = *fno.lfname ? fno.lfname : fno.fname; 
 #else 
       		fn = fno.fname; 
 #endif 
-			//µã±íÊ¾µ±Ç°Ä¿Â¼£¬Ìø¹ı			
+			//ç‚¹è¡¨ç¤ºå½“å‰ç›®å½•ï¼Œè·³è¿‡			
 			if (*fn == '.') continue; 	
-			//Ä¿Â¼£¬µİ¹é¶ÁÈ¡      
+			//ç›®å½•ï¼Œé€’å½’è¯»å–      
 			if (fno.fattrib & AM_DIR)         
 			{ 			
-				//ºÏ³ÉÍêÕûÄ¿Â¼Ãû        
+				//åˆæˆå®Œæ•´ç›®å½•å        
 				sprintf(&path[i], "/%s", fn); 		
-				//µİ¹é±éÀú         
+				//é€’å½’éå†         
 				res = scan_files(path);	
 				path[i] = 0;         
-				//´ò¿ªÊ§°Ü£¬Ìø³öÑ­»·        
+				//æ‰“å¼€å¤±è´¥ï¼Œè·³å‡ºå¾ªç¯        
 				if (res != FR_OK) 
 					break; 
       } 
 			else 
 			{ 
-				printf("%s/%s\r\n", path, fn);								//Êä³öÎÄ¼şÃû	
-        /* ¿ÉÒÔÔÚÕâÀïÌáÈ¡ÌØ¶¨¸ñÊ½µÄÎÄ¼şÂ·¾¶ */        
+				printf("%s/%s\r\n", path, fn);								//è¾“å‡ºæ–‡ä»¶å	
+        /* å¯ä»¥åœ¨è¿™é‡Œæå–ç‰¹å®šæ ¼å¼çš„æ–‡ä»¶è·¯å¾„ */        
       }//else
     } //for
   } 

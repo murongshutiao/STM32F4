@@ -1,7 +1,7 @@
 #include "main.h"
 #include "board.h"
 
-/* FreeRTOSÍ·ÎÄ¼ş */
+/* FreeRTOSå¤´æ–‡ä»¶ */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
@@ -9,64 +9,62 @@
 
 
 
-static TaskHandle_t AppTaskCreate_Handle = NULL;/* ´´½¨ÈÎÎñ¾ä±ú */
-static TaskHandle_t Test1_Task_Handle = NULL;/* LEDÈÎÎñ¾ä±ú */
-static TaskHandle_t Test2_Task_Handle = NULL;/* KEYÈÎÎñ¾ä±ú */
+static TaskHandle_t AppTaskCreate_Handle = NULL;/* åˆ›å»ºä»»åŠ¡å¥æŸ„ */
+static TaskHandle_t Test1_Task_Handle = NULL;/* LEDä»»åŠ¡å¥æŸ„ */
+static TaskHandle_t Test2_Task_Handle = NULL;/* KEYä»»åŠ¡å¥æŸ„ */
 
 
 
-static void AppTaskCreate(void);/* ÓÃÓÚ´´½¨ÈÎÎñ */
+static void AppTaskCreate(void);/* ç”¨äºåˆ›å»ºä»»åŠ¡ */
 
-static void Test1_Task(void* pvParameters);/* Test1_TaskÈÎÎñÊµÏÖ */
-static void Test2_Task(void* pvParameters);/* Test2_TaskÈÎÎñÊµÏÖ */
+static void Test1_Task(void* pvParameters);/* Test1_Taskä»»åŠ¡å®ç° */
+static void Test2_Task(void* pvParameters);/* Test2_Taskä»»åŠ¡å®ç° */
 
 extern void TCPIP_Init(void);
 
 
 /**
-  * @brief  Ö÷º¯Êı
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  ä¸»å‡½æ•°
+  * @param  æ— 
+  * @retval æ— 
   */
 int main(void)
 {
-    BaseType_t xReturn = pdPASS;/* ¶¨ÒåÒ»¸ö´´½¨ĞÅÏ¢·µ»ØÖµ£¬Ä¬ÈÏÎªpdPASS */
+    BaseType_t xReturn = pdPASS;/* å®šä¹‰ä¸€ä¸ªåˆ›å»ºä¿¡æ¯è¿”å›å€¼ï¼Œé»˜è®¤ä¸ºpdPASS */
     
-    /* ¿ª·¢°åÓ²¼ş³õÊ¼»¯ */
+    /* å¼€å‘æ¿ç¡¬ä»¶åˆå§‹åŒ– */
     BSP_Init();
   
-//  tcpecho_init();
-  
-    /* ´´½¨AppTaskCreateÈÎÎñ */
-    xReturn = xTaskCreate   ((TaskFunction_t)AppTaskCreate,         /* ÈÎÎñÈë¿Úº¯Êı */
-                            (const char*    )"AppTaskCreate",       /* ÈÎÎñÃû×Ö */
-                            (uint16_t       )512,                   /* ÈÎÎñÕ»´óĞ¡ */
-                            (void*          )NULL,                  /* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-                            (UBaseType_t    )1,                     /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-                            (TaskHandle_t*  )&AppTaskCreate_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
-    /* Æô¶¯ÈÎÎñµ÷¶È */           
+    /* åˆ›å»ºAppTaskCreateä»»åŠ¡ */
+    xReturn = xTaskCreate   ((TaskFunction_t)AppTaskCreate,         /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                            (const char*    )"AppTaskCreate",       /* ä»»åŠ¡åå­— */
+                            (uint16_t       )512,                   /* ä»»åŠ¡æ ˆå¤§å° */
+                            (void*          )NULL,                  /* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                            (UBaseType_t    )1,                     /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+                            (TaskHandle_t*  )&AppTaskCreate_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
+    /* å¯åŠ¨ä»»åŠ¡è°ƒåº¦ */           
     if(pdPASS == xReturn)
     {
-        vTaskStartScheduler();   /* Æô¶¯ÈÎÎñ£¬¿ªÆôµ÷¶È */
+        vTaskStartScheduler();   /* å¯åŠ¨ä»»åŠ¡ï¼Œå¼€å¯è°ƒåº¦ */
     }
     else
     {
         return -1;  
     }
   
-    while(1);   /* Õı³£²»»áÖ´ĞĞµ½ÕâÀï */ 
+    while(1);   /* æ­£å¸¸ä¸ä¼šæ‰§è¡Œåˆ°è¿™é‡Œ */ 
 }
 
 
 /***********************************************************************
-  * @ º¯ÊıÃû  £º AppTaskCreate
-  * @ ¹¦ÄÜËµÃ÷£º ÎªÁË·½±ã¹ÜÀí£¬ËùÓĞµÄÈÎÎñ´´½¨º¯Êı¶¼·ÅÔÚÕâ¸öº¯ÊıÀïÃæ
-  * @ ²ÎÊı    £º ÎŞ  
-  * @ ·µ»ØÖµ  £º ÎŞ
+  * @ å‡½æ•°å  ï¼š AppTaskCreate
+  * @ åŠŸèƒ½è¯´æ˜ï¼š ä¸ºäº†æ–¹ä¾¿ç®¡ç†ï¼Œæ‰€æœ‰çš„ä»»åŠ¡åˆ›å»ºå‡½æ•°éƒ½æ”¾åœ¨è¿™ä¸ªå‡½æ•°é‡Œé¢
+  * @ å‚æ•°    ï¼š æ—   
+  * @ è¿”å›å€¼  ï¼š æ— 
   **********************************************************************/
 static void AppTaskCreate(void)
 {
-    BaseType_t xReturn = pdPASS;/* ¶¨ÒåÒ»¸ö´´½¨ĞÅÏ¢·µ»ØÖµ£¬Ä¬ÈÏÎªpdPASS */
+    BaseType_t xReturn = pdPASS;/* å®šä¹‰ä¸€ä¸ªåˆ›å»ºä¿¡æ¯è¿”å›å€¼ï¼Œé»˜è®¤ä¸ºpdPASS */
     TCPIP_Init();
     // Netconn_TCP_Client_Init();
     // Netconn_TCP_Server_Init();
@@ -79,48 +77,48 @@ static void AppTaskCreate(void)
     // Http_Server_Socket_Init();
     // http_server_socket_init();
     // Web_Cgi_Init(void);
-    httpd_init();       /* httpd·şÎñÆ÷³õÊ¼»¯ */
+    httpd_init();       /* httpdæœåŠ¡å™¨åˆå§‹åŒ– */
     httpd_ssi_init();
     httpd_cgi_init();
     
-    taskENTER_CRITICAL();           //½øÈëÁÙ½çÇø
+    taskENTER_CRITICAL();           //è¿›å…¥ä¸´ç•ŒåŒº
 
-    /* ´´½¨Test1_TaskÈÎÎñ */
-    xReturn = xTaskCreate((TaskFunction_t )Test1_Task, /* ÈÎÎñÈë¿Úº¯Êı */
-                            (const char*    )"Test1_Task",/* ÈÎÎñÃû×Ö */
-                            (uint16_t       )512,   /* ÈÎÎñÕ»´óĞ¡ */
-                            (void*          )NULL,	/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-                            (UBaseType_t    )1,	    /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-                            (TaskHandle_t*  )&Test1_Task_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+    /* åˆ›å»ºTest1_Taskä»»åŠ¡ */
+    xReturn = xTaskCreate((TaskFunction_t )Test1_Task, /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                            (const char*    )"Test1_Task",/* ä»»åŠ¡åå­— */
+                            (uint16_t       )512,   /* ä»»åŠ¡æ ˆå¤§å° */
+                            (void*          )NULL,	/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                            (UBaseType_t    )1,	    /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+                            (TaskHandle_t*  )&Test1_Task_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
     if(pdPASS == xReturn)
     {
         printf("Create Test1_Task sucess...\r\n");
     }
   
-    /* ´´½¨Test2_TaskÈÎÎñ */
-    xReturn = xTaskCreate((TaskFunction_t )Test2_Task,  /* ÈÎÎñÈë¿Úº¯Êı */
-                            (const char*    )"Test2_Task",/* ÈÎÎñÃû×Ö */
-                            (uint16_t       )512,  /* ÈÎÎñÕ»´óĞ¡ */
-                            (void*          )NULL,/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-                            (UBaseType_t    )2, /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-                            (TaskHandle_t*  )&Test2_Task_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+    /* åˆ›å»ºTest2_Taskä»»åŠ¡ */
+    xReturn = xTaskCreate((TaskFunction_t )Test2_Task,  /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                            (const char*    )"Test2_Task",/* ä»»åŠ¡åå­— */
+                            (uint16_t       )512,  /* ä»»åŠ¡æ ˆå¤§å° */
+                            (void*          )NULL,/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                            (UBaseType_t    )2, /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+                            (TaskHandle_t*  )&Test2_Task_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
     if(pdPASS == xReturn)
     {
         printf("Create Test2_Task sucess...\n\n");
     }
     
-    vTaskDelete(AppTaskCreate_Handle); //É¾³ıAppTaskCreateÈÎÎñ
+    vTaskDelete(AppTaskCreate_Handle); //åˆ é™¤AppTaskCreateä»»åŠ¡
     
-    taskEXIT_CRITICAL();            //ÍË³öÁÙ½çÇø
+    taskEXIT_CRITICAL();            //é€€å‡ºä¸´ç•ŒåŒº
 }
 
 
 
 /**********************************************************************
-  * @ º¯ÊıÃû  £º Test1_Task
-  * @ ¹¦ÄÜËµÃ÷£º Test1_TaskÈÎÎñÖ÷Ìå
-  * @ ²ÎÊı    £º   
-  * @ ·µ»ØÖµ  £º ÎŞ
+  * @ å‡½æ•°å  ï¼š Test1_Task
+  * @ åŠŸèƒ½è¯´æ˜ï¼š Test1_Taskä»»åŠ¡ä¸»ä½“
+  * @ å‚æ•°    ï¼š   
+  * @ è¿”å›å€¼  ï¼š æ— 
   ********************************************************************/
 static void Test1_Task(void* parameter)
 {	
@@ -128,15 +126,15 @@ static void Test1_Task(void* parameter)
     {
         LED1_TOGGLE;
     //    PRINT_DEBUG("LED1_TOGGLE\n");
-        vTaskDelay(1000);/* ÑÓÊ±1000¸ötick */
+        vTaskDelay(1000);/* å»¶æ—¶1000ä¸ªtick */
     }
 }
 
 /**********************************************************************
-  * @ º¯ÊıÃû  £º Test2_Task
-  * @ ¹¦ÄÜËµÃ÷£º Test2_TaskÈÎÎñÖ÷Ìå
-  * @ ²ÎÊı    £º   
-  * @ ·µ»ØÖµ  £º ÎŞ
+  * @ å‡½æ•°å  ï¼š Test2_Task
+  * @ åŠŸèƒ½è¯´æ˜ï¼š Test2_Taskä»»åŠ¡ä¸»ä½“
+  * @ å‚æ•°    ï¼š   
+  * @ è¿”å›å€¼  ï¼š æ— 
   ********************************************************************/
 static void Test2_Task(void* parameter)
 {	 
@@ -144,7 +142,7 @@ static void Test2_Task(void* parameter)
     {
         LED2_TOGGLE;
     //    PRINT_DEBUG("LED2_TOGGLE\n");
-        vTaskDelay(2000);/* ÑÓÊ±2000¸ötick */
+        vTaskDelay(2000);/* å»¶æ—¶2000ä¸ªtick */
     }
 }
 

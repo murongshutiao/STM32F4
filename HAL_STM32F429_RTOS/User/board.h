@@ -45,14 +45,14 @@ extern const uint32_t version;
 
 
 /**
- *  Ê±ÖÓ 
- * Ô´:HSE
+ *  æ—¶é’Ÿ 
+ * æº:HSE
  * SYSCLK = 168M
  * AHB = 168M
  * APB2 = 84M
  * APB1 = 42M
  * */
-/**************** MCOÒıÄ_¹Ì¶¨éA8ºÍC9 ****************/
+/**************** MCOå¼•è…³å›ºå®šç‚ºA8å’ŒC9 ****************/
 
 
 
@@ -62,7 +62,7 @@ extern const uint32_t version;
 
 
 
-//Òı½Å¶¨Òå
+//å¼•è„šå®šä¹‰
 /*******************************************************/
 #define MBMaster_USART                             USART2
 #define MBMaster_USART_CLK_ENABLE()                __USART2_CLK_ENABLE();
@@ -81,7 +81,7 @@ extern const uint32_t version;
 #define MBMaster_USART_IRQ                 		    USART2_IRQn
 /************************************************************/
 
-//Òı½Å¶¨Òå
+//å¼•è„šå®šä¹‰
 /*******************************************************/
 #define MBSlave_USART                             USART3
 #define MBSlave_USART_CLK_ENABLE()                __USART3_CLK_ENABLE()
@@ -122,14 +122,14 @@ extern const uint32_t version;
 
 
 
-/********************* ÎÄ¼şÏµÍ³ *********************/
-/* ÎªÃ¿¸öÉè±¸¶¨ÒåÒ»¸öÎïÀí±àºÅ */
+/********************* æ–‡ä»¶ç³»ç»Ÿ *********************/
+/* ä¸ºæ¯ä¸ªè®¾å¤‡å®šä¹‰ä¸€ä¸ªç‰©ç†ç¼–å· */
 
 
-#define ATA			    0     // Ô¤ÁôSD¿¨Ê¹ÓÃ
-#define SPI_FLASH		1     // Íâ²¿SPI Flash
-#define INTERNAL_FLASH		2     // ÄÚ²¿Flash
-#define INTERNAL_RAM		3     // ÄÚ²¿Ram
+#define ATA			    0     // é¢„ç•™SDå¡ä½¿ç”¨
+#define SPI_FLASH		1     // å¤–éƒ¨SPI Flash
+#define INTERNAL_FLASH		2     // å†…éƒ¨Flash
+#define INTERNAL_RAM		3     // å†…éƒ¨Ram
 
 
 void BSP_Init(void);

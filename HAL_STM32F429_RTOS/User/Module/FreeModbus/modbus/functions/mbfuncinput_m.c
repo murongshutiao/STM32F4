@@ -62,7 +62,7 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 /**
  * This function will request read input register.
  *
- * @param ucSndAddr ´Ó»úµØÖ·
+ * @param ucSndAddr ä»æœºåœ°å€
  * @param usRegAddr register start address
  * @param usNRegs register total number
  * @param lTimeOut timeout (-1 will waiting forever)
@@ -92,7 +92,7 @@ eMBMasterReqErrCode eMBMasterReqReadInputRegister( UCHAR ucSndAddr, USHORT usReg
 		ucMBFrame[MB_PDU_REQ_READ_REGCNT_OFF]     = usNRegs >> 8;
 		ucMBFrame[MB_PDU_REQ_READ_REGCNT_OFF + 1] = usNRegs;
 		vMBMasterSetPDUSndLength( MB_PDU_SIZE_MIN + MB_PDU_REQ_READ_SIZE );
-		(void)xMBMasterPortEventPost( EV_MASTER_FRAME_SENT );    /* ÔOÖÃÖ÷™C¶Ë¿Úé°lËÍ î‘B */
+		(void)xMBMasterPortEventPost( EV_MASTER_FRAME_SENT );    /* è¨­ç½®ä¸»æ©Ÿç«¯å£ç‚ºç™¼é€ç‹€æ…‹ */
 		eErrStatus = eMBMasterWaitRequestFinish( );
     }
     return eErrStatus;

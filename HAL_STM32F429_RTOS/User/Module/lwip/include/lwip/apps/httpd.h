@@ -91,8 +91,8 @@ typedef const char *(*tCGIHandler)(int iIndex, int iNumParams, char *pcParam[],
  */
 typedef struct
 {
-    const char *pcCGIName;      /* ÇëÇóµÄCGI¶ÔÏó(ËùÇëÇóµÄÍøÒ³) */
-    tCGIHandler pfnCGIHandler;  /* ¶ÔÓ¦CGI¶ÔÏóµÄ»Øµ÷º¯Êı */
+    const char *pcCGIName;      /* è¯·æ±‚çš„CGIå¯¹è±¡(æ‰€è¯·æ±‚çš„ç½‘é¡µ) */
+    tCGIHandler pfnCGIHandler;  /* å¯¹åº”CGIå¯¹è±¡çš„å›è°ƒå‡½æ•° */
 } tCGI;
 
 void http_set_cgi_handlers(const tCGI *pCGIs, int iNumHandlers);

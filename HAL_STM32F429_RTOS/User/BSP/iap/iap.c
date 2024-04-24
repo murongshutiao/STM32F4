@@ -11,17 +11,17 @@ void Jump_Dfu_BootLoader(void)
     __IO uint32_t BootAddr = 0x1FFF0000;
     void (*SysMemBootJump)(void);
 
-    __set_PRIMASK(1);   /* �ر�ȫ���ж� */
+    __set_PRIMASK(1);   /* 关闭全局中断 */
 
-    /* �رյδ�ʱ�� */
+    /* 关闭滴答定时器 */
     SysTick->CTRL = 0;
     SysTick->LOAD = 0;
     SysTick->VAL = 0;
 
-    /* ��������ʱ�ӵ�Ĭ��״̬��ʹ��HSIʱ�� */
+    /* 设置所有时钟到默认状态，使用HSI时钟 */
     HAL_RCC_DeInit();
 
-    /* �ر������жϣ���������жϹ����־ */
+    /* 关闭所有中断，清除所有中断挂起标志 */
     for(uint8_t i=0;i<8;i++)
     {
         NVIC->ICER[i] = 0xFFFFFFFF;
@@ -30,10 +30,10 @@ void Jump_Dfu_BootLoader(void)
 
     __set_PRIMASK(0);
 
-    /* ������ӳ�䵽ϵͳFlash */
+    /* 设置重映射到系统Flash */
     __HAL_SYSCFG_REMAPMEMORY_SYSTEMFLASH();
 
-    /* ��ת��ϵͳBootloader,�׵�ַ��MSP,��ַ+4�Ǹ�λ�жϷ�������ַ */
+    /* 跳转到系统Bootloader,首地址是MSP,地址+4是复位中断服务程序地址 */
     SysMemBootJump = (void(*)(void))(*((uint32_t *)(BootAddr + 4)));//STM32F4_Bootloader_RstAddr;
 
     __set_MSP(*(uint32_t *)BootAddr);
@@ -43,13 +43,13 @@ void Jump_Dfu_BootLoader(void)
 
     while(1)
     {
-        /* ��תʧ�� */
+        /* 跳转失败 */
         LED2_ON;
     }
 
 }
 
-uint32_t g_iapbuf[IAP_WriteBufSize];     /* 2k�ֽڻ��� */
+uint32_t g_iapbuf[IAP_WriteBufSize];     /* 2k字节缓存 */
 
 
 

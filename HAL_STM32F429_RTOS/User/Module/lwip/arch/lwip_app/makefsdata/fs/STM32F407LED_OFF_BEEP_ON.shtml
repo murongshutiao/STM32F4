@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>ALIENTEK Ì½Ë÷ÕßSTM32F407¿ª·¢°åLWIPÊµÀý</title>
+<title>ALIENTEK æŽ¢ç´¢è€…STM32F407å¼€å‘æ¿LWIPå®žä¾‹</title>
 <style type="text/css">
 
 .ul1{margin:0;padding:0; list-style:none;}
@@ -22,26 +22,26 @@
 <body class="bodystyle">
 <div style="background-color:#FFFFFF;">
 <div class="logo">
- <img src="image/head.jpg" alt="¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾" title="¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾" style="margin:20px 0px 0px 0px;" />
+ <img src="image/head.jpg" alt="å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸" title="å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸" style="margin:20px 0px 0px 0px;" />
  
 </div>
  
 <div class="menu">
 	<ul class="ul1">
-    	<li class="li1"><a href="index.html">Ö÷Ò³</a></li>
-        <li class="li1"><a href="STM32F407LED_OFF_BEEP_OFF.shtml">LED/BEEP¿ØÖÆ</a></li>
-        <li class="li1"><a href="STM32F407ADC_TEMPERATE.shtml">ADC/ÄÚ²¿ÎÂ¶È´«¸ÐÆ÷</a></li>
-        <li class="li1"><a href="STM32F407RTC.shtml">RTCÊµÊ±Ê±ÖÓ</a></li>
-        <li class="li1"><a href="http://eboard.taobao.com" target="_blank">ÁªÏµÎÒÃÇ</a></li>
+    	<li class="li1"><a href="index.html">ä¸»é¡µ</a></li>
+        <li class="li1"><a href="STM32F407LED_OFF_BEEP_OFF.shtml">LED/BEEPæŽ§åˆ¶</a></li>
+        <li class="li1"><a href="STM32F407ADC_TEMPERATE.shtml">ADC/å†…éƒ¨æ¸©åº¦ä¼ æ„Ÿå™¨</a></li>
+        <li class="li1"><a href="STM32F407RTC.shtml">RTCå®žæ—¶æ—¶é’Ÿ</a></li>
+        <li class="li1"><a href="http://eboard.taobao.com" target="_blank">è”ç³»æˆ‘ä»¬</a></li>
     </ul>
 </div>
  
 <div style="margin-top:30px;">
-´ËÒ³ÃæÓÃÀ´¿ØÖÆ¿ª·¢°åÉÏµÄLEDºÍ·äÃùÆ÷,Ñ¡ÔñLED1»òBEEPµÄ×´Ì¬£¬È»ºóµã»÷·¢ËÍ°´Å¥¡£²é¿´¿ª·¢°åÉÏµÄ¶ÔÓ¦µÄLEDµÆÊÇ»ò·äÃùÆ÷·ñ±ä»¯¡£ 
+æ­¤é¡µé¢ç”¨æ¥æŽ§åˆ¶å¼€å‘æ¿ä¸Šçš„LEDå’Œèœ‚é¸£å™¨,é€‰æ‹©LED1æˆ–BEEPçš„çŠ¶æ€ï¼Œç„¶åŽç‚¹å‡»å‘é€æŒ‰é’®ã€‚æŸ¥çœ‹å¼€å‘æ¿ä¸Šçš„å¯¹åº”çš„LEDç¯æ˜¯æˆ–èœ‚é¸£å™¨å¦å˜åŒ–ã€‚ 
 </div>
 <div style="width:1000px; background-color:#0066CC;color:#fff;margin-top:30px;  ">
                 <h3>
-                  <span style="text-align:center;">Ì½Ë÷ÕßÍøÒ³LED¿ØÖÆ</span>
+                  <span style="text-align:center;">æŽ¢ç´¢è€…ç½‘é¡µLEDæŽ§åˆ¶</span>
                 </h3>
 </div>
 <div style="margin-top:30px; text-align:center;">
@@ -56,7 +56,7 @@
 
 <div style="width:1000px; background-color:#0066CC;color:#fff; ">
                 <h3>
-                  <span style="text-align:center;">Ì½Ë÷ÕßÍøÒ³BEEP·äÃùÆ÷¿ØÖÆ</span>
+                  <span style="text-align:center;">æŽ¢ç´¢è€…ç½‘é¡µBEEPèœ‚é¸£å™¨æŽ§åˆ¶</span>
                 </h3>
 </div>
 
@@ -73,7 +73,7 @@
 </div>
  <div align="center" style="margin-top:20px;margin-bottom:30px;">
    <tr>
-         <td align="center">&copy; ¿ªÔ´µç×ÓÍø(OpenEdv.com) | <a href="http://www.alientek.com/" target="_blank">¹ØÓÚÎÒÃÇ</a> | <a target="_blank" href="http://www.alientek.com">¹Ù·½ÍøÕ¾</a> | <a href="http://weibo.com/u/2973019374" target="_blank">@ÐÂÀËÎ¢²©</a> |<a href="http://shop62057469.taobao.com/" target="_blank">¹Ù·½ÌÔ±¦µê</a> |<a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:#737573;text-decoration:none;">ÔÁICP±¸12000418ºÅ-1</a></td>           </tr>     <BR>          
+         <td align="center">&copy; å¼€æºç”µå­ç½‘(OpenEdv.com) | <a href="http://www.alientek.com/" target="_blank">å…³äºŽæˆ‘ä»¬</a> | <a target="_blank" href="http://www.alientek.com">å®˜æ–¹ç½‘ç«™</a> | <a href="http://weibo.com/u/2973019374" target="_blank">@æ–°æµªå¾®åš</a> |<a href="http://shop62057469.taobao.com/" target="_blank">å®˜æ–¹æ·˜å®åº—</a> |<a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:#737573;text-decoration:none;">ç²¤ICPå¤‡12000418å·-1</a></td>           </tr>     <BR>          
  </div>
 </body>
 </html>

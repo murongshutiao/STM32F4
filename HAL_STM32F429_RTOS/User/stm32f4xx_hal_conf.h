@@ -163,10 +163,10 @@
 
 
 
-/* ################## ÒÔÌ«ÍøÍâÉèÅäÖÃ ##################### */
+/* ################## ä»¥å¤ªç½‘å¤–è®¾é…ç½® ##################### */
 /* Section 1 : Ethernet peripheral configuration */
 
-/* ÒÔÌ«Íø MAC µØÖ·ÅäÖÃ */
+/* ä»¥å¤ªç½‘ MAC åœ°å€é…ç½® */
 #define MAC_ADDR0   2U
 #define MAC_ADDR1   0U
 #define MAC_ADDR2   0U
@@ -175,8 +175,8 @@
 #define MAC_ADDR5   0U
 
 /* Definition of the Ethernet driver buffers size and count */   
-#define ETH_RX_BUF_SIZE                ETH_MAX_PACKET_SIZE  /* ÒÔÌ«Íø½ÓÊÕ×î´ó³¤¶È               */
-#define ETH_TX_BUF_SIZE                ETH_MAX_PACKET_SIZE  /* ÒÔÌ«Íø·¢ËÍ×î´ó³¤¶È              */
+#define ETH_RX_BUF_SIZE                ETH_MAX_PACKET_SIZE  /* ä»¥å¤ªç½‘æ¥æ”¶æœ€å¤§é•¿åº¦               */
+#define ETH_TX_BUF_SIZE                ETH_MAX_PACKET_SIZE  /* ä»¥å¤ªç½‘å‘é€æœ€å¤§é•¿åº¦              */
 #define ETH_RXBUFNB                    ((uint32_t)8U)       /* 4 Rx buffers of size ETH_RX_BUF_SIZE  */
 #define ETH_TXBUFNB                    ((uint32_t)8U)       /* 4 Tx buffers of size ETH_TX_BUF_SIZE  */
 

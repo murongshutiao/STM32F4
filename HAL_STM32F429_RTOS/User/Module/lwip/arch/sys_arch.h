@@ -34,7 +34,7 @@
 #include <lwip/arch.h>
 #include "tcpip.h"
 
- /* FreeRTOSͷ�ļ� */
+ /* FreeRTOS═Ě╬─╝■ */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"

@@ -5,8 +5,8 @@
 #define countof(a)      (sizeof(a) / sizeof(*(a)))
 #define  BufferSize (countof(Tx_Buffer)-1)
 
-/* ·¢ËÍ»º³åÇø³õÊ¼»¯ */
-uint8_t Tx_Buffer[] = "¸ĞĞ»ÄúÑ¡ÓÃÒ°»ğstm32¿ª·¢°å\r\nhttp://fire-stm32.taobao.com";
+/* å‘é€ç¼“å†²åŒºåˆå§‹åŒ– */
+uint8_t Tx_Buffer[] = "æ„Ÿè°¢æ‚¨é€‰ç”¨é‡ç«stm32å¼€å‘æ¿\r\nhttp://fire-stm32.taobao.com";
 uint8_t Rx_Buffer[BufferSize];
 
 
@@ -22,23 +22,23 @@ void Flash_Spi_Mode_Init(void)
     /*##-1- Configure the SPI peripheral #######################################*/
     /* Set the SPI parameters */
     FlashSpiHandler.Instance               = Flash_SPI;
-    FlashSpiHandler.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;       /* Ê±ÖÓ·ÖÅäÒò×Ó */
-    FlashSpiHandler.Init.Direction         = SPI_DIRECTION_2LINES;          /* Ë«ÏòÄ£Ê½ */
+    FlashSpiHandler.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;       /* æ—¶é’Ÿåˆ†é…å› å­ */
+    FlashSpiHandler.Init.Direction         = SPI_DIRECTION_2LINES;          /* åŒå‘æ¨¡å¼ */
     FlashSpiHandler.Init.CLKPhase          = SPI_PHASE_2EDGE;               /* CPHA */
     FlashSpiHandler.Init.CLKPolarity       = SPI_POLARITY_HIGH;             /* CPOL */
-    FlashSpiHandler.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE;    /* ²»Ê¹ÓÃCRC */
+    FlashSpiHandler.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE;    /* ä¸ä½¿ç”¨CRC */
     FlashSpiHandler.Init.CRCPolynomial     = 7;
-    FlashSpiHandler.Init.DataSize          = SPI_DATASIZE_8BIT;             /* Êı¾İ³¤¶È */
-    FlashSpiHandler.Init.FirstBit          = SPI_FIRSTBIT_MSB;              /* MSBÏÈĞĞ */
-    FlashSpiHandler.Init.NSS               = SPI_NSS_SOFT;                  /* NEE²»Ê¹ÓÃSPIÓ²¼ş¿ØÖÆ */
-    FlashSpiHandler.Init.TIMode            = SPI_TIMODE_DISABLE;            /* ²»ÆôÓÃÖĞ¶ÏÄ£Ê½ */
-    FlashSpiHandler.Init.Mode = SPI_MODE_MASTER;                            /* ÅäÖÃÎªÖ÷»úÄ£Ê½ */
+    FlashSpiHandler.Init.DataSize          = SPI_DATASIZE_8BIT;             /* æ•°æ®é•¿åº¦ */
+    FlashSpiHandler.Init.FirstBit          = SPI_FIRSTBIT_MSB;              /* MSBå…ˆè¡Œ */
+    FlashSpiHandler.Init.NSS               = SPI_NSS_SOFT;                  /* NEEä¸ä½¿ç”¨SPIç¡¬ä»¶æ§åˆ¶ */
+    FlashSpiHandler.Init.TIMode            = SPI_TIMODE_DISABLE;            /* ä¸å¯ç”¨ä¸­æ–­æ¨¡å¼ */
+    FlashSpiHandler.Init.Mode = SPI_MODE_MASTER;                            /* é…ç½®ä¸ºä¸»æœºæ¨¡å¼ */
 
     HAL_SPI_Init(&FlashSpiHandler); 
     
     __HAL_SPI_ENABLE(&FlashSpiHandler); 
 
-    /* Ê¹ SPI_FLASH ½øÈë 4 ×Ö½ÚµØÖ·Ä£Ê½,Õâ¸öµØÖ·Ä£Ê½¸úNOR FLASHÈİÁ¿ÓĞ¹Ø */
+    /* ä½¿ SPI_FLASH è¿›å…¥ 4 å­—èŠ‚åœ°å€æ¨¡å¼,è¿™ä¸ªåœ°å€æ¨¡å¼è·ŸNOR FLASHå®¹é‡æœ‰å…³ */
 	SPI_FLASH_Mode_Init();  
 }
 
@@ -96,81 +96,81 @@ void Flash_SPI_Init(void)
 
 
  /**
-  * @brief  ²Á³ıFLASHÉÈÇø
-  * @param  SectorAddr£ºÒª²Á³ıµÄÉÈÇøµØÖ·
-  * @retval ÎŞ
+  * @brief  æ“¦é™¤FLASHæ‰‡åŒº
+  * @param  SectorAddrï¼šè¦æ“¦é™¤çš„æ‰‡åŒºåœ°å€
+  * @retval æ— 
   */
 void SPI_FLASH_SectorErase(uint32_t SectorAddr)
 {
-    /* ·¢ËÍFLASHĞ´Ê¹ÄÜÃüÁî */
+    /* å‘é€FLASHå†™ä½¿èƒ½å‘½ä»¤ */
     SPI_FLASH_WriteEnable();
     SPI_FLASH_WaitForWriteEnd();
-    /* ²Á³ıÉÈÇø */
-    /* Ñ¡ÔñFLASH: CSµÍµçÆ½ */
+    /* æ“¦é™¤æ‰‡åŒº */
+    /* é€‰æ‹©FLASH: CSä½ç”µå¹³ */
     SPI_FLASH_CS_LOW();
-    /* ·¢ËÍÉÈÇø²Á³ıÖ¸Áî*/
+    /* å‘é€æ‰‡åŒºæ“¦é™¤æŒ‡ä»¤*/
     SPI_FLASH_SendByte(W25X_SectorErase);
-    // /*·¢ËÍ²Á³ıÉÈÇøµØÖ·µÄ¸ß8Î»*/
+    // /*å‘é€æ“¦é™¤æ‰‡åŒºåœ°å€çš„é«˜8ä½*/
     // SPI_FLASH_SendByte((SectorAddr & 0xFF000000) >> 24);
-    /*·¢ËÍ²Á³ıÉÈÇøµØÖ·µÄÖĞÇ°8Î»*/
+    /*å‘é€æ“¦é™¤æ‰‡åŒºåœ°å€çš„ä¸­å‰8ä½*/
     SPI_FLASH_SendByte((SectorAddr & 0xFF0000) >> 16);
-    /* ·¢ËÍ²Á³ıÉÈÇøµØÖ·µÄÖĞºó8Î» */
+    /* å‘é€æ“¦é™¤æ‰‡åŒºåœ°å€çš„ä¸­å8ä½ */
     SPI_FLASH_SendByte((SectorAddr & 0xFF00) >> 8);
-    /* ·¢ËÍ²Á³ıÉÈÇøµØÖ·µÄµÍ8Î» */
+    /* å‘é€æ“¦é™¤æ‰‡åŒºåœ°å€çš„ä½8ä½ */
     SPI_FLASH_SendByte(SectorAddr & 0xFF);
-    /* Í£Ö¹ĞÅºÅ FLASH: CS ¸ßµçÆ½ */
+    /* åœæ­¢ä¿¡å· FLASH: CS é«˜ç”µå¹³ */
     SPI_FLASH_CS_HIGH();
-    /* µÈ´ı²Á³ıÍê±Ï*/
+    /* ç­‰å¾…æ“¦é™¤å®Œæ¯•*/
     SPI_FLASH_WaitForWriteEnd();
 }
 
 
  /**
-  * @brief  ²Á³ıFLASHÉÈÇø£¬ÕûÆ¬²Á³ı
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  æ“¦é™¤FLASHæ‰‡åŒºï¼Œæ•´ç‰‡æ“¦é™¤
+  * @param  æ— 
+  * @retval æ— 
   */
 void SPI_FLASH_BulkErase(void)
 {
-    /* ·¢ËÍFLASHĞ´Ê¹ÄÜÃüÁî */
+    /* å‘é€FLASHå†™ä½¿èƒ½å‘½ä»¤ */
     SPI_FLASH_WriteEnable();
 
-    /* Õû¿é Erase */
-    /* Ñ¡ÔñFLASH: CSµÍµçÆ½ */
+    /* æ•´å— Erase */
+    /* é€‰æ‹©FLASH: CSä½ç”µå¹³ */
     SPI_FLASH_CS_LOW();
-    /* ·¢ËÍÕû¿é²Á³ıÖ¸Áî*/
+    /* å‘é€æ•´å—æ“¦é™¤æŒ‡ä»¤*/
     SPI_FLASH_SendByte(W25X_ChipErase);
-    /* Í£Ö¹ĞÅºÅ FLASH: CS ¸ßµçÆ½ */
+    /* åœæ­¢ä¿¡å· FLASH: CS é«˜ç”µå¹³ */
     SPI_FLASH_CS_HIGH();
 
-    /* µÈ´ı²Á³ıÍê±Ï*/
+    /* ç­‰å¾…æ“¦é™¤å®Œæ¯•*/
     SPI_FLASH_WaitForWriteEnd();
 }
 
  /**
-  * @brief  ¶ÔFLASH°´Ò³Ğ´ÈëÊı¾İ£¬µ÷ÓÃ±¾º¯ÊıĞ´ÈëÊı¾İÇ°ĞèÒªÏÈ²Á³ıÉÈÇø
-  * @param	pBuffer£¬ÒªĞ´ÈëÊı¾İµÄÖ¸Õë
-  * @param WriteAddr£¬Ğ´ÈëµØÖ·
-  * @param  NumByteToWrite£¬Ğ´ÈëÊı¾İ³¤¶È£¬±ØĞëĞ¡ÓÚµÈÓÚSPI_FLASH_PerWritePageSize
-  * @retval ÎŞ
+  * @brief  å¯¹FLASHæŒ‰é¡µå†™å…¥æ•°æ®ï¼Œè°ƒç”¨æœ¬å‡½æ•°å†™å…¥æ•°æ®å‰éœ€è¦å…ˆæ“¦é™¤æ‰‡åŒº
+  * @param	pBufferï¼Œè¦å†™å…¥æ•°æ®çš„æŒ‡é’ˆ
+  * @param WriteAddrï¼Œå†™å…¥åœ°å€
+  * @param  NumByteToWriteï¼Œå†™å…¥æ•°æ®é•¿åº¦ï¼Œå¿…é¡»å°äºç­‰äºSPI_FLASH_PerWritePageSize
+  * @retval æ— 
   */
 void SPI_FLASH_PageWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite)
 {
-    /* ·¢ËÍFLASHĞ´Ê¹ÄÜÃüÁî */
+    /* å‘é€FLASHå†™ä½¿èƒ½å‘½ä»¤ */
     SPI_FLASH_WriteEnable();
 
-    /* Ñ¡ÔñFLASH: CSµÍµçÆ½ */
+    /* é€‰æ‹©FLASH: CSä½ç”µå¹³ */
     SPI_FLASH_CS_LOW();
-    /* Ğ´Ò³Ğ´Ö¸Áî*/
+    /* å†™é¡µå†™æŒ‡ä»¤*/
     SPI_FLASH_SendByte(W25X_PageProgram);
 
-    /*·¢ËÍĞ´µØÖ·µÄ¸ß8Î»*/
+    /*å‘é€å†™åœ°å€çš„é«˜8ä½*/
     // SPI_FLASH_SendByte((WriteAddr & 0xFF000000) >> 24);
-    /*·¢ËÍĞ´µØÖ·µÄÖĞÇ°8Î»*/
+    /*å‘é€å†™åœ°å€çš„ä¸­å‰8ä½*/
     SPI_FLASH_SendByte((WriteAddr & 0xFF0000) >> 16);
-    /*·¢ËÍĞ´µØÖ·µÄÖĞºó8Î»*/
+    /*å‘é€å†™åœ°å€çš„ä¸­å8ä½*/
     SPI_FLASH_SendByte((WriteAddr & 0xFF00) >> 8);
-    /*·¢ËÍĞ´µØÖ·µÄµÍ8Î»*/
+    /*å‘é€å†™åœ°å€çš„ä½8ä½*/
     SPI_FLASH_SendByte(WriteAddr & 0xFF);
 
     if(NumByteToWrite > SPI_FLASH_PerWritePageSize)
@@ -179,45 +179,45 @@ void SPI_FLASH_PageWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteT
         FLASH_ERROR("SPI_FLASH_PageWrite too large!");
     }
 
-    /* Ğ´ÈëÊı¾İ*/
+    /* å†™å…¥æ•°æ®*/
     while (NumByteToWrite--)
     {
-        /* ·¢ËÍµ±Ç°ÒªĞ´ÈëµÄ×Ö½ÚÊı¾İ */
+        /* å‘é€å½“å‰è¦å†™å…¥çš„å­—èŠ‚æ•°æ® */
         SPI_FLASH_SendByte(*pBuffer);
-        /* Ö¸ÏòÏÂÒ»×Ö½ÚÊı¾İ */
+        /* æŒ‡å‘ä¸‹ä¸€å­—èŠ‚æ•°æ® */
         pBuffer++;
     }
 
-    /* Í£Ö¹ĞÅºÅ FLASH: CS ¸ßµçÆ½ */
+    /* åœæ­¢ä¿¡å· FLASH: CS é«˜ç”µå¹³ */
     SPI_FLASH_CS_HIGH();
 
-    /* µÈ´ıĞ´ÈëÍê±Ï*/
+    /* ç­‰å¾…å†™å…¥å®Œæ¯•*/
     SPI_FLASH_WaitForWriteEnd();
 }
 
 
  /**
-  * @brief  ¶ÔFLASHĞ´ÈëÊı¾İ£¬µ÷ÓÃ±¾º¯ÊıĞ´ÈëÊı¾İÇ°ĞèÒªÏÈ²Á³ıÉÈÇø
-  * @param	pBuffer£¬ÒªĞ´ÈëÊı¾İµÄÖ¸Õë
-  * @param  WriteAddr£¬Ğ´ÈëµØÖ·
-  * @param  NumByteToWrite£¬Ğ´ÈëÊı¾İ³¤¶È
-  * @retval ÎŞ
+  * @brief  å¯¹FLASHå†™å…¥æ•°æ®ï¼Œè°ƒç”¨æœ¬å‡½æ•°å†™å…¥æ•°æ®å‰éœ€è¦å…ˆæ“¦é™¤æ‰‡åŒº
+  * @param	pBufferï¼Œè¦å†™å…¥æ•°æ®çš„æŒ‡é’ˆ
+  * @param  WriteAddrï¼Œå†™å…¥åœ°å€
+  * @param  NumByteToWriteï¼Œå†™å…¥æ•°æ®é•¿åº¦
+  * @retval æ— 
   */
 void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite)
 {
   uint8_t NumOfPage = 0, NumOfSingle = 0, Addr = 0, count = 0, temp = 0;
 	
-	/*modÔËËãÇóÓà£¬ÈôwriteAddrÊÇSPI_FLASH_PageSizeÕûÊı±¶£¬ÔËËã½á¹ûAddrÖµÎª0*/
+	/*modè¿ç®—æ±‚ä½™ï¼Œè‹¥writeAddræ˜¯SPI_FLASH_PageSizeæ•´æ•°å€ï¼Œè¿ç®—ç»“æœAddrå€¼ä¸º0*/
   Addr = WriteAddr % SPI_FLASH_PageSize;
 	
-	/*²îcount¸öÊı¾İÖµ£¬¸ÕºÃ¿ÉÒÔ¶ÔÆëµ½Ò³µØÖ·*/
+	/*å·®countä¸ªæ•°æ®å€¼ï¼Œåˆšå¥½å¯ä»¥å¯¹é½åˆ°é¡µåœ°å€*/
   count = SPI_FLASH_PageSize - Addr;	
-	/*¼ÆËã³öÒªĞ´¶àÉÙÕûÊıÒ³*/
+	/*è®¡ç®—å‡ºè¦å†™å¤šå°‘æ•´æ•°é¡µ*/
   NumOfPage =  NumByteToWrite / SPI_FLASH_PageSize;
-	/*modÔËËãÇóÓà£¬¼ÆËã³öÊ£Óà²»ÂúÒ»Ò³µÄ×Ö½ÚÊı*/
+	/*modè¿ç®—æ±‚ä½™ï¼Œè®¡ç®—å‡ºå‰©ä½™ä¸æ»¡ä¸€é¡µçš„å­—èŠ‚æ•°*/
   NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
 
-	 /* Addr=0,ÔòWriteAddr ¸ÕºÃ°´Ò³¶ÔÆë aligned  */
+	 /* Addr=0,åˆ™WriteAddr åˆšå¥½æŒ‰é¡µå¯¹é½ aligned  */
   if (Addr == 0) 
   {
 		/* NumByteToWrite < SPI_FLASH_PageSize */
@@ -227,7 +227,7 @@ void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByt
     }
     else /* NumByteToWrite > SPI_FLASH_PageSize */
     {
-			/*ÏÈ°ÑÕûÊıÒ³¶¼Ğ´ÁË*/
+			/*å…ˆæŠŠæ•´æ•°é¡µéƒ½å†™äº†*/
       while (NumOfPage--)
       {
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, SPI_FLASH_PageSize);
@@ -235,37 +235,37 @@ void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByt
         pBuffer += SPI_FLASH_PageSize;
       }
 			
-			/*ÈôÓĞ¶àÓàµÄ²»ÂúÒ»Ò³µÄÊı¾İ£¬°ÑËüĞ´Íê*/
+			/*è‹¥æœ‰å¤šä½™çš„ä¸æ»¡ä¸€é¡µçš„æ•°æ®ï¼ŒæŠŠå®ƒå†™å®Œ*/
       SPI_FLASH_PageWrite(pBuffer, WriteAddr, NumOfSingle);
     }
   }
-	/* ÈôµØÖ·Óë SPI_FLASH_PageSize ²»¶ÔÆë  */
+	/* è‹¥åœ°å€ä¸ SPI_FLASH_PageSize ä¸å¯¹é½  */
   else 
   {
 		/* NumByteToWrite < SPI_FLASH_PageSize */
     if (NumOfPage == 0) 
     {
-			/*µ±Ç°Ò³Ê£ÓàµÄcount¸öÎ»ÖÃ±ÈNumOfSingleĞ¡£¬Ğ´²»Íê*/
+			/*å½“å‰é¡µå‰©ä½™çš„countä¸ªä½ç½®æ¯”NumOfSingleå°ï¼Œå†™ä¸å®Œ*/
       if (NumOfSingle > count) 
       {
         temp = NumOfSingle - count;
 				
-				/*ÏÈĞ´Âúµ±Ç°Ò³*/
+				/*å…ˆå†™æ»¡å½“å‰é¡µ*/
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, count);
         WriteAddr +=  count;
         pBuffer += count;
 				
-				/*ÔÙĞ´Ê£ÓàµÄÊı¾İ*/
+				/*å†å†™å‰©ä½™çš„æ•°æ®*/
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, temp);
       }
-      else /*µ±Ç°Ò³Ê£ÓàµÄcount¸öÎ»ÖÃÄÜĞ´ÍêNumOfSingle¸öÊı¾İ*/
+      else /*å½“å‰é¡µå‰©ä½™çš„countä¸ªä½ç½®èƒ½å†™å®ŒNumOfSingleä¸ªæ•°æ®*/
       {				
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, NumByteToWrite);
       }
     }
     else /* NumByteToWrite > SPI_FLASH_PageSize */
     {
-			/*µØÖ·²»¶ÔÆë¶à³öµÄcount·Ö¿ª´¦Àí£¬²»¼ÓÈëÕâ¸öÔËËã*/
+			/*åœ°å€ä¸å¯¹é½å¤šå‡ºçš„countåˆ†å¼€å¤„ç†ï¼Œä¸åŠ å…¥è¿™ä¸ªè¿ç®—*/
       NumByteToWrite -= count;
       NumOfPage =  NumByteToWrite / SPI_FLASH_PageSize;
       NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
@@ -274,14 +274,14 @@ void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByt
       WriteAddr +=  count;
       pBuffer += count;
 			
-			/*°ÑÕûÊıÒ³¶¼Ğ´ÁË*/
+			/*æŠŠæ•´æ•°é¡µéƒ½å†™äº†*/
       while (NumOfPage--)
       {
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, SPI_FLASH_PageSize);
         WriteAddr +=  SPI_FLASH_PageSize;
         pBuffer += SPI_FLASH_PageSize;
       }
-			/*ÈôÓĞ¶àÓàµÄ²»ÂúÒ»Ò³µÄÊı¾İ£¬°ÑËüĞ´Íê*/
+			/*è‹¥æœ‰å¤šä½™çš„ä¸æ»¡ä¸€é¡µçš„æ•°æ®ï¼ŒæŠŠå®ƒå†™å®Œ*/
       if (NumOfSingle != 0)
       {
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, NumOfSingle);
@@ -291,79 +291,79 @@ void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByt
 }
 
  /**
-  * @brief  ¶ÁÈ¡FLASHÊı¾İ
-  * @param 	pBuffer£¬´æ´¢¶Á³öÊı¾İµÄÖ¸Õë
-  * @param   ReadAddr£¬¶ÁÈ¡µØÖ·
-  * @param   NumByteToRead£¬¶ÁÈ¡Êı¾İ³¤¶È
-  * @retval ÎŞ
+  * @brief  è¯»å–FLASHæ•°æ®
+  * @param 	pBufferï¼Œå­˜å‚¨è¯»å‡ºæ•°æ®çš„æŒ‡é’ˆ
+  * @param   ReadAddrï¼Œè¯»å–åœ°å€
+  * @param   NumByteToReadï¼Œè¯»å–æ•°æ®é•¿åº¦
+  * @retval æ— 
   */
 void SPI_FLASH_BufferRead(uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead)
 {
-    /* Ñ¡ÔñFLASH: CSµÍµçÆ½ */
+    /* é€‰æ‹©FLASH: CSä½ç”µå¹³ */
     SPI_FLASH_CS_LOW();
 
-    /* ·¢ËÍ ¶Á Ö¸Áî */
+    /* å‘é€ è¯» æŒ‡ä»¤ */
     SPI_FLASH_SendByte(W25X_ReadData);
 
-    /* ·¢ËÍ ¶Á µØÖ·¸ß8Î» */
+    /* å‘é€ è¯» åœ°å€é«˜8ä½ */
     // SPI_FLASH_SendByte((ReadAddr & 0xFF000000) >> 24);
-    /* ·¢ËÍ ¶Á µØÖ·ÖĞÇ°8Î» */
+    /* å‘é€ è¯» åœ°å€ä¸­å‰8ä½ */
     SPI_FLASH_SendByte((ReadAddr & 0xFF0000) >> 16);
-    /* ·¢ËÍ ¶Á µØÖ·ÖĞºó8Î» */
+    /* å‘é€ è¯» åœ°å€ä¸­å8ä½ */
     SPI_FLASH_SendByte((ReadAddr& 0xFF00) >> 8);
-    /* ·¢ËÍ ¶Á µØÖ·µÍ8Î» */
+    /* å‘é€ è¯» åœ°å€ä½8ä½ */
     SPI_FLASH_SendByte(ReadAddr & 0xFF);
     
-        /* ¶ÁÈ¡Êı¾İ */
+        /* è¯»å–æ•°æ® */
     while (NumByteToRead--)
     {
-        /* ¶ÁÈ¡Ò»¸ö×Ö½Ú*/
+        /* è¯»å–ä¸€ä¸ªå­—èŠ‚*/
         *pBuffer = SPI_FLASH_SendByte(Dummy_Byte);
-        /* Ö¸ÏòÏÂÒ»¸ö×Ö½Ú»º³åÇø */
+        /* æŒ‡å‘ä¸‹ä¸€ä¸ªå­—èŠ‚ç¼“å†²åŒº */
         pBuffer++;
     }
 
-    /* Í£Ö¹ĞÅºÅ FLASH: CS ¸ßµçÆ½ */
+    /* åœæ­¢ä¿¡å· FLASH: CS é«˜ç”µå¹³ */
     SPI_FLASH_CS_HIGH();
 }
 
 
  /**
-  * @brief  ¶ÁÈ¡FLASH ID
-  * @param 	ÎŞ
+  * @brief  è¯»å–FLASH ID
+  * @param 	æ— 
   * @retval FLASH ID
   */
 uint32_t SPI_FLASH_ReadID(void)
 {
     uint32_t Temp = 0, Temp0 = 0, Temp1 = 0, Temp2 = 0;
 
-    /* ¿ªÊ¼Í¨Ñ¶£ºCSµÍµçÆ½ */
+    /* å¼€å§‹é€šè®¯ï¼šCSä½ç”µå¹³ */
     SPI_FLASH_CS_LOW();
 
-    /* ·¢ËÍJEDECÖ¸Áî£¬¶ÁÈ¡ID */
+    /* å‘é€JEDECæŒ‡ä»¤ï¼Œè¯»å–ID */
     SPI_FLASH_SendByte(W25X_JedecDeviceID);
 
-    /* ¶ÁÈ¡Ò»¸ö×Ö½ÚÊı¾İ */
+    /* è¯»å–ä¸€ä¸ªå­—èŠ‚æ•°æ® */
     Temp0 = SPI_FLASH_SendByte(Dummy_Byte);
 
-    /* ¶ÁÈ¡Ò»¸ö×Ö½ÚÊı¾İ */
+    /* è¯»å–ä¸€ä¸ªå­—èŠ‚æ•°æ® */
     Temp1 = SPI_FLASH_SendByte(Dummy_Byte);
 
-    /* ¶ÁÈ¡Ò»¸ö×Ö½ÚÊı¾İ */
+    /* è¯»å–ä¸€ä¸ªå­—èŠ‚æ•°æ® */
     Temp2 = SPI_FLASH_SendByte(Dummy_Byte);
 
-    /* Í£Ö¹Í¨Ñ¶£ºCS¸ßµçÆ½ */
+    /* åœæ­¢é€šè®¯ï¼šCSé«˜ç”µå¹³ */
     SPI_FLASH_CS_HIGH();
 
-        /*°ÑÊı¾İ×éºÏÆğÀ´£¬×÷Îªº¯ÊıµÄ·µ»ØÖµ*/
+        /*æŠŠæ•°æ®ç»„åˆèµ·æ¥ï¼Œä½œä¸ºå‡½æ•°çš„è¿”å›å€¼*/
     Temp = (Temp0 << 16) | (Temp1 << 8) | Temp2;
 
     return Temp;
 }
 
  /**
-  * @brief  ¶ÁÈ¡FLASH Device ID
-  * @param 	ÎŞ
+  * @brief  è¯»å–FLASH Device ID
+  * @param 	æ— 
   * @retval FLASH Device ID
   */
 uint32_t SPI_FLASH_ReadDeviceID(void)
@@ -421,9 +421,9 @@ void SPI_FLASH_StartReadSequence(uint32_t ReadAddr)
 
 
  /**
-  * @brief  Ê¹ÓÃSPI¶ÁÈ¡Ò»¸ö×Ö½ÚµÄÊı¾İ
-  * @param  ÎŞ
-  * @retval ·µ»Ø½ÓÊÕµ½µÄÊı¾İ
+  * @brief  ä½¿ç”¨SPIè¯»å–ä¸€ä¸ªå­—èŠ‚çš„æ•°æ®
+  * @param  æ— 
+  * @retval è¿”å›æ¥æ”¶åˆ°çš„æ•°æ®
   */
 uint8_t SPI_FLASH_ReadByte(void)
 {
@@ -432,32 +432,32 @@ uint8_t SPI_FLASH_ReadByte(void)
 
 
  /**
-  * @brief  Ê¹ÓÃSPI·¢ËÍÒ»¸ö×Ö½ÚµÄÊı¾İ
-  * @param  byte£ºÒª·¢ËÍµÄÊı¾İ
-  * @retval ·µ»Ø½ÓÊÕµ½µÄÊı¾İ
+  * @brief  ä½¿ç”¨SPIå‘é€ä¸€ä¸ªå­—èŠ‚çš„æ•°æ®
+  * @param  byteï¼šè¦å‘é€çš„æ•°æ®
+  * @retval è¿”å›æ¥æ”¶åˆ°çš„æ•°æ®
   */
 uint8_t SPI_FLASH_SendByte(uint8_t byte)
 {
     SPITimeout = SPIT_FLAG_TIMEOUT;
 
-    /* µÈ´ı·¢ËÍ»º³åÇøÎª¿Õ£¬TXEÊÂ¼ş */
+    /* ç­‰å¾…å‘é€ç¼“å†²åŒºä¸ºç©ºï¼ŒTXEäº‹ä»¶ */
     while (__HAL_SPI_GET_FLAG( &FlashSpiHandler, SPI_FLAG_TXE ) == RESET)
     {
         if((SPITimeout--) == 0) return SPI_TIMEOUT_UserCallback(0);
     }
 
-    /* Ğ´ÈëÊı¾İ¼Ä´æÆ÷£¬°ÑÒªĞ´ÈëµÄÊı¾İĞ´Èë·¢ËÍ»º³åÇø */
+    /* å†™å…¥æ•°æ®å¯„å­˜å™¨ï¼ŒæŠŠè¦å†™å…¥çš„æ•°æ®å†™å…¥å‘é€ç¼“å†²åŒº */
     WRITE_REG(FlashSpiHandler.Instance->DR, byte);
 
     SPITimeout = SPIT_FLAG_TIMEOUT;
 
-    /* µÈ´ı½ÓÊÕ»º³åÇø·Ç¿Õ£¬RXNEÊÂ¼ş */
+    /* ç­‰å¾…æ¥æ”¶ç¼“å†²åŒºéç©ºï¼ŒRXNEäº‹ä»¶ */
     while (__HAL_SPI_GET_FLAG( &FlashSpiHandler, SPI_FLAG_RXNE ) == RESET)
     {
         if((SPITimeout--) == 0) return SPI_TIMEOUT_UserCallback(1);
     }
 
-    /* ¶ÁÈ¡Êı¾İ¼Ä´æÆ÷£¬»ñÈ¡½ÓÊÕ»º³åÇøÊı¾İ */
+    /* è¯»å–æ•°æ®å¯„å­˜å™¨ï¼Œè·å–æ¥æ”¶ç¼“å†²åŒºæ•°æ® */
     return READ_REG(FlashSpiHandler.Instance->DR);
 }
 
@@ -496,26 +496,26 @@ uint16_t SPI_FLASH_SendHalfWord(uint16_t HalfWord)
 
 
  /**
-  * @brief  ÏòFLASH·¢ËÍ Ğ´Ê¹ÄÜ ÃüÁî
+  * @brief  å‘FLASHå‘é€ å†™ä½¿èƒ½ å‘½ä»¤
   * @param  none
   * @retval none
   */
 void SPI_FLASH_WriteEnable(void)
 {
-    /* Í¨Ñ¶¿ªÊ¼£ºCSµÍ */
+    /* é€šè®¯å¼€å§‹ï¼šCSä½ */
     SPI_FLASH_CS_LOW();
 
-    /* ·¢ËÍĞ´Ê¹ÄÜÃüÁî*/
+    /* å‘é€å†™ä½¿èƒ½å‘½ä»¤*/
     SPI_FLASH_SendByte(W25X_WriteEnable);
 
-    /*Í¨Ñ¶½áÊø£ºCS¸ß */
+    /*é€šè®¯ç»“æŸï¼šCSé«˜ */
     SPI_FLASH_CS_HIGH();
 }
 
 
 
  /**
-  * @brief  µÈ´ıWIP(BUSY)±êÖ¾±»ÖÃ0£¬¼´µÈ´ıµ½FLASHÄÚ²¿Êı¾İĞ´ÈëÍê±Ï
+  * @brief  ç­‰å¾…WIP(BUSY)æ ‡å¿—è¢«ç½®0ï¼Œå³ç­‰å¾…åˆ°FLASHå†…éƒ¨æ•°æ®å†™å…¥å®Œæ¯•
   * @param  none
   * @retval none
   */
@@ -523,17 +523,17 @@ void SPI_FLASH_WaitForWriteEnd(void)
 {
     uint8_t FLASH_Status = 0;
 
-    /* Ñ¡Ôñ FLASH: CS µÍ */
+    /* é€‰æ‹© FLASH: CS ä½ */
     SPI_FLASH_CS_LOW();
 
-    /* ·¢ËÍ ¶Á×´Ì¬¼Ä´æÆ÷ ÃüÁî */
+    /* å‘é€ è¯»çŠ¶æ€å¯„å­˜å™¨ å‘½ä»¤ */
     SPI_FLASH_SendByte(W25X_ReadStatusReg);
 
     SPITimeout = SPIT_FLAG_TIMEOUT;
-    /* ÈôFLASHÃ¦Âµ£¬ÔòµÈ´ı */
+    /* è‹¥FLASHå¿™ç¢Œï¼Œåˆ™ç­‰å¾… */
     do
     {
-        /* ¶ÁÈ¡FLASHĞ¾Æ¬µÄ×´Ì¬¼Ä´æÆ÷ */
+        /* è¯»å–FLASHèŠ¯ç‰‡çš„çŠ¶æ€å¯„å­˜å™¨ */
         FLASH_Status = SPI_FLASH_SendByte(Dummy_Byte);	 
 
         {
@@ -544,45 +544,45 @@ void SPI_FLASH_WaitForWriteEnd(void)
         }
         } 
     }
-    while ((FLASH_Status & WIP_Flag) == SET); /* ÕıÔÚĞ´Èë±êÖ¾ */
+    while ((FLASH_Status & WIP_Flag) == SET); /* æ­£åœ¨å†™å…¥æ ‡å¿— */
 
-    /* Í£Ö¹ĞÅºÅ  FLASH: CS ¸ß */
+    /* åœæ­¢ä¿¡å·  FLASH: CS é«˜ */
     SPI_FLASH_CS_HIGH();
 }
 
 
-//½øÈëµôµçÄ£Ê½
+//è¿›å…¥æ‰ç”µæ¨¡å¼
 void SPI_Flash_PowerDown(void)   
 { 
-    /* Ñ¡Ôñ FLASH: CS µÍ */
+    /* é€‰æ‹© FLASH: CS ä½ */
     SPI_FLASH_CS_LOW();
 
-    /* ·¢ËÍ µôµç ÃüÁî */
+    /* å‘é€ æ‰ç”µ å‘½ä»¤ */
     SPI_FLASH_SendByte(W25X_PowerDown);
 
-    /* Í£Ö¹ĞÅºÅ  FLASH: CS ¸ß */
+    /* åœæ­¢ä¿¡å·  FLASH: CS é«˜ */
     SPI_FLASH_CS_HIGH();
 }   
 
 
 
-//»½ĞÑ
+//å”¤é†’
 void SPI_Flash_WAKEUP(void)   
 {
-    /*Ñ¡Ôñ FLASH: CS µÍ */
+    /*é€‰æ‹© FLASH: CS ä½ */
     SPI_FLASH_CS_LOW();
 
-    /* ·¢ÉÏ ÉÏµç ÃüÁî */
+    /* å‘ä¸Š ä¸Šç”µ å‘½ä»¤ */
     SPI_FLASH_SendByte(W25X_ReleasePowerDown);
 
-    /* Í£Ö¹ĞÅºÅ FLASH: CS ¸ß */
-    SPI_FLASH_CS_HIGH();                   //µÈ´ıTRES1
+    /* åœæ­¢ä¿¡å· FLASH: CS é«˜ */
+    SPI_FLASH_CS_HIGH();                   //ç­‰å¾…TRES1
 }   
 
 
 
  /**
-  * @brief  Ê¹ SPI_FLASH ½øÈë 4 ×Ö½ÚµØÖ·Ä£Ê½
+  * @brief  ä½¿ SPI_FLASH è¿›å…¥ 4 å­—èŠ‚åœ°å€æ¨¡å¼
   * @param  none
   * @retval none
   */
@@ -590,26 +590,26 @@ void SPI_FLASH_Mode_Init(void)
 {
 	uint8_t Temp;
 	
-	/*Ñ¡Ôñ FLASH: CS µÍ */
+	/*é€‰æ‹© FLASH: CS ä½ */
 	SPI_FLASH_CS_LOW();
 	
-	/* ·¢ËÍ×´Ì¬¼Ä´æÆ÷ 3 ÃüÁî */
+	/* å‘é€çŠ¶æ€å¯„å­˜å™¨ 3 å‘½ä»¤ */
 	SPI_FLASH_SendByte(W25X_ReadStatusRegister3); 
 	
 	Temp = SPI_FLASH_SendByte(Dummy_Byte);
 	
-	/* Í£Ö¹ĞÅºÅ FLASH: CS ¸ß */
+	/* åœæ­¢ä¿¡å· FLASH: CS é«˜ */
 	SPI_FLASH_CS_HIGH();
 	
 	if((Temp&0x01) == 0)
 	{
-		/*Ñ¡Ôñ FLASH: CS µÍ */
+		/*é€‰æ‹© FLASH: CS ä½ */
 		SPI_FLASH_CS_LOW();
 		
-		/* ½øÈë4×Ö½ÚÄ£Ê½ */
+		/* è¿›å…¥4å­—èŠ‚æ¨¡å¼ */
 		SPI_FLASH_SendByte(W25X_Enter4ByteMode);
 		
-		/* Í£Ö¹ĞÅºÅ FLASH: CS ¸ß */
+		/* åœæ­¢ä¿¡å· FLASH: CS é«˜ */
 		SPI_FLASH_CS_HIGH();
 	}
 }
@@ -617,14 +617,14 @@ void SPI_FLASH_Mode_Init(void)
 
 
 /**
-  * @brief  µÈ´ı³¬Ê±»Øµ÷º¯Êı
+  * @brief  ç­‰å¾…è¶…æ—¶å›è°ƒå‡½æ•°
   * @param  None.
   * @retval None.
   */
 static  uint16_t SPI_TIMEOUT_UserCallback(uint8_t errorCode)
 {
-    /* µÈ´ı³¬Ê±ºóµÄ´¦Àí,Êä³ö´íÎóĞÅÏ¢ */
-    FLASH_ERROR("SPI µÈ´ı³¬Ê±!errorCode = %d",errorCode);
+    /* ç­‰å¾…è¶…æ—¶åçš„å¤„ç†,è¾“å‡ºé”™è¯¯ä¿¡æ¯ */
+    FLASH_ERROR("SPI ç­‰å¾…è¶…æ—¶!errorCode = %d",errorCode);
     return 0;
 }
 
@@ -644,32 +644,32 @@ void Flash_Spi_test(void)
 {
 
 
-    //¶ÁÈ¡µÄID´æ´¢Î»ÖÃ
+    //è¯»å–çš„IDå­˜å‚¨ä½ç½®
     __IO uint32_t DeviceID = 0;
     __IO uint32_t FlashID = 0;
     __IO TestStatus TransferStatus1 = FAILED;
 
-	/* »ñÈ¡ Flash Device ID */
+	/* è·å– Flash Device ID */
 	DeviceID = SPI_FLASH_ReadDeviceID();
 
     Delay( 200 );
 
-	/* »ñÈ¡ SPI Flash ID */
+	/* è·å– SPI Flash ID */
 	FlashID = SPI_FLASH_ReadID();
 
-	/* ¼ìÑé SPI Flash ID */
+	/* æ£€éªŒ SPI Flash ID */
 	if (FlashID == sFLASH_ID) 
 	{	
-		/* ²Á³ı½«ÒªĞ´ÈëµÄ SPI FLASH ÉÈÇø£¬FLASHĞ´ÈëÇ°ÒªÏÈ²Á³ı */
+		/* æ“¦é™¤å°†è¦å†™å…¥çš„ SPI FLASH æ‰‡åŒºï¼ŒFLASHå†™å…¥å‰è¦å…ˆæ“¦é™¤ */
 		SPI_FLASH_SectorErase(FLASH_SectorToErase);	 	 
 		
-		/* ½«·¢ËÍ»º³åÇøµÄÊı¾İĞ´µ½flashÖĞ */
+		/* å°†å‘é€ç¼“å†²åŒºçš„æ•°æ®å†™åˆ°flashä¸­ */
 		SPI_FLASH_BufferWrite(Tx_Buffer, FLASH_WriteAddress, BufferSize);
 		
-		/* ½«¸Õ¸ÕĞ´ÈëµÄÊı¾İ¶Á³öÀ´·Åµ½½ÓÊÕ»º³åÇøÖĞ */
+		/* å°†åˆšåˆšå†™å…¥çš„æ•°æ®è¯»å‡ºæ¥æ”¾åˆ°æ¥æ”¶ç¼“å†²åŒºä¸­ */
 		SPI_FLASH_BufferRead(Rx_Buffer, FLASH_ReadAddress, BufferSize);
 		
-		/* ¼ì²éĞ´ÈëµÄÊı¾İÓë¶Á³öµÄÊı¾İÊÇ·ñÏàµÈ */
+		/* æ£€æŸ¥å†™å…¥çš„æ•°æ®ä¸è¯»å‡ºçš„æ•°æ®æ˜¯å¦ç›¸ç­‰ */
 		TransferStatus1 = U8Buffercmp(Tx_Buffer, Rx_Buffer, BufferSize);
 		
 		if( PASSED == TransferStatus1 )

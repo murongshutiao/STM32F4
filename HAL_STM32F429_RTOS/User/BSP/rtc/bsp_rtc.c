@@ -8,35 +8,35 @@ RTC_HandleTypeDef Rtc_Handle;
 
 __IO uint8_t Alarmflag =0;
 /**
-  * @brief  ÉèÖÃÊ±¼äºÍÈÕÆÚ
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  è®¾ç½®æ—¶é—´å’Œæ—¥æœŸ
+  * @param  æ— 
+  * @retval æ— 
   */
 void RTC_TimeAndDate_Set(void)
 {
     RTC_DateTypeDef  RTC_DateStructure;
     RTC_TimeTypeDef  RTC_TimeStructure;
-	// ³õÊ¼»¯Ê±¼ä
+	// åˆå§‹åŒ–æ—¶é—´
 	RTC_TimeStructure.TimeFormat = RTC_H12_AMorPM;
 	RTC_TimeStructure.Hours = HOURS;        
 	RTC_TimeStructure.Minutes = MINUTES;      
 	RTC_TimeStructure.Seconds = SECONDS;      
     HAL_RTC_SetTime(&Rtc_Handle,&RTC_TimeStructure, RTC_FORMAT_BIN);
-    // ³õÊ¼»¯ÈÕÆÚ	
+    // åˆå§‹åŒ–æ—¥æœŸ	
 	RTC_DateStructure.WeekDay = WEEKDAY;       
 	RTC_DateStructure.Date = DATE;         
 	RTC_DateStructure.Month = MONTH;         
 	RTC_DateStructure.Year = YEAR;        
     HAL_RTC_SetDate(&Rtc_Handle,&RTC_DateStructure, RTC_FORMAT_BIN);
     
-	/* Íù±¸·İ¼Ä´æÆ÷Ğ´Ò»¸öÖµ×ö±êÖ¾Î» */
+	/* å¾€å¤‡ä»½å¯„å­˜å™¨å†™ä¸€ä¸ªå€¼åšæ ‡å¿—ä½ */
     HAL_RTCEx_BKUPWrite(&Rtc_Handle,RTC_BKP_DRX, RTC_BKP_DATA);
 }
 
 /**
-  * @brief  ÏÔÊ¾Ê±¼äºÍÈÕÆÚ
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  æ˜¾ç¤ºæ—¶é—´å’Œæ—¥æœŸ
+  * @param  æ— 
+  * @retval æ— 
   */
 void RTC_TimeAndDate_Show(void)
 {
@@ -48,23 +48,23 @@ void RTC_TimeAndDate_Show(void)
 	
 	while(1)
 	{
-		// »ñÈ¡ÈÕÀú
+		// è·å–æ—¥å†
 		HAL_RTC_GetTime(&Rtc_Handle, &RTC_TimeStructure, RTC_FORMAT_BIN);
 		HAL_RTC_GetDate(&Rtc_Handle, &RTC_DateStructure, RTC_FORMAT_BIN);
 			
-			// Ã¿Ãë´òÓ¡Ò»´Î
+			// æ¯ç§’æ‰“å°ä¸€æ¬¡
 		if(Rtctmp != RTC_TimeStructure.Seconds)
 		{
 							
-			// ´òÓ¡ÈÕÆÚ
+			// æ‰“å°æ—¥æœŸ
 			printf("The Date :  Y:20%0.2d - M:%0.2d - D:%0.2d - W:%0.2d\r\n", 
 			RTC_DateStructure.Year,
 			RTC_DateStructure.Month, 
 			RTC_DateStructure.Date,
 			RTC_DateStructure.WeekDay);
 
-			//Òº¾§ÏÔÊ¾ÈÕÆÚ
-			//ÏÈ°ÑÒªÏÔÊ¾µÄÊı¾İÓÃsprintfº¯Êı×ª»»Îª×Ö·û´®£¬È»ºó²ÅÄÜÓÃÒº¾§ÏÔÊ¾º¯ÊıÏÔÊ¾
+			//æ¶²æ™¶æ˜¾ç¤ºæ—¥æœŸ
+			//å…ˆæŠŠè¦æ˜¾ç¤ºçš„æ•°æ®ç”¨sprintfå‡½æ•°è½¬æ¢ä¸ºå­—ç¬¦ä¸²ï¼Œç„¶åæ‰èƒ½ç”¨æ¶²æ™¶æ˜¾ç¤ºå‡½æ•°æ˜¾ç¤º
 			sprintf(LCDTemp,"The Date :  Y:20%0.2d - M:%0.2d - D:%0.2d - W:%0.2d", 
 			RTC_DateStructure.Year,
 			RTC_DateStructure.Month, 
@@ -73,13 +73,13 @@ void RTC_TimeAndDate_Show(void)
 			
  
 			
-			// ´òÓ¡Ê±¼ä
+			// æ‰“å°æ—¶é—´
 			printf("The Time :  %0.2d:%0.2d:%0.2d \r\n\r\n", 
 			RTC_TimeStructure.Hours, 
 			RTC_TimeStructure.Minutes, 
 			RTC_TimeStructure.Seconds);
 			
-			//Òº¾§ÏÔÊ¾Ê±¼ä
+			//æ¶²æ™¶æ˜¾ç¤ºæ—¶é—´
 			sprintf(LCDTemp,"The Time :  %0.2d:%0.2d:%0.2d", 
 			RTC_TimeStructure.Hours, 
 			RTC_TimeStructure.Minutes, 
@@ -92,100 +92,100 @@ void RTC_TimeAndDate_Show(void)
 }
 
 /**
-  * @brief  RTCÅäÖÃ£ºÑ¡ÔñRTCÊ±ÖÓÔ´£¬ÉèÖÃRTC_CLKµÄ·ÖÆµÏµÊı
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  RTCé…ç½®ï¼šé€‰æ‹©RTCæ—¶é’Ÿæºï¼Œè®¾ç½®RTC_CLKçš„åˆ†é¢‘ç³»æ•°
+  * @param  æ— 
+  * @retval æ— 
   */
 void RTC_CLK_Config(void)
 {  
 	RCC_OscInitTypeDef        RCC_OscInitStruct;
 	RCC_PeriphCLKInitTypeDef  PeriphClkInitStruct;
 
-	// ÅäÖÃRTCÍâÉè
+	// é…ç½®RTCå¤–è®¾
 	Rtc_Handle.Instance = RTC;
 
-	/*Ê¹ÄÜ PWR Ê±ÖÓ*/
+	/*ä½¿èƒ½ PWR æ—¶é’Ÿ*/
 	__HAL_RCC_PWR_CLK_ENABLE();
-	/* PWR_CR:DBFÖÃ1£¬Ê¹ÄÜRTC¡¢RTC±¸·İ¼Ä´æÆ÷ºÍ±¸·İSRAMµÄ·ÃÎÊ */
+	/* PWR_CR:DBFç½®1ï¼Œä½¿èƒ½RTCã€RTCå¤‡ä»½å¯„å­˜å™¨å’Œå¤‡ä»½SRAMçš„è®¿é—® */
 	HAL_PWR_EnableBkUpAccess();
 
 #if defined (RTC_CLOCK_SOURCE_LSI) 
-	/* Ê¹ÓÃLSI×÷ÎªRTCÊ±ÖÓÔ´»áÓĞÎó²î 
-	 * Ä¬ÈÏÑ¡ÔñLSE×÷ÎªRTCµÄÊ±ÖÓÔ´
+	/* ä½¿ç”¨LSIä½œä¸ºRTCæ—¶é’Ÿæºä¼šæœ‰è¯¯å·® 
+	 * é»˜è®¤é€‰æ‹©LSEä½œä¸ºRTCçš„æ—¶é’Ÿæº
 	 */
-	/* ³õÊ¼»¯LSI */ 
+	/* åˆå§‹åŒ–LSI */ 
 	RCC_OscInitStruct.OscillatorType =  RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_LSE;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
 	RCC_OscInitStruct.LSIState = RCC_LSI_ON;
 	RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
 	HAL_RCC_OscConfig(&RCC_OscInitStruct);
-	/* Ñ¡ÔñLSI×öÎªRTCµÄÊ±ÖÓÔ´ */
+	/* é€‰æ‹©LSIåšä¸ºRTCçš„æ—¶é’Ÿæº */
 	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
 	PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
 	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
 
 #elif defined (RTC_CLOCK_SOURCE_LSE)
-	/* ³õÊ¼»¯LSE */ 
+	/* åˆå§‹åŒ–LSE */ 
 	RCC_OscInitStruct.OscillatorType =  RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_LSE;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
 	RCC_OscInitStruct.LSEState = RCC_LSE_ON;
 	RCC_OscInitStruct.LSIState = RCC_LSI_OFF;
 	HAL_RCC_OscConfig(&RCC_OscInitStruct);
-	/* Ñ¡ÔñLSE×öÎªRTCµÄÊ±ÖÓÔ´ */
+	/* é€‰æ‹©LSEåšä¸ºRTCçš„æ—¶é’Ÿæº */
 	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
 	PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
 	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct); 
 
 #endif /* RTC_CLOCK_SOURCE_LSI */
 
-	/* Ê¹ÄÜRTCÊ±ÖÓ */
+	/* ä½¿èƒ½RTCæ—¶é’Ÿ */
 	__HAL_RCC_RTC_ENABLE(); 
 
-	/* µÈ´ı RTC APB ¼Ä´æÆ÷Í¬²½ */
+	/* ç­‰å¾… RTC APB å¯„å­˜å™¨åŒæ­¥ */
 	HAL_RTC_WaitForSynchro(&Rtc_Handle);
 
-	/*=====================³õÊ¼»¯Í¬²½/Òì²½Ô¤·ÖÆµÆ÷µÄÖµ======================*/
-	/* Çı¶¯ÈÕÀúµÄÊ±ÖÓck_spare = LSE/[(255+1)*(127+1)] = 1HZ */
-	Rtc_Handle.Init.AsynchPrediv = ASYNCHPREDIV;/* ÉèÖÃÒì²½Ô¤·ÖÆµÆ÷µÄÖµ */
-	Rtc_Handle.Init.SynchPrediv  = SYNCHPREDIV;	/* ÉèÖÃÍ¬²½Ô¤·ÖÆµÆ÷µÄÖµ */
+	/*=====================åˆå§‹åŒ–åŒæ­¥/å¼‚æ­¥é¢„åˆ†é¢‘å™¨çš„å€¼======================*/
+	/* é©±åŠ¨æ—¥å†çš„æ—¶é’Ÿck_spare = LSE/[(255+1)*(127+1)] = 1HZ */
+	Rtc_Handle.Init.AsynchPrediv = ASYNCHPREDIV;/* è®¾ç½®å¼‚æ­¥é¢„åˆ†é¢‘å™¨çš„å€¼ */
+	Rtc_Handle.Init.SynchPrediv  = SYNCHPREDIV;	/* è®¾ç½®åŒæ­¥é¢„åˆ†é¢‘å™¨çš„å€¼ */
 	Rtc_Handle.Init.HourFormat   = RTC_HOURFORMAT_24; 
-	/* ÓÃRTC_InitStructureµÄÄÚÈİ³õÊ¼»¯RTC¼Ä´æÆ÷ */
+	/* ç”¨RTC_InitStructureçš„å†…å®¹åˆå§‹åŒ–RTCå¯„å­˜å™¨ */
 	if (HAL_RTC_Init(&Rtc_Handle) != HAL_OK)
 	{
-		printf("\n\r RTC Ê±ÖÓ³õÊ¼»¯Ê§°Ü \r\n");
+		printf("\n\r RTC æ—¶é’Ÿåˆå§‹åŒ–å¤±è´¥ \r\n");
 	}	
 }
 
 
 void RTC_Test(void)
 {
-	/* ²é¿´±¸·İ¼Ä´æÆ÷µÄÖµ */
+	/* æŸ¥çœ‹å¤‡ä»½å¯„å­˜å™¨çš„å€¼ */
 	if (HAL_RTCEx_BKUPRead(&Rtc_Handle,RTC_BKP_DRX) != RTC_BKP_DATA)
 	{				
-		/* ÉèÖÃÊ±¼äºÍÈÕÆÚ */
+		/* è®¾ç½®æ—¶é—´å’Œæ—¥æœŸ */
 		RTC_TimeAndDate_Set();
 	}
 	else
 	{
-		/* ¼ì²éÊÇ·ñµçÔ´¸´Î» */
+		/* æ£€æŸ¥æ˜¯å¦ç”µæºå¤ä½ */
 		if (__HAL_RCC_GET_FLAG(RCC_FLAG_PORRST) != RESET)
 		{
-		  printf("\r\n ·¢ÉúµçÔ´¸´Î»....\r\n");
+		  printf("\r\n å‘ç”Ÿç”µæºå¤ä½....\r\n");
 		}
-		/* ¼ì²éÊÇ·ñÍâ²¿¸´Î» */
+		/* æ£€æŸ¥æ˜¯å¦å¤–éƒ¨å¤ä½ */
 		else if (__HAL_RCC_GET_FLAG(RCC_FLAG_PINRST) != RESET)
 		{
-		  printf("\r\n ·¢ÉúÍâ²¿¸´Î»....\r\n");
+		  printf("\r\n å‘ç”Ÿå¤–éƒ¨å¤ä½....\r\n");
 		}
-		printf("\r\n ²»ĞèÒªÖØĞÂÅäÖÃRTC....\r\n");    
-		/* Ê¹ÄÜ PWR Ê±ÖÓ */
+		printf("\r\n ä¸éœ€è¦é‡æ–°é…ç½®RTC....\r\n");    
+		/* ä½¿èƒ½ PWR æ—¶é’Ÿ */
 		__HAL_RCC_PWR_CLK_ENABLE();
-		/* PWR_CR:DBFÖÃ1£¬Ê¹ÄÜRTC¡¢RTC±¸·İ¼Ä´æÆ÷ºÍ±¸·İSRAMµÄ·ÃÎÊ */
+		/* PWR_CR:DBFç½®1ï¼Œä½¿èƒ½RTCã€RTCå¤‡ä»½å¯„å­˜å™¨å’Œå¤‡ä»½SRAMçš„è®¿é—® */
 		HAL_PWR_EnableBkUpAccess();
-		/* µÈ´ı RTC APB ¼Ä´æÆ÷Í¬²½ */
+		/* ç­‰å¾… RTC APB å¯„å­˜å™¨åŒæ­¥ */
 		HAL_RTC_WaitForSynchro(&Rtc_Handle);
 	} 
-	/* ÏÔÊ¾Ê±¼äºÍÈÕÆÚ */
+	/* æ˜¾ç¤ºæ—¶é—´å’Œæ—¥æœŸ */
 	RTC_TimeAndDate_Show();
 }
 

@@ -33,19 +33,19 @@
 void elog_para_init(void)
 {
 
-    /* ÉèÖÃÃ¿¸ö¼¶±ğµÄÈÕÖ¾Êä³ö¸ñÊ½ */
-    //Êä³öËùÓĞÄÚÈİ
+    /* è®¾ç½®æ¯ä¸ªçº§åˆ«çš„æ—¥å¿—è¾“å‡ºæ ¼å¼ */
+    //è¾“å‡ºæ‰€æœ‰å†…å®¹
     elog_set_fmt(ELOG_LVL_ASSERT, ELOG_FMT_ALL);
-    //Êä³öÈÕÖ¾¼¶±ğĞÅÏ¢ºÍÈÕÖ¾TAG
+    //è¾“å‡ºæ—¥å¿—çº§åˆ«ä¿¡æ¯å’Œæ—¥å¿—TAG
     elog_set_fmt(ELOG_LVL_ERROR, ELOG_FMT_LVL | ELOG_FMT_TAG);
     elog_set_fmt(ELOG_LVL_WARN, ELOG_FMT_LVL | ELOG_FMT_TAG);
     elog_set_fmt(ELOG_LVL_INFO, ELOG_FMT_LVL | ELOG_FMT_TAG);
-    //³ıÁËÊ±¼ä¡¢½ø³ÌĞÅÏ¢¡¢Ïß³ÌĞÅÏ¢Ö®Íâ£¬ÆäÓàÈ«²¿Êä³ö
+    //é™¤äº†æ—¶é—´ã€è¿›ç¨‹ä¿¡æ¯ã€çº¿ç¨‹ä¿¡æ¯ä¹‹å¤–ï¼Œå…¶ä½™å…¨éƒ¨è¾“å‡º
     elog_set_fmt(ELOG_LVL_DEBUG, ELOG_FMT_ALL & ~(ELOG_FMT_TIME | ELOG_FMT_P_INFO | ELOG_FMT_T_INFO));
-    //Êä³öËùÓĞÄÚÈİ
+    //è¾“å‡ºæ‰€æœ‰å†…å®¹
     elog_set_fmt(ELOG_LVL_VERBOSE, ELOG_FMT_ALL);
 
-    /* Æô¶¯elog */
+    /* å¯åŠ¨elog */
     elog_start();
 
 }
@@ -112,7 +112,7 @@ void elog_port_output_unlock(void) {
 const char *elog_port_get_time(void) {
     
     /* add your code here */
-    return "";  /* »ñÈ¡Ê±¼ä */
+    return "";  /* è·å–æ—¶é—´ */
 }
 
 /**
@@ -123,7 +123,7 @@ const char *elog_port_get_time(void) {
 const char *elog_port_get_p_info(void) {
     
     /* add your code here */
-    return "";  /* »ñÈ¡½ø³ÌºÅ */
+    return "";  /* è·å–è¿›ç¨‹å· */
     
 }
 
@@ -135,7 +135,7 @@ const char *elog_port_get_p_info(void) {
 const char *elog_port_get_t_info(void) {
     
     /* add your code here */
-    return "";  /* »ñÈ¡Ïß³ÌºÅ */
+    return "";  /* è·å–çº¿ç¨‹å· */
     
 }
 

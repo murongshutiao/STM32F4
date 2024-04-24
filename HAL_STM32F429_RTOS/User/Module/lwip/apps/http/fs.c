@@ -35,7 +35,7 @@
 #include "lwip/apps/fs.h"
 #include <string.h>
 
-/* HTTPD_FSDATA_FILE fsdata.c �ļ� */
+/* HTTPD_FSDATA_FILE fsdata.c ÎÄ¼þ */
 #include HTTPD_FSDATA_FILE
 
 /*-----------------------------------------------------------------------------------*/

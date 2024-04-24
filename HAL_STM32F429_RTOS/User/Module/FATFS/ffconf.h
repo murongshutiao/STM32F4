@@ -24,7 +24,7 @@
 /   2: f_opendir(), f_readdir() and f_closedir() are removed in addition to 1.
 /   3: f_lseek() function is removed in addition to 2. */
 
-/* ¸ñÊ½»¯¶ÁĞ´¹¦ÄÜ */
+/* æ ¼å¼åŒ–è¯»å†™åŠŸèƒ½ */
 #define	_USE_STRFUNC	1   
 /* This option switches string functions, f_gets(), f_putc(), f_puts() and
 /  f_printf().
@@ -38,7 +38,7 @@
 /* This option switches filtered directory read feature and related functions,
 /  f_findfirst() and f_findnext(). (0:Disable or 1:Enable) */
 
-/* Ê¹ÄÜ¸ñÊ½»¯¹¦ÄÜ */
+/* ä½¿èƒ½æ ¼å¼åŒ–åŠŸèƒ½ */
 #define	_USE_MKFS		1               
 /* This option switches f_mkfs() function. (0:Disable or 1:Enable) */
 
@@ -89,7 +89,7 @@
 /   950 - Traditional Chinese (DBCS)
 */
 
-/* ³¤ÎÄ¼şÃûÖ§³Ö */
+/* é•¿æ–‡ä»¶åæ”¯æŒ */
 #define	_USE_LFN	2
 #define	_MAX_LFN	255
 /* The _USE_LFN option switches the LFN feature.
@@ -137,7 +137,7 @@
 /*---------------------------------------------------------------------------/
 / Drive/Volume Configurations
 /---------------------------------------------------------------------------*/
-/* Ö¸¶¨ÎïÀíÉè±¸ÊıÁ¿ */
+/* æŒ‡å®šç‰©ç†è®¾å¤‡æ•°é‡ */
 #define _VOLUMES	3
 /* Number of volumes (logical drives) to be used. */
 
@@ -159,8 +159,8 @@
 /  listed in the VolToPart[]. Also f_fdisk() funciton will be available. */
 
 
-#define	_MIN_SS		512     /* ×îĞ¡ÉÈÇø */
-#define	_MAX_SS		4096    /* ×î´óÉÈÇø */
+#define	_MIN_SS		512     /* æœ€å°æ‰‡åŒº */
+#define	_MAX_SS		4096    /* æœ€å¤§æ‰‡åŒº */
 /* These options configure the range of sector size to be supported. (512, 1024,
 /  2048 or 4096) Always set both 512 for most systems, all type of memory cards and
 /  harddisk. But a larger value may be required for on-board flash memory and some

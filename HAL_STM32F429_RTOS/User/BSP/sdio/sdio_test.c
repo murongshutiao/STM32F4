@@ -176,36 +176,36 @@ static uint8_t Buffercmp(uint32_t* pBuffer1, uint32_t* pBuffer2, uint16_t Buffer
 
 /**
 	**************************************************************
-	* Description : ³õÊ¼»¯WiFiÄ£¿éÊ¹ÄÜÒı½Å£¬²¢½ûÓÃWiFiÄ£¿é
+	* Description : åˆå§‹åŒ–WiFiæ¨¡å—ä½¿èƒ½å¼•è„šï¼Œå¹¶ç¦ç”¨WiFiæ¨¡å—
 	* Argument(s) : none.
 	* Return(s)   : none.
 	**************************************************************
 	*/
 void WIFI_PDN_INIT(void)
 {
-	/*¶¨ÒåÒ»¸öGPIO_InitTypeDefÀàĞÍµÄ½á¹¹Ìå*/
+	/*å®šä¹‰ä¸€ä¸ªGPIO_InitTypeDefç±»å‹çš„ç»“æ„ä½“*/
 	GPIO_InitTypeDef GPIO_InitStruct;
-	/*Ê¹ÄÜÒı½ÅÊ±ÖÓ*/	
+	/*ä½¿èƒ½å¼•è„šæ—¶é’Ÿ*/	
 	__HAL_RCC_GPIOG_CLK_ENABLE();
-	/*Ñ¡ÔñÒª¿ØÖÆµÄGPIOÒı½Å*/															   
+	/*é€‰æ‹©è¦æ§åˆ¶çš„GPIOå¼•è„š*/															   
 	GPIO_InitStruct.Pin = GPIO_PIN_9;	
-	/*ÉèÖÃÒı½ÅµÄÊä³öÀàĞÍÎªÍÆÍìÊä³ö*/
+	/*è®¾ç½®å¼•è„šçš„è¾“å‡ºç±»å‹ä¸ºæ¨æŒ½è¾“å‡º*/
 	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;      
-	/*ÉèÖÃÒı½ÅÎªÉÏÀ­Ä£Ê½*/
+	/*è®¾ç½®å¼•è„šä¸ºä¸Šæ‹‰æ¨¡å¼*/
 	GPIO_InitStruct.Pull  = GPIO_PULLUP;
-	/*ÉèÖÃÒı½ÅËÙÂÊÎª¸ßËÙ */   
+	/*è®¾ç½®å¼•è„šé€Ÿç‡ä¸ºé«˜é€Ÿ */   
 	GPIO_InitStruct.Speed = GPIO_SPEED_FAST; 
-	/*µ÷ÓÃ¿âº¯Êı£¬Ê¹ÓÃÉÏÃæÅäÖÃµÄGPIO_InitStructure³õÊ¼»¯GPIO*/
+	/*è°ƒç”¨åº“å‡½æ•°ï¼Œä½¿ç”¨ä¸Šé¢é…ç½®çš„GPIO_InitStructureåˆå§‹åŒ–GPIO*/
 	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);	
-	/*½ûÓÃWiFiÄ£¿é*/
+	/*ç¦ç”¨WiFiæ¨¡å—*/
 	HAL_GPIO_WritePin(GPIOG,GPIO_PIN_9,GPIO_PIN_RESET);  
 }
 
 static volatile DSTATUS Stat = STA_NOINIT;
 extern SD_HandleTypeDef uSdHandle;
-//·¢ËÍ±êÖ¾Î»
+//å‘é€æ ‡å¿—ä½
 extern volatile uint8_t TX_Flag;
-//½ÓÊÜ±êÖ¾Î»
+//æ¥å—æ ‡å¿—ä½
 extern volatile uint8_t RX_Flag; 
 
 
@@ -235,9 +235,9 @@ DSTATUS SD_status(void)
 
 
 DRESULT SD_read(
-                BYTE *buff,//Êı¾İ»º´æÇø 
-                DWORD sector, //ÉÈÇøÊ×µØÖ·
-                UINT count)//ÉÈÇø¸öÊı(1..128)
+                BYTE *buff,//æ•°æ®ç¼“å­˜åŒº 
+                DWORD sector, //æ‰‡åŒºé¦–åœ°å€
+                UINT count)//æ‰‡åŒºä¸ªæ•°(1..128)
 {
   DRESULT res = RES_ERROR;
   uint32_t timeout;
@@ -279,16 +279,16 @@ DRESULT SD_read(
 
 
   
-DRESULT SD_write(BYTE lun,//ÎïÀíÉÈÇø£¬¶à¸öÉè±¸Ê±ÓÃµ½(0...)
-                 const BYTE *buff,//Êı¾İ»º´æÇø 
-                 DWORD sector, //ÉÈÇøÊ×µØÖ·
-                 UINT count)//ÉÈÇø¸öÊı(1..128)
+DRESULT SD_write(BYTE lun,//ç‰©ç†æ‰‡åŒºï¼Œå¤šä¸ªè®¾å¤‡æ—¶ç”¨åˆ°(0...)
+                 const BYTE *buff,//æ•°æ®ç¼“å­˜åŒº 
+                 DWORD sector, //æ‰‡åŒºé¦–åœ°å€
+                 UINT count)//æ‰‡åŒºä¸ªæ•°(1..128)
 {
     DRESULT res = RES_ERROR;
     uint32_t timeout;
   
     TX_Flag = 0;
-    //¸üĞÂÏàÓ¦µÄDCache
+    //æ›´æ–°ç›¸åº”çš„DCache
     if(HAL_SD_WriteBlocks_DMA(&uSdHandle, (uint8_t*)buff,
                              (uint32_t) (sector),
                              count) == HAL_OK)
@@ -367,101 +367,101 @@ DRESULT SD_ioctl(BYTE lun,BYTE cmd, void *buff)
 
 
 
-FATFS SDCard_fs;           /* FatFsÎïÀíÉè±¸¶ÔÏó */
-FIL SDCard_fnew;           /* ÎÄ¼ş¶ÔÏó */
-FRESULT res_sd;  /* ·µ»Ø½á¹û */
-UINT SDCard_fnum;          /* ÎÄ¼ş³É¹¦¶ÁĞ´ÊıÁ¿ */
+FATFS SDCard_fs;           /* FatFsç‰©ç†è®¾å¤‡å¯¹è±¡ */
+FIL SDCard_fnew;           /* æ–‡ä»¶å¯¹è±¡ */
+FRESULT res_sd;  /* è¿”å›ç»“æœ */
+UINT SDCard_fnum;          /* æ–‡ä»¶æˆåŠŸè¯»å†™æ•°é‡ */
 BYTE SDCard_ReadBuffer[1024] = {0};
 BYTE SDCard_WriteBuffer[] = "murongshutiao,I love you,fengzhangyi,I love you!";
 
 void Fatfs_SDCard_Test(void)
 {
-       //ÔÚÍâ²¿SD¿¨¹ÒÔØÎÄ¼şÏµÍ³£¬ÎÄ¼şÏµÍ³¹ÒÔØÊ±»á¶ÔSD¿¨³õÊ¼»¯
+       //åœ¨å¤–éƒ¨SDå¡æŒ‚è½½æ–‡ä»¶ç³»ç»Ÿï¼Œæ–‡ä»¶ç³»ç»ŸæŒ‚è½½æ—¶ä¼šå¯¹SDå¡åˆå§‹åŒ–
    res_sd = f_mount(&SDCard_fs,"0:",1);  
 
 
-   /*----------------------- ¸ñÊ½»¯²âÊÔ ---------------------------*/  
-   /* Èç¹ûÃ»ÓĞÎÄ¼şÏµÍ³¾Í¸ñÊ½»¯´´½¨´´½¨ÎÄ¼şÏµÍ³ */
+   /*----------------------- æ ¼å¼åŒ–æµ‹è¯• ---------------------------*/  
+   /* å¦‚æœæ²¡æœ‰æ–‡ä»¶ç³»ç»Ÿå°±æ ¼å¼åŒ–åˆ›å»ºåˆ›å»ºæ–‡ä»¶ç³»ç»Ÿ */
    if(res_sd == FR_NO_FILESYSTEM)
    {
-      printf("¡·SD¿¨»¹Ã»ÓĞÎÄ¼şÏµÍ³£¬¼´½«½øĞĞ¸ñÊ½»¯...\r\n");
-      /* ¸ñÊ½»¯ */
+      printf("ã€‹SDå¡è¿˜æ²¡æœ‰æ–‡ä»¶ç³»ç»Ÿï¼Œå³å°†è¿›è¡Œæ ¼å¼åŒ–...\r\n");
+      /* æ ¼å¼åŒ– */
       res_sd=f_mkfs("0:",0,0);							
 
       if(res_sd == FR_OK)
       {
-        printf("¡·SD¿¨ÒÑ³É¹¦¸ñÊ½»¯ÎÄ¼şÏµÍ³¡£\r\n");
-        /* ¸ñÊ½»¯ºó£¬ÏÈÈ¡Ïû¹ÒÔØ */
+        printf("ã€‹SDå¡å·²æˆåŠŸæ ¼å¼åŒ–æ–‡ä»¶ç³»ç»Ÿã€‚\r\n");
+        /* æ ¼å¼åŒ–åï¼Œå…ˆå–æ¶ˆæŒ‚è½½ */
         res_sd = f_mount(NULL,"0:",1);			
-        /* ÖØĞÂ¹ÒÔØ	*/			
+        /* é‡æ–°æŒ‚è½½	*/			
         res_sd = f_mount(&SDCard_fs,"0:",1);
       }
       else
       {
         LED_RED;
-        printf("¡¶¡¶¸ñÊ½»¯Ê§°Ü¡£¡·¡·\r\n");
+        printf("ã€Šã€Šæ ¼å¼åŒ–å¤±è´¥ã€‚ã€‹ã€‹\r\n");
         while(1);
       }
    }
    else if(res_sd!=FR_OK)
    {
-      printf("£¡£¡SD¿¨¹ÒÔØÎÄ¼şÏµÍ³Ê§°Ü¡£(%d)\r\n",res_sd);
-      printf("£¡£¡¿ÉÄÜÔ­Òò£ºSD¿¨³õÊ¼»¯²»³É¹¦¡£\r\n");
+      printf("ï¼ï¼SDå¡æŒ‚è½½æ–‡ä»¶ç³»ç»Ÿå¤±è´¥ã€‚(%d)\r\n",res_sd);
+      printf("ï¼ï¼å¯èƒ½åŸå› ï¼šSDå¡åˆå§‹åŒ–ä¸æˆåŠŸã€‚\r\n");
       while(1);
    }
    else
    {
-      printf("¡·ÎÄ¼şÏµÍ³¹ÒÔØ³É¹¦£¬¿ÉÒÔ½øĞĞ¶ÁĞ´²âÊÔ\r\n");
+      printf("ã€‹æ–‡ä»¶ç³»ç»ŸæŒ‚è½½æˆåŠŸï¼Œå¯ä»¥è¿›è¡Œè¯»å†™æµ‹è¯•\r\n");
    }	
-    /*----------------------- ÎÄ¼şÏµÍ³²âÊÔ£ºĞ´²âÊÔ -----------------------------*/
-    /* ´ò¿ªÎÄ¼ş£¬Èç¹ûÎÄ¼ş²»´æÔÚÔò´´½¨Ëü */
-    printf("\r\n****** ¼´½«½øĞĞÎÄ¼şĞ´Èë²âÊÔ... ******\r\n");	
-    res_sd = f_open(&SDCard_fnew, "0:FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt",FA_CREATE_ALWAYS | FA_WRITE );
+    /*----------------------- æ–‡ä»¶ç³»ç»Ÿæµ‹è¯•ï¼šå†™æµ‹è¯• -----------------------------*/
+    /* æ‰“å¼€æ–‡ä»¶ï¼Œå¦‚æœæ–‡ä»¶ä¸å­˜åœ¨åˆ™åˆ›å»ºå®ƒ */
+    printf("\r\n****** å³å°†è¿›è¡Œæ–‡ä»¶å†™å…¥æµ‹è¯•... ******\r\n");	
+    res_sd = f_open(&SDCard_fnew, "0:FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt",FA_CREATE_ALWAYS | FA_WRITE );
     if ( res_sd == FR_OK )
     {
-      printf("¡·´ò¿ª/´´½¨FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txtÎÄ¼ş³É¹¦£¬ÏòÎÄ¼şĞ´ÈëÊı¾İ¡£\r\n");
-      /* ½«Ö¸¶¨´æ´¢ÇøÄÚÈİĞ´Èëµ½ÎÄ¼şÄÚ */
+      printf("ã€‹æ‰“å¼€/åˆ›å»ºFatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txtæ–‡ä»¶æˆåŠŸï¼Œå‘æ–‡ä»¶å†™å…¥æ•°æ®ã€‚\r\n");
+      /* å°†æŒ‡å®šå­˜å‚¨åŒºå†…å®¹å†™å…¥åˆ°æ–‡ä»¶å†… */
       res_sd=f_write(&SDCard_fnew,SDCard_WriteBuffer,sizeof(SDCard_WriteBuffer),&SDCard_fnum);
       if(res_sd==FR_OK)
       {
-        printf("¡·ÎÄ¼şĞ´Èë³É¹¦£¬Ğ´Èë×Ö½ÚÊı¾İ£º%d\n",SDCard_fnum);
-        printf("¡·ÏòÎÄ¼şĞ´ÈëµÄÊı¾İÎª£º\r\n%s\r\n",SDCard_WriteBuffer);
+        printf("ã€‹æ–‡ä»¶å†™å…¥æˆåŠŸï¼Œå†™å…¥å­—èŠ‚æ•°æ®ï¼š%d\n",SDCard_fnum);
+        printf("ã€‹å‘æ–‡ä»¶å†™å…¥çš„æ•°æ®ä¸ºï¼š\r\n%s\r\n",SDCard_WriteBuffer);
       }
       else
       {
-        printf("£¡£¡ÎÄ¼şĞ´ÈëÊ§°Ü£º(%d)\n",res_sd);
+        printf("ï¼ï¼æ–‡ä»¶å†™å…¥å¤±è´¥ï¼š(%d)\n",res_sd);
       }    
-      /* ²»ÔÙ¶ÁĞ´£¬¹Ø±ÕÎÄ¼ş */
+      /* ä¸å†è¯»å†™ï¼Œå…³é—­æ–‡ä»¶ */
       f_close(&SDCard_fnew);
     }
     else
     {	
       LED_RED;
-      printf("£¡£¡´ò¿ª/´´½¨ÎÄ¼şÊ§°Ü¡£\r\n");
+      printf("ï¼ï¼æ‰“å¼€/åˆ›å»ºæ–‡ä»¶å¤±è´¥ã€‚\r\n");
     }
     
-  /*------------------- ÎÄ¼şÏµÍ³²âÊÔ£º¶Á²âÊÔ ------------------------------------*/
-    printf("****** ¼´½«½øĞĞÎÄ¼ş¶ÁÈ¡²âÊÔ... ******\r\n");
-    res_sd = f_open(&SDCard_fnew, "0:FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt", FA_OPEN_EXISTING | FA_READ); 	 
+  /*------------------- æ–‡ä»¶ç³»ç»Ÿæµ‹è¯•ï¼šè¯»æµ‹è¯• ------------------------------------*/
+    printf("****** å³å°†è¿›è¡Œæ–‡ä»¶è¯»å–æµ‹è¯•... ******\r\n");
+    res_sd = f_open(&SDCard_fnew, "0:FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt", FA_OPEN_EXISTING | FA_READ); 	 
     if(res_sd == FR_OK)
     {
       LED_GREEN;
-      printf("¡·´ò¿ªÎÄ¼ş³É¹¦¡£\r\n");
+      printf("ã€‹æ‰“å¼€æ–‡ä»¶æˆåŠŸã€‚\r\n");
       res_sd = f_read(&SDCard_fnew, SDCard_ReadBuffer, sizeof(SDCard_ReadBuffer), &SDCard_fnum); 
       if(res_sd==FR_OK)
       {
-        printf("¡·ÎÄ¼ş¶ÁÈ¡³É¹¦,¶Áµ½×Ö½ÚÊı¾İ£º%d\r\n",SDCard_fnum);
-        printf("¡·¶ÁÈ¡µÃµÄÎÄ¼şÊı¾İÎª£º\r\n%s \r\n", SDCard_ReadBuffer);	
+        printf("ã€‹æ–‡ä»¶è¯»å–æˆåŠŸ,è¯»åˆ°å­—èŠ‚æ•°æ®ï¼š%d\r\n",SDCard_fnum);
+        printf("ã€‹è¯»å–å¾—çš„æ–‡ä»¶æ•°æ®ä¸ºï¼š\r\n%s \r\n", SDCard_ReadBuffer);	
       }
       else
       {
-        printf("£¡£¡ÎÄ¼ş¶ÁÈ¡Ê§°Ü£º(%d)\n",res_sd);
+        printf("ï¼ï¼æ–‡ä»¶è¯»å–å¤±è´¥ï¼š(%d)\n",res_sd);
       }		
     }
     else
     {
       LED_RED;
-      printf("£¡£¡´ò¿ªÎÄ¼şÊ§°Ü¡£\r\n");
+      printf("ï¼ï¼æ‰“å¼€æ–‡ä»¶å¤±è´¥ã€‚\r\n");
     }
 }
 

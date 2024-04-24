@@ -1,10 +1,10 @@
 #include "./bsp_dma.h"
 
 
-/* Ïà¹Øºê¶¨Òå£¬Ê¹ÓÃ´æ´¢Æ÷µ½´æ´¢Æ÷´«Êä±ØĞëÊ¹ÓÃDMA2 */
+/* ç›¸å…³å®å®šä¹‰ï¼Œä½¿ç”¨å­˜å‚¨å™¨åˆ°å­˜å‚¨å™¨ä¼ è¾“å¿…é¡»ä½¿ç”¨DMA2 */
 
-/* ¶¨ÒåaSRC_Const_BufferÊı×é×÷ÎªDMA´«ÊäÊı¾İÔ´
-  const¹Ø¼ü×Ö½«aSRC_Const_BufferÊı×é±äÁ¿¶¨ÒåÎª³£Á¿ÀàĞÍ */
+/* å®šä¹‰aSRC_Const_Bufferæ•°ç»„ä½œä¸ºDMAä¼ è¾“æ•°æ®æº
+  constå…³é”®å­—å°†aSRC_Const_Bufferæ•°ç»„å˜é‡å®šä¹‰ä¸ºå¸¸é‡ç±»å‹ */
 const uint32_t aSRC_Const_Buffer[]= {
                                     0x01020304,0x05060708,0x090A0B0C,0x0D0E0F10,
                                     0x11121314,0x15161718,0x191A1B1C,0x1D1E1F20,
@@ -18,59 +18,59 @@ const uint32_t aSRC_Const_Buffer[]= {
 #define BUFFER_SIZE     (sizeof(aSRC_Const_Buffer) / sizeof(aSRC_Const_Buffer[0]))
 
 
-uint32_t aDST_Buffer[BUFFER_SIZE];  /* ¶¨ÒåDMA´«ÊäÄ¿±ê´æ´¢Æ÷ */
+uint32_t aDST_Buffer[BUFFER_SIZE];  /* å®šä¹‰DMAä¼ è¾“ç›®æ ‡å­˜å‚¨å™¨ */
 
 
 DMA_HandleTypeDef DMA_M2M_Handler;
 
-DMA_HandleTypeDef  DMA_Handle;      //DMA¾ä±ú
+DMA_HandleTypeDef  DMA_Handle;      //DMAå¥æŸ„
 
 /**
-  * ÅĞ¶ÏÖ¸¶¨³¤¶ÈµÄÁ½¸öÊı¾İÔ´ÊÇ·ñÍêÈ«ÏàµÈ£¬
-  * Èç¹ûÍêÈ«ÏàµÈ·µ»Ø1£¬Ö»ÒªÆäÖĞÒ»¶ÔÊı¾İ²»ÏàµÈ·µ»Ø0
+  * åˆ¤æ–­æŒ‡å®šé•¿åº¦çš„ä¸¤ä¸ªæ•°æ®æºæ˜¯å¦å®Œå…¨ç›¸ç­‰ï¼Œ
+  * å¦‚æœå®Œå…¨ç›¸ç­‰è¿”å›1ï¼Œåªè¦å…¶ä¸­ä¸€å¯¹æ•°æ®ä¸ç›¸ç­‰è¿”å›0
   */
 static uint8_t Buffercmp(const uint32_t* pBuffer, uint32_t* pBuffer1, uint16_t BufferLength)
 {
-	/* Êı¾İ³¤¶Èµİ¼õ */
+	/* æ•°æ®é•¿åº¦é€’å‡ */
 	while(BufferLength--)
 	{
-		/* ÅĞ¶ÏÁ½¸öÊı¾İÔ´ÊÇ·ñ¶ÔÓ¦ÏàµÈ */
+		/* åˆ¤æ–­ä¸¤ä¸ªæ•°æ®æºæ˜¯å¦å¯¹åº”ç›¸ç­‰ */
 		if(*pBuffer != *pBuffer1)
 		{
-		  /* ¶ÔÓ¦Êı¾İÔ´²»ÏàµÈÂíÉÏÍË³öº¯Êı£¬²¢·µ»Ø0 */
+		  /* å¯¹åº”æ•°æ®æºä¸ç›¸ç­‰é©¬ä¸Šé€€å‡ºå‡½æ•°ï¼Œå¹¶è¿”å›0 */
 		  return 0;
 		}
-		/* µİÔöÁ½¸öÊı¾İÔ´µÄµØÖ·Ö¸Õë */
+		/* é€’å¢ä¸¤ä¸ªæ•°æ®æºçš„åœ°å€æŒ‡é’ˆ */
 		pBuffer++;
 		pBuffer1++;
 	}
-	/* Íê³ÉÅĞ¶Ï²¢ÇÒ¶ÔÓ¦Êı¾İÏà¶Ô */
+	/* å®Œæˆåˆ¤æ–­å¹¶ä¸”å¯¹åº”æ•°æ®ç›¸å¯¹ */
 	return 1;  
 }
 
 
 
 /**
-  * DMA´«ÊäÅäÖÃ
+  * DMAä¼ è¾“é…ç½®
   */
 void DMA_MemToMem_Config(void)
 {
-	DMA_STREAM_CLOCK();     /* Ê¹ÄÜDMAÊ±ÖÓ */
+	DMA_STREAM_CLOCK();     /* ä½¿èƒ½DMAæ—¶é’Ÿ */
 
-	DMA_M2M_Handler.Instance = DMA_STREAM;                       /* Á÷ */
-	DMA_M2M_Handler.Init .Channel = DMA_CHANNEL;                 /* DMAÊı¾İÁ÷Í¨µÀÑ¡Ôñ */
-	DMA_M2M_Handler.Init.Direction = DMA_MEMORY_TO_MEMORY;       /* ´æ´¢Æ÷µ½´æ´¢Æ÷Ä£Ê½ */
-	DMA_M2M_Handler.Init.PeriphInc = DMA_PINC_ENABLE;            /* Ê¹ÄÜ×Ô¶¯µİÔö¹¦ÄÜ */
-	DMA_M2M_Handler.Init.MemInc = DMA_MINC_ENABLE;               /* Ê¹ÄÜ×Ô¶¯µİÔö¹¦ÄÜ */
-	DMA_M2M_Handler.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;      /* Ô´Êı¾İÊÇ×Ö´óĞ¡(32Î») */
-	DMA_M2M_Handler.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;         /* Ä¿±êÊı¾İÒ²ÊÇ×Ö´óĞ¡(32Î») */
-	DMA_M2M_Handler.Init.Mode = DMA_NORMAL;                      /* Ò»´Î´«ÊäÄ£Ê½£¬´æ´¢Æ÷µ½´æ´¢Æ÷Ä£Ê½²»ÄÜÊ¹ÓÃÑ­»·´«Êä */
-	DMA_M2M_Handler.Init.Priority = DMA_PRIORITY_HIGH;           /* DMAÊı¾İÁ÷ÓÅÏÈ¼¶Îª¸ß */
-	DMA_M2M_Handler.Init.FIFOMode = DMA_FIFOMODE_DISABLE;        /* ½ûÓÃFIFOÄ£Ê½ */ 
+	DMA_M2M_Handler.Instance = DMA_STREAM;                       /* æµ */
+	DMA_M2M_Handler.Init .Channel = DMA_CHANNEL;                 /* DMAæ•°æ®æµé€šé“é€‰æ‹© */
+	DMA_M2M_Handler.Init.Direction = DMA_MEMORY_TO_MEMORY;       /* å­˜å‚¨å™¨åˆ°å­˜å‚¨å™¨æ¨¡å¼ */
+	DMA_M2M_Handler.Init.PeriphInc = DMA_PINC_ENABLE;            /* ä½¿èƒ½è‡ªåŠ¨é€’å¢åŠŸèƒ½ */
+	DMA_M2M_Handler.Init.MemInc = DMA_MINC_ENABLE;               /* ä½¿èƒ½è‡ªåŠ¨é€’å¢åŠŸèƒ½ */
+	DMA_M2M_Handler.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;      /* æºæ•°æ®æ˜¯å­—å¤§å°(32ä½) */
+	DMA_M2M_Handler.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;         /* ç›®æ ‡æ•°æ®ä¹Ÿæ˜¯å­—å¤§å°(32ä½) */
+	DMA_M2M_Handler.Init.Mode = DMA_NORMAL;                      /* ä¸€æ¬¡ä¼ è¾“æ¨¡å¼ï¼Œå­˜å‚¨å™¨åˆ°å­˜å‚¨å™¨æ¨¡å¼ä¸èƒ½ä½¿ç”¨å¾ªç¯ä¼ è¾“ */
+	DMA_M2M_Handler.Init.Priority = DMA_PRIORITY_HIGH;           /* DMAæ•°æ®æµä¼˜å…ˆçº§ä¸ºé«˜ */
+	DMA_M2M_Handler.Init.FIFOMode = DMA_FIFOMODE_DISABLE;        /* ç¦ç”¨FIFOæ¨¡å¼ */ 
 	DMA_M2M_Handler.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-	DMA_M2M_Handler.Init.MemBurst = DMA_MBURST_SINGLE;           /* µ¥´ÎÄ£Ê½ */
-	DMA_M2M_Handler.Init.PeriphBurst = DMA_PBURST_SINGLE;        /* µ¥´ÎÄ£Ê½ */
-	HAL_DMA_Init(&DMA_M2M_Handler);                              /* ³õÊ¼»¯DMAÊı¾İÁ÷²ÎÊıÅäÖÃ */
+	DMA_M2M_Handler.Init.MemBurst = DMA_MBURST_SINGLE;           /* å•æ¬¡æ¨¡å¼ */
+	DMA_M2M_Handler.Init.PeriphBurst = DMA_PBURST_SINGLE;        /* å•æ¬¡æ¨¡å¼ */
+	HAL_DMA_Init(&DMA_M2M_Handler);                              /* åˆå§‹åŒ–DMAæ•°æ®æµå‚æ•°é…ç½® */
 
 }
 
@@ -82,62 +82,62 @@ void DMA_MemToMem_Test(void)
     HAL_StatusTypeDef DMA_status = HAL_ERROR;
 	uint8_t TransferStatus;
 
-    /* Æô¶¯DMAÊı¾İÁ÷´«Êä, */
+    /* å¯åŠ¨DMAæ•°æ®æµä¼ è¾“, */
 	DMA_status = HAL_DMA_Start(&DMA_M2M_Handler,(uint32_t)aSRC_Const_Buffer,(uint32_t)aDST_Buffer,BUFFER_SIZE);
 
 	if (DMA_status != HAL_OK)
 	{
-		/* DMA³ö´í¾ÍÈÃ³ÌĞòÔËĞĞÏÂÃæÑ­»·£ºRGB²ÊÉ«µÆÉÁË¸ */   
+		/* DMAå‡ºé”™å°±è®©ç¨‹åºè¿è¡Œä¸‹é¢å¾ªç¯ï¼šRGBå½©è‰²ç¯é—ªçƒ */   
 			LED_RED;
 
 	} 
 
-	/* µÈ´ıDMA´«ÊäÍê³É */
+	/* ç­‰å¾…DMAä¼ è¾“å®Œæˆ */
 	while(__HAL_DMA_GET_FLAG(&DMA_M2M_Handler,DMA_FLAG_TCIF0_4)==DISABLE)
 	{
 
 	}
 
-	/* ±È½ÏÔ´Êı¾İÓë´«ÊäºóÊı¾İ */
+	/* æ¯”è¾ƒæºæ•°æ®ä¸ä¼ è¾“åæ•°æ® */
 	TransferStatus=Buffercmp(aSRC_Const_Buffer, aDST_Buffer, BUFFER_SIZE);
 
-	/* ÅĞ¶ÏÔ´Êı¾İÓë´«ÊäºóÊı¾İ±È½Ï½á¹û*/
+	/* åˆ¤æ–­æºæ•°æ®ä¸ä¼ è¾“åæ•°æ®æ¯”è¾ƒç»“æœ*/
 	if(TransferStatus==0)  
 	{
-		/* Ô´Êı¾İÓë´«ÊäºóÊı¾İ²»ÏàµÈÊ±RGB²ÊÉ«µÆÏÔÊ¾ºìÉ« */
+		/* æºæ•°æ®ä¸ä¼ è¾“åæ•°æ®ä¸ç›¸ç­‰æ—¶RGBå½©è‰²ç¯æ˜¾ç¤ºçº¢è‰² */
 		LED_RED;
 	}
 	else
 	{ 
-		/* Ô´Êı¾İÓë´«ÊäºóÊı¾İÏàµÈÊ±RGB²ÊÉ«µÆÏÔÊ¾À¶É« */
+		/* æºæ•°æ®ä¸ä¼ è¾“åæ•°æ®ç›¸ç­‰æ—¶RGBå½©è‰²ç¯æ˜¾ç¤ºè“è‰² */
 		LED_BLUE;
 	}	
 }
 
 
 /**
-  * @brief  USART1 TX DMA ÅäÖÃ£¬ÄÚ´æµ½ÍâÉè(USART1->DR)
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  USART1 TX DMA é…ç½®ï¼Œå†…å­˜åˆ°å¤–è®¾(USART1->DR)
+  * @param  æ— 
+  * @retval æ— 
   */
 void Debug_Uart_Dma_Config(void)
 {
 	Debug_Uart_DMA_CLK_ENABLE();  
 	
-	//Tx DMAÅäÖÃ
-	DMA_Handle.Instance = Debug_Uart_DMA_STREAM;             	//Êı¾İÁ÷Ñ¡Ôñ
-	DMA_Handle.Init.Channel = Debug_Uart_DMA_CHANNEL;              //Í¨µÀÑ¡Ôñ
-	DMA_Handle.Init.Direction = DMA_MEMORY_TO_PERIPH;             //´æ´¢Æ÷µ½ÍâÉè
-	DMA_Handle.Init.PeriphInc = DMA_PINC_DISABLE;                 //ÍâÉè·ÇÔöÁ¿Ä£Ê½
-	DMA_Handle.Init.MemInc = DMA_MINC_ENABLE;                     //´æ´¢Æ÷ÔöÁ¿Ä£Ê½
-	DMA_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;    //ÍâÉèÊı¾İ³¤¶È:8Î»
-	DMA_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;       //´æ´¢Æ÷Êı¾İ³¤¶È:8Î»
-	DMA_Handle.Init.Mode = DMA_NORMAL;                            //ÍâÉèÆÕÍ¨Ä£Ê½
-	DMA_Handle.Init.Priority = DMA_PRIORITY_MEDIUM;               //ÖĞµÈÓÅÏÈ¼¶
-	DMA_Handle.Init.FIFOMode = DMA_FIFOMODE_DISABLE;              //½ûÓÃFIFO
+	//Tx DMAé…ç½®
+	DMA_Handle.Instance = Debug_Uart_DMA_STREAM;             	//æ•°æ®æµé€‰æ‹©
+	DMA_Handle.Init.Channel = Debug_Uart_DMA_CHANNEL;              //é€šé“é€‰æ‹©
+	DMA_Handle.Init.Direction = DMA_MEMORY_TO_PERIPH;             //å­˜å‚¨å™¨åˆ°å¤–è®¾
+	DMA_Handle.Init.PeriphInc = DMA_PINC_DISABLE;                 //å¤–è®¾éå¢é‡æ¨¡å¼
+	DMA_Handle.Init.MemInc = DMA_MINC_ENABLE;                     //å­˜å‚¨å™¨å¢é‡æ¨¡å¼
+	DMA_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;    //å¤–è®¾æ•°æ®é•¿åº¦:8ä½
+	DMA_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;       //å­˜å‚¨å™¨æ•°æ®é•¿åº¦:8ä½
+	DMA_Handle.Init.Mode = DMA_NORMAL;                            //å¤–è®¾æ™®é€šæ¨¡å¼
+	DMA_Handle.Init.Priority = DMA_PRIORITY_MEDIUM;               //ä¸­ç­‰ä¼˜å…ˆçº§
+	DMA_Handle.Init.FIFOMode = DMA_FIFOMODE_DISABLE;              //ç¦ç”¨FIFO
 	DMA_Handle.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;      
-	DMA_Handle.Init.MemBurst = DMA_MBURST_SINGLE;                 //´æ´¢Æ÷Í»·¢µ¥´Î´«Êä
-	DMA_Handle.Init.PeriphBurst = DMA_PBURST_SINGLE;              //ÍâÉèÍ»·¢µ¥´Î´«Êä
+	DMA_Handle.Init.MemBurst = DMA_MBURST_SINGLE;                 //å­˜å‚¨å™¨çªå‘å•æ¬¡ä¼ è¾“
+	DMA_Handle.Init.PeriphBurst = DMA_PBURST_SINGLE;              //å¤–è®¾çªå‘å•æ¬¡ä¼ è¾“
 	
 	HAL_DMA_Init(&DMA_Handle);
 	/* Associate the DMA handle */
@@ -152,7 +152,7 @@ void Debug_Uart_Dma_Test(void)
 {
 	uint8_t SendBuff[SENDBUFF_SIZE];
 
-	/*Ìî³ä½«Òª·¢ËÍµÄÊı¾İ*/
+	/*å¡«å……å°†è¦å‘é€çš„æ•°æ®*/
 	for(uint8_t i=0;i<SENDBUFF_SIZE;i++)
 	{
 		SendBuff[i]	 = 'A';

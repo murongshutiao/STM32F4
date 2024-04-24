@@ -336,7 +336,7 @@ const struct http_ssi_tag_description http_ssi_tag_desc[] = {
 
 #if LWIP_HTTPD_CGI
 /* CGI handler information */
-static const tCGI *httpd_cgis;  /* CGIÊı×éÖ¸Õë */
+static const tCGI *httpd_cgis;  /* CGIæ•°ç»„æŒ‡é’ˆ */
 static int httpd_num_cgis;
 static int http_cgi_paramcount;
 #define http_cgi_params     hs->params
@@ -2748,8 +2748,8 @@ void http_set_ssi_handler(tSSIHandler ssi_handler, const char **tags, int num_ta
  * @ingroup httpd
  * Set an array of CGI filenames/handler functions
  *
- * @param cgis:CGI½á¹¹ÌåÊı×é
- * @param num_handlers CGIÊı×éµÄÊıÁ¿
+ * @param cgis:CGIç»“æ„ä½“æ•°ç»„
+ * @param num_handlers CGIæ•°ç»„çš„æ•°é‡
  */
 void http_set_cgi_handlers(const tCGI *cgis, int num_handlers)
 {

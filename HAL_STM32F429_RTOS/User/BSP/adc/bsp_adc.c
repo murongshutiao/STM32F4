@@ -12,65 +12,65 @@ static void Rheostat_ADC_GPIO_Config(void)
         
     GPIO_InitStructure.Pin = RHEOSTAT_ADC_GPIO_PIN;
     GPIO_InitStructure.Mode = GPIO_MODE_ANALOG;	    
-    GPIO_InitStructure.Pull = GPIO_NOPULL ; //²»ÉÏÀ­²»ÏÂÀ­
+    GPIO_InitStructure.Pull = GPIO_NOPULL ; //ä¸ä¸Šæ‹‰ä¸ä¸‹æ‹‰
     HAL_GPIO_Init(RHEOSTAT_ADC_GPIO_PORT, &GPIO_InitStructure);		
 }
 
 static void Rheostat_ADC_Mode_Config(void)
 {
 #ifdef DMA_ADC_STREAM
-    // ¿ªÆôDMAÊ±ÖÓ
+    // å¼€å¯DMAæ—¶é’Ÿ
     DMA_ADC_STREAM_CLOCK();
     
-    DMA_Init_Handle.Instance = DMA_ADC_STREAM;// Êı¾İ´«ÊäÍ¨µÀ
-    DMA_Init_Handle.Init.Direction = DMA_PERIPH_TO_MEMORY;	// Êı¾İ´«Êä·½ÏòÎªÍâÉèµ½´æ´¢Æ÷
-    DMA_Init_Handle.Init.PeriphInc = DMA_PINC_DISABLE;// ÍâÉè¼Ä´æÆ÷Ö»ÓĞÒ»¸ö£¬µØÖ·²»ÓÃµİÔö
-    DMA_Init_Handle.Init.MemInc = DMA_MINC_ENABLE; // ´æ´¢Æ÷µØÖ·¹Ì¶¨
-    DMA_Init_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD; // ÍâÉèÊı¾İ´óĞ¡Îª°ë×Ö£¬¼´Á½¸ö×Ö½Ú 
-    DMA_Init_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;	//	´æ´¢Æ÷Êı¾İ´óĞ¡Ò²Îª°ë×Ö£¬¸úÍâÉèÊı¾İ´óĞ¡ÏàÍ¬
-    DMA_Init_Handle.Init.Mode = DMA_CIRCULAR;   // Ñ­»·´«ÊäÄ£Ê½
-    DMA_Init_Handle.Init.Priority = DMA_PRIORITY_HIGH;  // DMA ´«ÊäÍ¨µÀÓÅÏÈ¼¶Îª¸ß£¬µ±Ê¹ÓÃÒ»¸öDMAÍ¨µÀÊ±£¬ÓÅÏÈ¼¶ÉèÖÃ²»Ó°Ïì
-    DMA_Init_Handle.Init.FIFOMode = DMA_FIFOMODE_DISABLE;  // ½ûÖ¹DMA FIFO	£¬Ê¹ÓÃÖ±Á¬Ä£Ê½
-    // FIFO ´óĞ¡£¬FIFOÄ£Ê½½ûÖ¹Ê±£¬Õâ¸ö²»ÓÃÅäÖÃ	
+    DMA_Init_Handle.Instance = DMA_ADC_STREAM;// æ•°æ®ä¼ è¾“é€šé“
+    DMA_Init_Handle.Init.Direction = DMA_PERIPH_TO_MEMORY;	// æ•°æ®ä¼ è¾“æ–¹å‘ä¸ºå¤–è®¾åˆ°å­˜å‚¨å™¨
+    DMA_Init_Handle.Init.PeriphInc = DMA_PINC_DISABLE;// å¤–è®¾å¯„å­˜å™¨åªæœ‰ä¸€ä¸ªï¼Œåœ°å€ä¸ç”¨é€’å¢
+    DMA_Init_Handle.Init.MemInc = DMA_MINC_ENABLE; // å­˜å‚¨å™¨åœ°å€å›ºå®š
+    DMA_Init_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD; // å¤–è®¾æ•°æ®å¤§å°ä¸ºåŠå­—ï¼Œå³ä¸¤ä¸ªå­—èŠ‚ 
+    DMA_Init_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;	//	å­˜å‚¨å™¨æ•°æ®å¤§å°ä¹Ÿä¸ºåŠå­—ï¼Œè·Ÿå¤–è®¾æ•°æ®å¤§å°ç›¸åŒ
+    DMA_Init_Handle.Init.Mode = DMA_CIRCULAR;   // å¾ªç¯ä¼ è¾“æ¨¡å¼
+    DMA_Init_Handle.Init.Priority = DMA_PRIORITY_HIGH;  // DMA ä¼ è¾“é€šé“ä¼˜å…ˆçº§ä¸ºé«˜ï¼Œå½“ä½¿ç”¨ä¸€ä¸ªDMAé€šé“æ—¶ï¼Œä¼˜å…ˆçº§è®¾ç½®ä¸å½±å“
+    DMA_Init_Handle.Init.FIFOMode = DMA_FIFOMODE_DISABLE;  // ç¦æ­¢DMA FIFO	ï¼Œä½¿ç”¨ç›´è¿æ¨¡å¼
+    // FIFO å¤§å°ï¼ŒFIFOæ¨¡å¼ç¦æ­¢æ—¶ï¼Œè¿™ä¸ªä¸ç”¨é…ç½®	
     DMA_Init_Handle.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_HALFFULL;
     DMA_Init_Handle.Init.MemBurst = DMA_MBURST_SINGLE;
     DMA_Init_Handle.Init.PeriphBurst = DMA_PBURST_SINGLE;  
-    DMA_Init_Handle.Init.Channel = DMA_ADC_CHANNEL; // Ñ¡Ôñ DMA Í¨µÀ£¬Í¨µÀ´æÔÚÓÚÁ÷ÖĞ
-    //³õÊ¼»¯DMAÁ÷£¬Á÷Ïàµ±ÓÚÒ»¸ö´óµÄ¹ÜµÀ£¬¹ÜµÀÀïÃæÓĞºÜ¶àÍ¨µÀ
+    DMA_Init_Handle.Init.Channel = DMA_ADC_CHANNEL; // é€‰æ‹© DMA é€šé“ï¼Œé€šé“å­˜åœ¨äºæµä¸­
+    //åˆå§‹åŒ–DMAæµï¼Œæµç›¸å½“äºä¸€ä¸ªå¤§çš„ç®¡é“ï¼Œç®¡é“é‡Œé¢æœ‰å¾ˆå¤šé€šé“
     HAL_DMA_Init(&DMA_Init_Handle); 
     HAL_DMA_Start (&DMA_Init_Handle,RHEOSTAT_ADC_DR_ADDR,(uint32_t)&ADC_ConvertedValue,1);
 #endif
 
     RHEOSTAT_ADC_CLK_ENABLE();
 
-    // -------------------ADC Init ½á¹¹Ìå ²ÎÊı ³õÊ¼»¯------------------------
+    // -------------------ADC Init ç»“æ„ä½“ å‚æ•° åˆå§‹åŒ–------------------------
     ADC_Handle.Instance = RHEOSTAT_ADC;
-    ADC_Handle.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV4;// ADCÊ±ÖÓ·ÖÆµ 4·ÖÆµ
-    ADC_Handle.Init.Resolution = ADC_RESOLUTION_12B;// ADC ·Ö±æÂÊ
-    ADC_Handle.Init.ScanConvMode = DISABLE; // ½ûÖ¹É¨ÃèÄ£Ê½£¬¶àÍ¨µÀ²É¼¯²ÅĞèÒª
-    ADC_Handle.Init.ContinuousConvMode = ENABLE;// Á¬Ğø×ª»»	
-    ADC_Handle.Init.DiscontinuousConvMode = DISABLE;// ·ÇÁ¬Ğø×ª»»	
-    ADC_Handle.Init.NbrOfDiscConversion   = 0;// ·ÇÁ¬Ğø×ª»»¸öÊı
-    ADC_Handle.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;//½ûÖ¹Íâ²¿±ßÑØ´¥·¢
-    //Ê¹ÓÃÈí¼ş´¥·¢£¬Íâ²¿´¥·¢²»ÓÃÅäÖÃ£¬×¢ÊÍµô¼´¿É
+    ADC_Handle.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV4;// ADCæ—¶é’Ÿåˆ†é¢‘ 4åˆ†é¢‘
+    ADC_Handle.Init.Resolution = ADC_RESOLUTION_12B;// ADC åˆ†è¾¨ç‡
+    ADC_Handle.Init.ScanConvMode = DISABLE; // ç¦æ­¢æ‰«ææ¨¡å¼ï¼Œå¤šé€šé“é‡‡é›†æ‰éœ€è¦
+    ADC_Handle.Init.ContinuousConvMode = ENABLE;// è¿ç»­è½¬æ¢	
+    ADC_Handle.Init.DiscontinuousConvMode = DISABLE;// éè¿ç»­è½¬æ¢	
+    ADC_Handle.Init.NbrOfDiscConversion   = 0;// éè¿ç»­è½¬æ¢ä¸ªæ•°
+    ADC_Handle.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;//ç¦æ­¢å¤–éƒ¨è¾¹æ²¿è§¦å‘
+    //ä½¿ç”¨è½¯ä»¶è§¦å‘ï¼Œå¤–éƒ¨è§¦å‘ä¸ç”¨é…ç½®ï¼Œæ³¨é‡Šæ‰å³å¯
     //ADC_Handle.Init.ExternalTrigConv      = ADC_EXTERNALTRIGCONV_T1_CC1;
-    ADC_Handle.Init.DataAlign = ADC_DATAALIGN_RIGHT;//Êı¾İÓÒ¶ÔÆë
-    ADC_Handle.Init.NbrOfConversion = 1;//×ª»»Í¨µÀ 1¸ö
-    ADC_Handle.Init.DMAContinuousRequests = ENABLE;//Ê¹ÄÜÁ¬Ğø×ª»»ÇëÇó£¬µ¥Í¨µÀÊ¹ÄÜDMA²»Ó°Ïì
-    ADC_Handle.Init.EOCSelection          = DISABLE;    //×ª»»Íê³É±êÖ¾                
-    HAL_ADC_Init(&ADC_Handle);  // ³õÊ¼»¯ADC
+    ADC_Handle.Init.DataAlign = ADC_DATAALIGN_RIGHT;//æ•°æ®å³å¯¹é½
+    ADC_Handle.Init.NbrOfConversion = 1;//è½¬æ¢é€šé“ 1ä¸ª
+    ADC_Handle.Init.DMAContinuousRequests = ENABLE;//ä½¿èƒ½è¿ç»­è½¬æ¢è¯·æ±‚ï¼Œå•é€šé“ä½¿èƒ½DMAä¸å½±å“
+    ADC_Handle.Init.EOCSelection          = DISABLE;    //è½¬æ¢å®Œæˆæ ‡å¿—                
+    HAL_ADC_Init(&ADC_Handle);  // åˆå§‹åŒ–ADC
 
     //---------------------------------------------------------------------------
     ADC_Config.Channel      = RHEOSTAT_ADC_CHANNEL;
-    ADC_Config.Rank         = 1;                    //²ÉÑùË³Ğò,µÚÒ»¸ö²ÉÑù
-    ADC_Config.SamplingTime = ADC_SAMPLETIME_56CYCLES;// ²ÉÑùÊ±¼ä¼ä¸ô	
-    ADC_Config.Offset       = 0;        /* ²»ÖªµÀÊ²Ã´ÓÃ */
-    // ÅäÖÃ ADC Í¨µÀ×ª»»Ë³ĞòÎª1£¬µÚÒ»¸ö×ª»»£¬²ÉÑùÊ±¼äÎª3¸öÊ±ÖÓÖÜÆÚ
+    ADC_Config.Rank         = 1;                    //é‡‡æ ·é¡ºåº,ç¬¬ä¸€ä¸ªé‡‡æ ·
+    ADC_Config.SamplingTime = ADC_SAMPLETIME_56CYCLES;// é‡‡æ ·æ—¶é—´é—´éš”	
+    ADC_Config.Offset       = 0;        /* ä¸çŸ¥é“ä»€ä¹ˆç”¨ */
+    // é…ç½® ADC é€šé“è½¬æ¢é¡ºåºä¸º1ï¼Œç¬¬ä¸€ä¸ªè½¬æ¢ï¼Œé‡‡æ ·æ—¶é—´ä¸º3ä¸ªæ—¶é’Ÿå‘¨æœŸ
     HAL_ADC_ConfigChannel(&ADC_Handle, &ADC_Config);
     HAL_ADC_Start_IT(&ADC_Handle);
 }
 
-//// ÅäÖÃÖĞ¶ÏÓÅÏÈ¼¶
+//// é…ç½®ä¸­æ–­ä¼˜å…ˆçº§
 //static void Rheostat_ADC_NVIC_Config(void)
 //{
 //    HAL_NVIC_SetPriority(Rheostat_ADC_IRQ, 0, 0);
@@ -87,13 +87,13 @@ void Rheostat_Init(void)
 }
 
 /**
-  * @brief  ×ª»»Íê³ÉÖĞ¶Ï»Øµ÷º¯Êı£¨·Ç×èÈûÄ£Ê½£©
-  * @param  AdcHandle : ADC¾ä±ú
-  * @retval ÎŞ
+  * @brief  è½¬æ¢å®Œæˆä¸­æ–­å›è°ƒå‡½æ•°ï¼ˆéé˜»å¡æ¨¡å¼ï¼‰
+  * @param  AdcHandle : ADCå¥æŸ„
+  * @retval æ— 
   */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
 {
-    /* »ñÈ¡½á¹û */
+    /* è·å–ç»“æœ */
     ADC_ConvertedValue = HAL_ADC_GetValue(AdcHandle);
 }
 

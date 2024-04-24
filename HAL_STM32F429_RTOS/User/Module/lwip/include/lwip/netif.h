@@ -260,11 +260,11 @@ struct netif_hint {
 struct netif 
 {
 #if !LWIP_SINGLE_NETIF
-    struct netif *next;   /* Ö¸ÏòÏÂÒ»¸öÁ´±í */
+    struct netif *next;   /* æŒ‡å‘ä¸‹ä¸€ä¸ªé“¾è¡¨ */
 #endif
 
 #if LWIP_IPV4
-    /* IPµØÖ·£¬×ÓÍøÑÚÂë£¬Íø¹Ø */
+    /* IPåœ°å€ï¼Œå­ç½‘æ©ç ï¼Œç½‘å…³ */
     ip_addr_t ip_addr;    
     ip_addr_t netmask;    
     ip_addr_t gw;         
@@ -284,17 +284,17 @@ struct netif
     #endif /* LWIP_IPV6_ADDRESS_LIFETIMES */
 #endif /* LWIP_IPV6 */
 
-    /* Íø¿¨µÄTCP/IPĞ­ÒéÕ»½âÎöº¯Êı */
+    /* ç½‘å¡çš„TCP/IPåè®®æ ˆè§£æå‡½æ•° */
     netif_input_fn input;
 
 #if LWIP_IPV4
-    /** ´Ëº¯ÊıÓÉ IP ²ãµ÷ÓÃ£¬ÔÚ½Ó¿ÚÉÏ·¢ËÍÊı¾İ°ü¡£Í¨³£Õâ¸ö¹¦ÄÜ£¬
-     * Ê×ÏÈ½âÎöÓ²¼şµØÖ·£¬È»ºó·¢ËÍÊı¾İ°ü¡£¶ÔÓÚÒÔÌ«ÍøÎïÀí²ã£¬ÕâÍ¨³£ÊÇ etharp_output() */
+    /** æ­¤å‡½æ•°ç”± IP å±‚è°ƒç”¨ï¼Œåœ¨æ¥å£ä¸Šå‘é€æ•°æ®åŒ…ã€‚é€šå¸¸è¿™ä¸ªåŠŸèƒ½ï¼Œ
+     * é¦–å…ˆè§£æç¡¬ä»¶åœ°å€ï¼Œç„¶åå‘é€æ•°æ®åŒ…ã€‚å¯¹äºä»¥å¤ªç½‘ç‰©ç†å±‚ï¼Œè¿™é€šå¸¸æ˜¯ etharp_output() */
     netif_output_fn output;
 #endif /* LWIP_IPV4 */
 
-    /**´Ëº¯ÊıÓÉ ethernet_output() µ÷ÓÃ£¬µ±ĞèÒªÔÚÍø¿¨ÉÏ·¢ËÍÒ»¸öÊı¾İ°üÊ±¡£
-    * µ×²ãÓ²¼şÊä³öÊı¾İº¯Êı£¬Ò»°ãÊÇµ÷ÓÃ×Ô¶¨Òåº¯Êı low_level_output. */
+    /**æ­¤å‡½æ•°ç”± ethernet_output() è°ƒç”¨ï¼Œå½“éœ€è¦åœ¨ç½‘å¡ä¸Šå‘é€ä¸€ä¸ªæ•°æ®åŒ…æ—¶ã€‚
+    * åº•å±‚ç¡¬ä»¶è¾“å‡ºæ•°æ®å‡½æ•°ï¼Œä¸€èˆ¬æ˜¯è°ƒç”¨è‡ªå®šä¹‰å‡½æ•° low_level_output. */
     netif_linkoutput_fn linkoutput;
 
 #if LWIP_IPV6
@@ -306,22 +306,22 @@ struct netif
 #endif /* LWIP_IPV6 */
 
 #if LWIP_NETIF_STATUS_CALLBACK
-  /* µ± netif ×´Ì¬ÉèÖÃÎª up »ò down Ê±µ÷ÓÃ´Ëº¯Êı */
+  /* å½“ netif çŠ¶æ€è®¾ç½®ä¸º up æˆ– down æ—¶è°ƒç”¨æ­¤å‡½æ•° */
   netif_status_callback_fn status_callback;
 #endif /* LWIP_NETIF_STATUS_CALLBACK */
 
 #if LWIP_NETIF_LINK_CALLBACK
-    /* µ± netif Á´½ÓÉèÖÃÎª up »ò down Ê±£¬½«µ÷ÓÃ´Ëº¯Êı */
+    /* å½“ netif é“¾æ¥è®¾ç½®ä¸º up æˆ– down æ—¶ï¼Œå°†è°ƒç”¨æ­¤å‡½æ•° */
     netif_status_callback_fn link_callback;
 #endif /* LWIP_NETIF_LINK_CALLBACK */
 
 #if LWIP_NETIF_REMOVE_CALLBACK
-    /* µ± netif ±»É¾³ıÊ±µ÷ÓÃ´Ëº¯Êı */
+    /* å½“ netif è¢«åˆ é™¤æ—¶è°ƒç”¨æ­¤å‡½æ•° */
     netif_status_callback_fn remove_callback;
 #endif /* LWIP_NETIF_REMOVE_CALLBACK */
 
-    /* ´Ë×Ö¶Î¿ÉÓÉÉè±¸Çı¶¯³ÌĞòÉèÖÃ²¢Ö¸ÏòÉè±¸µÄ×´Ì¬ĞÅÏ¢¡£
-    Ö÷ÒªÊÇ½«Íø¿¨µÄÄ³Ğ©Ë½ÓĞÊı¾İ´«µİ¸øÉÏ²ã£¬ÓÃ»§¿ÉÒÔ×ÔÓÉ·¢»Ó£¬Ò²¿ÉÒÔ²»ÓÃ¡£ */
+    /* æ­¤å­—æ®µå¯ç”±è®¾å¤‡é©±åŠ¨ç¨‹åºè®¾ç½®å¹¶æŒ‡å‘è®¾å¤‡çš„çŠ¶æ€ä¿¡æ¯ã€‚
+    ä¸»è¦æ˜¯å°†ç½‘å¡çš„æŸäº›ç§æœ‰æ•°æ®ä¼ é€’ç»™ä¸Šå±‚ï¼Œç”¨æˆ·å¯ä»¥è‡ªç”±å‘æŒ¥ï¼Œä¹Ÿå¯ä»¥ä¸ç”¨ã€‚ */
     void *state;
 
 #ifdef netif_get_client_data
@@ -329,24 +329,24 @@ struct netif
 #endif
 
 #if LWIP_NETIF_HOSTNAME 
-    const char*  hostname;  /* netif µÄÖ÷»úÃû */
+    const char*  hostname;  /* netif çš„ä¸»æœºå */
 #endif /* LWIP_NETIF_HOSTNAME */
 
 #if LWIP_CHECKSUM_CTRL_PER_NETIF
     u16_t chksum_flags;
 #endif /* LWIP_CHECKSUM_CTRL_PER_NETIF*/
   
-    u16_t mtu;  /* ×î´ó´«Êä×Ö½Ú£¬ÒÔÌ«ÍøÒ»°ã1500 */
+    u16_t mtu;  /* æœ€å¤§ä¼ è¾“å­—èŠ‚ï¼Œä»¥å¤ªç½‘ä¸€èˆ¬1500 */
 
 #if LWIP_IPV6 && LWIP_ND6_ALLOW_RA_UPDATES
     u16_t mtu6; /** maximum transfer unit (in bytes), updated by RA */
 #endif /* LWIP_IPV6 && LWIP_ND6_ALLOW_RA_UPDATES */
   
-    u8_t hwaddr[NETIF_MAX_HWADDR_LEN];      /* Íø¿¨Á´Â·²ãÓ²¼şµØÖ· */
-    u8_t hwaddr_len;                        /* Ó²¼şµØÖ·³¤¶È£¬MACµØÖ·6×Ö½Ú */
-    u8_t flags;                             /* Íø¿¨×´Ì¬±êÖ¾Î»,Íø¿¨¹¦ÄÜÊ¹ÄÜ£¬¹ã²¥Ê¹ÄÜ£¬ARPÊ¹ÄÜµÈ */
-    char name[2];                           /* Íø¿¨Ãû×Ö£¬Í¨³£×÷ÎªÍøÂçÀàĞÍ¼òĞ´ */
-    u8_t num;                               /* Íø¿¨ºÅ */
+    u8_t hwaddr[NETIF_MAX_HWADDR_LEN];      /* ç½‘å¡é“¾è·¯å±‚ç¡¬ä»¶åœ°å€ */
+    u8_t hwaddr_len;                        /* ç¡¬ä»¶åœ°å€é•¿åº¦ï¼ŒMACåœ°å€6å­—èŠ‚ */
+    u8_t flags;                             /* ç½‘å¡çŠ¶æ€æ ‡å¿—ä½,ç½‘å¡åŠŸèƒ½ä½¿èƒ½ï¼Œå¹¿æ’­ä½¿èƒ½ï¼ŒARPä½¿èƒ½ç­‰ */
+    char name[2];                           /* ç½‘å¡åå­—ï¼Œé€šå¸¸ä½œä¸ºç½‘ç»œç±»å‹ç®€å†™ */
+    u8_t num;                               /* ç½‘å¡å· */
 #if LWIP_IPV6_AUTOCONFIG
     /** is this netif enabled for IPv6 autoconfiguration */
     u8_t ip6_autoconfig_enabled;
@@ -357,14 +357,14 @@ struct netif
 #endif /* LWIP_IPV6_SEND_ROUTER_SOLICIT */
 #if MIB2_STATS
 
-    u8_t link_type;                         /* Á¬½ÓÀàĞÍ */
-    u32_t link_speed;                       /* Á¬½ÓËÙ¶È */
-    u32_t ts;                               /* ×îºóÒ»´Î¸ü¸ÄµÄÊ±¼ä´Á */
+    u8_t link_type;                         /* è¿æ¥ç±»å‹ */
+    u32_t link_speed;                       /* è¿æ¥é€Ÿåº¦ */
+    u32_t ts;                               /* æœ€åä¸€æ¬¡æ›´æ”¹çš„æ—¶é—´æˆ³ */
     /** counters */
     struct stats_mib2_netif_ctrs mib2_counters;
 #endif /* MIB2_STATS */
 #if LWIP_IPV4 && LWIP_IGMP
-  /* ¿ÉÒÔµ÷ÓÃ´Ëº¯ÊıÀ´Ìí¼Ó»òÉ¾³ı¶à²¥ÖĞµÄÌõÄ¿ÒÔÌ«Íø MAC µÄ¹ıÂË±í¡£*/
+  /* å¯ä»¥è°ƒç”¨æ­¤å‡½æ•°æ¥æ·»åŠ æˆ–åˆ é™¤å¤šæ’­ä¸­çš„æ¡ç›®ä»¥å¤ªç½‘ MAC çš„è¿‡æ»¤è¡¨ã€‚*/
   netif_igmp_mac_filter_fn igmp_mac_filter;
 #endif /* LWIP_IPV4 && LWIP_IGMP */
 #if LWIP_IPV6 && LWIP_IPV6_MLD

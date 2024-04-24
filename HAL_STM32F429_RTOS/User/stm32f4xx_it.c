@@ -41,7 +41,7 @@
 #include "./led/bsp_led.h"
 #include "cc.h"
 
-#include "FreeRTOS.h"					//FreeRTOSÊ¹ÓÃ		  
+#include "FreeRTOS.h"					//FreeRTOSä½¿ç”¨		  
 #include "task.h" 
 
 //extern SD_HandleTypeDef uSdHandle;
@@ -191,7 +191,7 @@ extern void xPortSysTickHandler(void);
 void SysTick_Handler(void)
 {
     uint32_t ulReturn;
-    /* ½øÈëÁÙ½ç¶Î£¬ÁÙ½ç¶Î¿ÉÒÔÇ¶Ì× */
+    /* è¿›å…¥ä¸´ç•Œæ®µï¼Œä¸´ç•Œæ®µå¯ä»¥åµŒå¥— */
     ulReturn = taskENTER_CRITICAL_FROM_ISR();
     
     HAL_IncTick();
@@ -205,7 +205,7 @@ void SysTick_Handler(void)
     }
 #endif  /* INCLUDE_xTaskGetSchedulerState */
     
-    /* ÍË³öÁÙ½ç¶Î */
+    /* é€€å‡ºä¸´ç•Œæ®µ */
     taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 }
 

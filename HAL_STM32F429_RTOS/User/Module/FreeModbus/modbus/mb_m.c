@@ -66,7 +66,7 @@ static UCHAR    ucMBMasterDestAddress;
 static BOOL     xMBRunInMasterMode = FALSE;
 static eMBMasterErrorEventType eMBMasterCurErrorType;
 
-/* modbus÷˜ª˙≈‰÷√Œ™Œ¥≥ı ºªØ◊¥Ã¨   */
+/* modbus‰∏ªÊú∫ÈÖçÁΩÆ‰∏∫Êú™ÂàùÂßãÂåñÁä∂ÊÄÅ   */
 static enum
 {
     STATE_ENABLED,
@@ -79,7 +79,7 @@ static enum
  * mode (RTU or ASCII) the are set to the correct implementations.
  * Using for Modbus Master,Add by Armink 20130813
  */
-static peMBFrameSend peMBMasterFrameSendCur;    /* ÷°∑¢ÀÕ∫Ø ˝ */
+static peMBFrameSend peMBMasterFrameSendCur;    /* Â∏ßÂèëÈÄÅÂáΩÊï∞ */
 static pvMBFrameStart pvMBMasterFrameStartCur;
 static pvMBFrameStop pvMBMasterFrameStopCur;
 static peMBFrameReceive peMBMasterFrameReceiveCur;
@@ -144,21 +144,21 @@ eMBErrorCode eMBMasterInit( eMBMode eMode, UCHAR ucPort, ULONG ulBaudRate, eMBPa
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
-    /* ≈‰÷√≥Ã–Ú‘À––À˘–Ëµƒ÷∏’Î */
+    /* ÈÖçÁΩÆÁ®ãÂ∫èËøêË°åÊâÄÈúÄÁöÑÊåáÈíà */
 	switch (eMode)
 	{
 #if MB_MASTER_RTU_ENABLED > 0
         case MB_RTU:
             pvMBMasterFrameStartCur = eMBMasterRTUStart;    
             pvMBMasterFrameStopCur = eMBMasterRTUStop;
-            peMBMasterFrameSendCur = eMBMasterRTUSend;  /* ≈‰÷√÷°∑¢ÀÕ∫Ø ˝ */
-            peMBMasterFrameReceiveCur = eMBMasterRTUReceive;    /* ≈‰÷√÷°Ω” ’∫Ø ˝ */
+            peMBMasterFrameSendCur = eMBMasterRTUSend;  /* ÈÖçÁΩÆÂ∏ßÂèëÈÄÅÂáΩÊï∞ */
+            peMBMasterFrameReceiveCur = eMBMasterRTUReceive;    /* ÈÖçÁΩÆÂ∏ßÊé•Êî∂ÂáΩÊï∞ */
             pvMBMasterFrameCloseCur = MB_PORT_HAS_CLOSE ? vMBMasterPortClose : NULL;
-            pxMBMasterFrameCBByteReceived = xMBMasterRTUReceiveFSM; /* ÷˜ª˙RTUΩ” ’◊¥Ã¨ª˙¥¶¿Ì */
-            pxMBMasterFrameCBTransmitterEmpty = xMBMasterRTUTransmitFSM;    /* ÷˜ª˙RTU∑¢ÀÕ◊¥Ã¨ª˙¥¶¿Ì */
-            pxMBMasterPortCBTimerExpired = xMBMasterRTUTimerExpired;    /* ≈‰÷√∂® ±∆˜÷¥––∫Ø ˝ */
+            pxMBMasterFrameCBByteReceived = xMBMasterRTUReceiveFSM; /* ‰∏ªÊú∫RTUÊé•Êî∂Áä∂ÊÄÅÊú∫Â§ÑÁêÜ */
+            pxMBMasterFrameCBTransmitterEmpty = xMBMasterRTUTransmitFSM;    /* ‰∏ªÊú∫RTUÂèëÈÄÅÁä∂ÊÄÅÊú∫Â§ÑÁêÜ */
+            pxMBMasterPortCBTimerExpired = xMBMasterRTUTimerExpired;    /* ÈÖçÁΩÆÂÆöÊó∂Âô®ÊâßË°åÂáΩÊï∞ */
 
-            /* Õ‚…Ë≥ı ºªØ */
+            /* Â§ñËÆæÂàùÂßãÂåñ */
             eStatus = eMBMasterRTUInit(ucPort, ulBaudRate, eParity);
             break;
 #endif
@@ -224,7 +224,7 @@ eMBErrorCode eMBMasterEnable( void )
     {
         /* Activate the protocol stack. */
         pvMBMasterFrameStartCur(  );
-        eMBState = STATE_ENABLED;   /* modbus÷˜ª˙◊¥Ã¨≈‰÷√Œ™ πƒ‹◊¥Ã¨ */
+        eMBState = STATE_ENABLED;   /* modbus‰∏ªÊú∫Áä∂ÊÄÅÈÖçÁΩÆ‰∏∫‰ΩøËÉΩÁä∂ÊÄÅ */
     }
     else
     {
@@ -271,24 +271,24 @@ eMBMasterIsEstablished( void )
 
 eMBErrorCode eMBMasterPoll( void )
 {
-    static UCHAR   *ucMBFrame;  /* Ω” ’µƒPDU÷∏’Î */
-    static UCHAR    ucRcvAddress;   /* µÿ÷∑ */
-    static UCHAR    ucFunctionCode; /* π¶ƒ‹¬Î */
-    static USHORT   usLength;   /* PDU≥§∂» */
+    static UCHAR   *ucMBFrame;  /* Êé•Êî∂ÁöÑPDUÊåáÈíà */
+    static UCHAR    ucRcvAddress;   /* Âú∞ÂùÄ */
+    static UCHAR    ucFunctionCode; /* ÂäüËÉΩÁ†Å */
+    static USHORT   usLength;   /* PDUÈïøÂ∫¶ */
     static eMBException eException;
 
     int             i , j;
     eMBErrorCode    eStatus = MB_ENOERR;
-    eMBMasterEventType    eEvent;   /* ÷˜ª˙–≠“È ¬º˛◊¥Ã¨ */
+    eMBMasterEventType    eEvent;   /* ‰∏ªÊú∫ÂçèËÆÆ‰∫ã‰ª∂Áä∂ÊÄÅ */
     eMBMasterErrorEventType errorType;
 
-    /* ºÏ≤È–≠“È’ª «∑Ò≥ı ºªØ∫√. */
+    /* Ê£ÄÊü•ÂçèËÆÆÊ†àÊòØÂê¶ÂàùÂßãÂåñÂ•Ω. */
     if((eMBState != STATE_ENABLED) && (eMBState != STATE_ESTABLISHED))
     {
         return MB_EILLSTATE;
     }
 
-    /* ªÒ»°µ±«∞◊¥Ã¨≥…π¶ */
+    /* Ëé∑ÂèñÂΩìÂâçÁä∂ÊÄÅÊàêÂäü */
     if(xMBMasterPortEventGet(&eEvent) == TRUE)
     {
         switch (eEvent)
@@ -297,37 +297,37 @@ eMBErrorCode eMBMasterPoll( void )
                 eMBState = STATE_ESTABLISHED;
                 break;
 
-            case EV_MASTER_FRAME_RECEIVED:  /* ÷°Ω” ’ÕÍ≥…,≤¢∂‘÷°Ω¯––≥§∂»£¨CRC–£—È≈–∂œ */
-                /* ªÒ»°¥”ª˙µÿ÷∑£¨PDU∂Œµÿ÷∑,PDU≥§∂»*/
+            case EV_MASTER_FRAME_RECEIVED:  /* Â∏ßÊé•Êî∂ÂÆåÊàê,Âπ∂ÂØπÂ∏ßËøõË°åÈïøÂ∫¶ÔºåCRCÊ†°È™åÂà§Êñ≠ */
+                /* Ëé∑Âèñ‰ªéÊú∫Âú∞ÂùÄÔºåPDUÊÆµÂú∞ÂùÄ,PDUÈïøÂ∫¶*/
                 eStatus = peMBMasterFrameReceiveCur(&ucRcvAddress,&ucMBFrame,&usLength );
 
                 /* Check if the frame is for us. If not ,send an error process event. */
                 if((eStatus == MB_ENOERR) && (ucRcvAddress == ucMBMasterGetDestAddress() ) )
                 {
-                    /* µÿ÷∑∆•≈‰’˝»∑«“√ª”–¥ÌŒÛ,≈‰÷√Œ™¥¶¿Ì◊¥Ã¨ */
+                    /* Âú∞ÂùÄÂåπÈÖçÊ≠£Á°Æ‰∏îÊ≤°ÊúâÈîôËØØ,ÈÖçÁΩÆ‰∏∫Â§ÑÁêÜÁä∂ÊÄÅ */
                     (void)xMBMasterPortEventPost(EV_MASTER_EXECUTE);
                 }
                 else
                 {
                     vMBMasterSetErrorType(EV_ERROR_RECEIVE_DATA);
                     
-                    /* ≈‰÷√Œ™¥ÌŒÛ◊¥Ã¨ */
+                    /* ÈÖçÁΩÆ‰∏∫ÈîôËØØÁä∂ÊÄÅ */
                     (void)xMBMasterPortEventPost( EV_MASTER_ERROR_PROCESS );
                 }
                 break;
 
-            case EV_MASTER_EXECUTE: /* ∂‘Ω” ’µƒ÷°Ω¯–– ˝æ›¥¶¿Ì */
-                ucFunctionCode = ucMBFrame[MB_PDU_FUNC_OFF];    /* ªÒ»°π¶ƒ‹¬Î */
+            case EV_MASTER_EXECUTE: /* ÂØπÊé•Êî∂ÁöÑÂ∏ßËøõË°åÊï∞ÊçÆÂ§ÑÁêÜ */
+                ucFunctionCode = ucMBFrame[MB_PDU_FUNC_OFF];    /* Ëé∑ÂèñÂäüËÉΩÁ†Å */
                 eException = MB_EX_ILLEGAL_FUNCTION;
 
-                /* ≤Èø¥ «∑ÒÃ· æ“Ï≥£÷° */
+                /* Êü•ÁúãÊòØÂê¶ÊèêÁ§∫ÂºÇÂ∏∏Â∏ß */
                 if(ucFunctionCode >> 7) 
                 {
                     eException = (eMBException)ucMBFrame[MB_PDU_DATA_OFF];
                 }
                 else
                 {
-                    /* ›Ü‘É≈–î‡Æê≥£¥a */
+                    /* Ëº™Ë©¢Âà§Êñ∑Áï∞Â∏∏Á¢º */
                     for (i = 0; i < MB_FUNC_HANDLERS_MAX; i++)
                     {
                         /* No more function handlers registered. Abort. */
@@ -372,9 +372,9 @@ eMBErrorCode eMBMasterPoll( void )
                 }
                 break;
 
-                /* ÷°∑¢ÀÕ */
+                /* Â∏ßÂèëÈÄÅ */
                 case EV_MASTER_FRAME_SENT:
-                    vMBMasterGetPDUSndBuf(&ucMBFrame);/* ªÒ»°PDUµƒ ◊µÿ÷∑£¨º¥π¶ƒ‹¬ÎŒª÷√ */
+                    vMBMasterGetPDUSndBuf(&ucMBFrame);/* Ëé∑ÂèñPDUÁöÑÈ¶ñÂú∞ÂùÄÔºåÂç≥ÂäüËÉΩÁ†Å‰ΩçÁΩÆ */
                     eStatus = peMBMasterFrameSendCur( ucMBMasterGetDestAddress(), ucMBFrame, usMBMasterGetPDUSndLength() );
                     break;
 

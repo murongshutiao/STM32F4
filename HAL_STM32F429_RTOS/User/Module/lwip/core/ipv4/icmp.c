@@ -102,7 +102,7 @@ icmp_input(struct pbuf *p, struct netif *inp)
     goto lenerr;
   }
 
-  type = *((u8_t *)p->payload); /* 获取ICMP类型 */
+  type = *((u8_t *)p->payload); /* 鑾峰彇ICMP绫诲瀷 */
 #ifdef LWIP_DEBUG
   code = *(((u8_t *)p->payload) + 1);
   /* if debug is enabled but debug statement below is somehow disabled: */
@@ -114,7 +114,7 @@ icmp_input(struct pbuf *p, struct netif *inp)
          (as obviously, an echo request has been sent, too). */
       MIB2_STATS_INC(mib2.icmpinechoreps);
       break;
-    case ICMP_ECHO: /* ICMP回响报文 */
+    case ICMP_ECHO: /* ICMP鍥炲搷鎶ユ枃 */
       MIB2_STATS_INC(mib2.icmpinechos);
       src = ip4_current_dest_addr();  
       /* multicast destination address? */
@@ -304,7 +304,7 @@ icmperr:
  *          p->payload pointing to the IP header
  * @param t type of the 'unreachable' packet
  */
-void /* 发送源站不可达报文 */
+void /* 鍙戦�佹簮绔欎笉鍙揪鎶ユ枃 */
 icmp_dest_unreach(struct pbuf *p, enum icmp_dur_type t)
 {
   MIB2_STATS_INC(mib2.icmpoutdestunreachs);
@@ -319,7 +319,7 @@ icmp_dest_unreach(struct pbuf *p, enum icmp_dur_type t)
  *          p->payload pointing to the IP header
  * @param t type of the 'time exceeded' packet
  */
-void  /* 发送ICMP超时报文 */
+void  /* 鍙戦�両CMP瓒呮椂鎶ユ枃 */
 icmp_time_exceeded(struct pbuf *p, enum icmp_te_type t)
 {
   MIB2_STATS_INC(mib2.icmpouttimeexcds);
@@ -374,8 +374,8 @@ icmp_send_response(struct pbuf *p, u8_t type, u8_t code)
   LWIP_DEBUGF(ICMP_DEBUG, ("\n"));
 
   icmphdr = (struct icmp_echo_hdr *)q->payload;
-  icmphdr->type = type;   /* 填写类型字段 */
-  icmphdr->code = code;   /* 填写代码字段 */
+  icmphdr->type = type;   /* 濉啓绫诲瀷瀛楁 */
+  icmphdr->code = code;   /* 濉啓浠ｇ爜瀛楁 */
   icmphdr->id = 0;
   icmphdr->seqno = 0;
 

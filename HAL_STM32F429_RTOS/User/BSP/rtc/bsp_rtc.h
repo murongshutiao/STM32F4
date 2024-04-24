@@ -3,34 +3,34 @@
 #include "board.h"
 
 extern RTC_HandleTypeDef Rtc_Handle;
-// ʱ��Դ�궨��
+// 时钟源宏定义
 #define RTC_CLOCK_SOURCE_LSE      
 //#define RTC_CLOCK_SOURCE_LSI  
 
-// �첽��Ƶ����
+// 异步分频因子
 #define ASYNCHPREDIV         0X7F
-// ͬ����Ƶ����
+// 同步分频因子
 #define SYNCHPREDIV          0XFF
 
-// ʱ��궨��
+// 时间宏定义
 #define RTC_H12_AMorPM			  RTC_HOURFORMAT12_AM  
 #define HOURS                     1          // 0~23
 #define MINUTES                   1          // 0~59
 #define SECONDS                   1          // 0~59
 
 
-// ���ں궨��
+// 日期宏定义
 #define WEEKDAY                   1         // 1~7
 #define DATE                      1         // 1~31
 #define MONTH                     1         // 1~12
 #define YEAR                      1         // 0~99
 
-// ʱ���ʽ�궨��
+// 时间格式宏定义
 #define RTC_Format_BINorBCD  RTC_FORMAT_BIN
 
-// ������Ĵ����궨��
+// 备份域寄存器宏定义
 #define RTC_BKP_DRX          RTC_BKP_DR0
-// д�뵽���ݼĴ��������ݺ궨��
+// 写入到备份寄存器的数据宏定义
 #define RTC_BKP_DATA         0X32F2 
                                   
 void RTC_CLK_Config(void);

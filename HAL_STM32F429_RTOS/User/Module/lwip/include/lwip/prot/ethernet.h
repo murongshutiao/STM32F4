@@ -74,14 +74,14 @@ PACK_STRUCT_END
 #endif
 PACK_STRUCT_BEGIN
 /** Ethernet header */
-struct eth_hdr  /* ÒÔÌ«ÍøÊ×²¿ */
+struct eth_hdr  /* ä»¥å¤ªç½‘é¦–éƒ¨ */
 {
 #if ETH_PAD_SIZE
     PACK_STRUCT_FLD_8(u8_t padding[ETH_PAD_SIZE]);
 #endif
-    PACK_STRUCT_FLD_S(struct eth_addr dest);    /* Ä¿±êMACµØÖ· */
-    PACK_STRUCT_FLD_S(struct eth_addr src);     /* Ô´MACµØÖ· */
-    PACK_STRUCT_FIELD(u16_t type);              /* Ö¡ÀàĞÍ */
+    PACK_STRUCT_FLD_S(struct eth_addr dest);    /* ç›®æ ‡MACåœ°å€ */
+    PACK_STRUCT_FLD_S(struct eth_addr src);     /* æºMACåœ°å€ */
+    PACK_STRUCT_FIELD(u16_t type);              /* å¸§ç±»å‹ */
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES

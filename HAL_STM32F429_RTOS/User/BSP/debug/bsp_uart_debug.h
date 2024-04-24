@@ -4,11 +4,11 @@
 
 #define IAP_BUFFERSIZE  (128)// * 1024) 
 
-//´®¿Ú²¨ÌØ
+//ä¸²å£æ³¢ç‰¹
 #define DEBUG_USART_BAUDRATE                    115200
 
 
-//Òı½Å¶¨Òå
+//å¼•è„šå®šä¹‰
 /*******************************************************/
 #define DEBUG_USART                             USART1
 #define DEBUG_USART_CLK_ENABLE()                __USART1_CLK_ENABLE();
@@ -32,8 +32,8 @@
 
 
 /**
- *  ´æ´¢Æ÷µ½´æ´¢Æ÷¶ÔÁ÷ºÍÍ¨µÀÃ»ÓĞÒªÇó
- * ´æ´¢Æ÷µ½´æ´¢Æ÷Ö»ÄÜÊ¹ÓÃµ¥´Î´«ÊäÄ£Ê½£¬²»ÄÜÊ¹ÓÃÑ­»·´«ÊäÄ£Ê½
+ *  å­˜å‚¨å™¨åˆ°å­˜å‚¨å™¨å¯¹æµå’Œé€šé“æ²¡æœ‰è¦æ±‚
+ * å­˜å‚¨å™¨åˆ°å­˜å‚¨å™¨åªèƒ½ä½¿ç”¨å•æ¬¡ä¼ è¾“æ¨¡å¼ï¼Œä¸èƒ½ä½¿ç”¨å¾ªç¯ä¼ è¾“æ¨¡å¼
  */
 #define DMA_STREAM               DMA2_Stream1
 #define DMA_CHANNEL              DMA_CHANNEL_2
@@ -61,8 +61,8 @@ typedef enum
 typedef struct
 {
     uint32_t semaphore:1;   /* */
-    uint32_t status:2;      /* µ±Ç°´®¿Ú×´Ì¬ */
-    uint32_t len:29;        /* µ±Ç°Êı¾İ³¤¶È */
+    uint32_t status:2;      /* å½“å‰ä¸²å£çŠ¶æ€ */
+    uint32_t len:29;        /* å½“å‰æ•°æ®é•¿åº¦ */
     uint32_t *pDataBuffer;
 }UartFsm_Handler_t;
 

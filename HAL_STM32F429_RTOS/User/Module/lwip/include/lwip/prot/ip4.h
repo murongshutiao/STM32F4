@@ -70,24 +70,24 @@ typedef struct ip4_addr_packed ip4_addr_p_t;
 #endif
 PACK_STRUCT_BEGIN
 /* The IPv4 header */
-struct ip_hdr /* IPV4Í·²¿ */
+struct ip_hdr /* IPV4å¤´éƒ¨ */
 {
-    PACK_STRUCT_FLD_8(u8_t _v_hl);  /* °æ±¾ºÍÊ×²¿³¤¶È */
-    PACK_STRUCT_FLD_8(u8_t _tos);   /* ·þÎñÀàÐÍ */
-    PACK_STRUCT_FIELD(u16_t _len);  /* Êý¾Ý±¨³¤¶È */
-    PACK_STRUCT_FIELD(u16_t _id);   /* Ã¿Ò»Ìõip±¨ÎÄµÄid,¶ÔÓÚip·ÖÆ¬µÄÃ¿Ò»ÌõÊÇÒ»ÑùµÄ¡£ */
-    PACK_STRUCT_FIELD(u16_t _offset);   /* ·ÖÆ¬±êÖ¾Óë·ÖÆ¬Æ«ÒÆ */
-/* ¹ØÓÚ·ÖÆ¬±êÖ¾µÄÏà¹Øºê¶¨Òå */
-#define IP_RF 0x8000U        /* ±£ÁôµÄ·ÖÆ¬±êÖ¾Î» */
-#define IP_DF 0x4000U        /* ²»·ÖÆ¬±êÖ¾Î» */
-#define IP_MF 0x2000U        /* ¸ü¶à·ÖÆ¬±êÖ¾Î» */
-#define IP_OFFMASK 0x1fffU   /* ·ÖÆ¬Æ«ÒÆÁ¿ */
+    PACK_STRUCT_FLD_8(u8_t _v_hl);  /* ç‰ˆæœ¬å’Œé¦–éƒ¨é•¿åº¦ */
+    PACK_STRUCT_FLD_8(u8_t _tos);   /* æœåŠ¡ç±»åž‹ */
+    PACK_STRUCT_FIELD(u16_t _len);  /* æ•°æ®æŠ¥é•¿åº¦ */
+    PACK_STRUCT_FIELD(u16_t _id);   /* æ¯ä¸€æ¡ipæŠ¥æ–‡çš„id,å¯¹äºŽipåˆ†ç‰‡çš„æ¯ä¸€æ¡æ˜¯ä¸€æ ·çš„ã€‚ */
+    PACK_STRUCT_FIELD(u16_t _offset);   /* åˆ†ç‰‡æ ‡å¿—ä¸Žåˆ†ç‰‡åç§» */
+/* å…³äºŽåˆ†ç‰‡æ ‡å¿—çš„ç›¸å…³å®å®šä¹‰ */
+#define IP_RF 0x8000U        /* ä¿ç•™çš„åˆ†ç‰‡æ ‡å¿—ä½ */
+#define IP_DF 0x4000U        /* ä¸åˆ†ç‰‡æ ‡å¿—ä½ */
+#define IP_MF 0x2000U        /* æ›´å¤šåˆ†ç‰‡æ ‡å¿—ä½ */
+#define IP_OFFMASK 0x1fffU   /* åˆ†ç‰‡åç§»é‡ */
     /* time to live */
-    PACK_STRUCT_FLD_8(u8_t _ttl);   /* Éú´æÊ±¼ä */
+    PACK_STRUCT_FLD_8(u8_t _ttl);   /* ç”Ÿå­˜æ—¶é—´ */
     /* protocol*/
-    PACK_STRUCT_FLD_8(u8_t _proto); /* ÉÏ²ãÐ­Òé */
+    PACK_STRUCT_FLD_8(u8_t _proto); /* ä¸Šå±‚åè®® */
     /* checksum */
-    PACK_STRUCT_FIELD(u16_t _chksum);   /* Ð£ÑéºÍ */
+    PACK_STRUCT_FIELD(u16_t _chksum);   /* æ ¡éªŒå’Œ */
     /* source and destination IP addresses */
     PACK_STRUCT_FLD_S(ip4_addr_p_t src);
     PACK_STRUCT_FLD_S(ip4_addr_p_t dest);
@@ -98,13 +98,13 @@ PACK_STRUCT_END
 #endif
 
 /* Macros to get struct ip_hdr fields: */
-#define IPH_V(hdr)  ((hdr)->_v_hl >> 4)             /* »ñÈ¡Ð­Òé°æ±¾ */
-#define IPH_HL(hdr) ((hdr)->_v_hl & 0x0f)           /* »ñÈ¡Ê×²¿³¤¶È */
-#define IPH_HL_BYTES(hdr) ((u8_t)(IPH_HL(hdr) * 4)) /* »ñÈ¡IPÊ×²¿³¤¶È×Ö½Ú */
-#define IPH_TOS(hdr) ((hdr)->_tos)                  /* »ñÈ¡·þÎñÀàÐÍ */
-#define IPH_LEN(hdr) ((hdr)->_len)                  /* IP±¨ÎÄ×Ü³¤¶È */
-#define IPH_ID(hdr) ((hdr)->_id)                    /* ip±¨ÎÄµÄid */                    
-#define IPH_OFFSET(hdr) ((hdr)->_offset)            /* ·ÖÆ¬±êÖ¾ºÍÆ«ÒÆÁ¿ */
+#define IPH_V(hdr)  ((hdr)->_v_hl >> 4)             /* èŽ·å–åè®®ç‰ˆæœ¬ */
+#define IPH_HL(hdr) ((hdr)->_v_hl & 0x0f)           /* èŽ·å–é¦–éƒ¨é•¿åº¦ */
+#define IPH_HL_BYTES(hdr) ((u8_t)(IPH_HL(hdr) * 4)) /* èŽ·å–IPé¦–éƒ¨é•¿åº¦å­—èŠ‚ */
+#define IPH_TOS(hdr) ((hdr)->_tos)                  /* èŽ·å–æœåŠ¡ç±»åž‹ */
+#define IPH_LEN(hdr) ((hdr)->_len)                  /* IPæŠ¥æ–‡æ€»é•¿åº¦ */
+#define IPH_ID(hdr) ((hdr)->_id)                    /* ipæŠ¥æ–‡çš„id */                    
+#define IPH_OFFSET(hdr) ((hdr)->_offset)            /* åˆ†ç‰‡æ ‡å¿—å’Œåç§»é‡ */
 #define IPH_OFFSET_BYTES(hdr) ((u16_t)((lwip_ntohs(IPH_OFFSET(hdr)) & IP_OFFMASK) * 8U))
 #define IPH_TTL(hdr) ((hdr)->_ttl)
 #define IPH_PROTO(hdr) ((hdr)->_proto)

@@ -42,15 +42,15 @@
          functions: HAL_LTDC_SetPixelFormat(), HAL_LTDC_SetAlpha(), HAL_LTDC_SetWindowSize(),
          HAL_LTDC_SetWindowPosition(), HAL_LTDC_SetAddress.
 
-     (#) Variant functions with ì_NoReloadî post fix allows to set the LTDC configuration/settings without immediate reload.
+     (#) Variant functions with ‚Äú_NoReload‚Äù post fix allows to set the LTDC configuration/settings without immediate reload.
          This is useful in case when the program requires to modify serval LTDC settings (on one or both layers) 
-         then applying(reload) these settings in one shot by calling the function ìHAL_LTDC_Reloadî
+         then applying(reload) these settings in one shot by calling the function ‚ÄúHAL_LTDC_Reload‚Äù
 
-         After calling the ì_NoReloadî functions to set different color/format/layer settings, 
-         the program can call the function  ìHAL_LTDC_Reloadî To apply(Reload) these settings. 
-         Function ìHAL_LTDC_Reloadî can be called with the parameter  ìReloadTypeî 
+         After calling the ‚Äú_NoReload‚Äù functions to set different color/format/layer settings, 
+         the program can call the function  ‚ÄúHAL_LTDC_Reload‚Äù To apply(Reload) these settings. 
+         Function ‚ÄúHAL_LTDC_Reload‚Äù can be called with the parameter  ‚ÄúReloadType‚Äù 
          set to LTDC_RELOAD_IMMEDIATE if an immediate reload is required.
-         Function ìHAL_LTDC_Reloadî can be called with the parameter  ìReloadTypeî 
+         Function ‚ÄúHAL_LTDC_Reload‚Äù can be called with the parameter  ‚ÄúReloadType‚Äù 
          set to LTDC_RELOAD_VERTICAL_BLANKING if the reload should be done in the next vertical blanking period, 
          this option allows to avoid display flicker by applying the new settings during the vertical blanking period.
            

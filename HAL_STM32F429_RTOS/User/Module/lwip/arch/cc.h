@@ -58,7 +58,7 @@ typedef int sys_prot_t;
 
 
 
-/* 选择小端模式 */
+/* 脩隆脭帽脨隆露脣脛拢脢陆 */
 #define BYTE_ORDER LITTLE_ENDIAN
 
 /* define compiler specific symbols */

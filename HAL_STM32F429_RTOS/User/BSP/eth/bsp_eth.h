@@ -3,7 +3,7 @@
 
 #include "stm32f4xx_hal.h"
 
-/* FreeRTOSÍ·ÎÄ¼ş */
+/* FreeRTOSå¤´æ–‡ä»¶ */
 //#include "FreeRTOS.h"
 //#include "task.h"
 
@@ -49,7 +49,7 @@ PG14     ------> ETH_TXD1
 HAL_StatusTypeDef Bsp_Eth_Init(void);
 
 /**
- * ethernetif.c         µ×²ã½Ó¿ÚÇı¶¯Ä£°å
+ * ethernetif.c         åº•å±‚æ¥å£é©±åŠ¨æ¨¡æ¿
  * 
 */
 

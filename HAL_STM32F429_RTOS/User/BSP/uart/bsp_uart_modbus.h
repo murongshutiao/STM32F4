@@ -4,7 +4,7 @@
 #include "board.h"
 
 
-//´®¿Ú²¨ÌØ
+//Â´Â®Â¿ÃšÂ²Â¨ÃŒÃ˜
 #define MBMaster_USART_BAUDRATE                    115200
 #define MBSlave_USART_BAUDRATE                    115200
 

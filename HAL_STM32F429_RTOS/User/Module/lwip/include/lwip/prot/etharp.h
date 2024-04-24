@@ -83,17 +83,17 @@ PACK_STRUCT_END
 #endif
 PACK_STRUCT_BEGIN
 /** the ARP message, see RFC 826 ("Packet format") */
-struct etharp_hdr           /* ARP±¨ÎÄ */
+struct etharp_hdr           /* ARPæŠ¥æ–‡ */
 {
-    PACK_STRUCT_FIELD(u16_t hwtype);        /* Ó²¼şÀàĞÍ */
-    PACK_STRUCT_FIELD(u16_t proto);         /* Ğ­ÒéÀàĞÍ */
-    PACK_STRUCT_FLD_8(u8_t  hwlen);         /* Ó²¼şµØÖ·³¤¶È */
-    PACK_STRUCT_FLD_8(u8_t  protolen);      /* Ğ­ÒéµØÖ·³¤¶È */
-    PACK_STRUCT_FIELD(u16_t opcode);        /* ²Ù×÷×Ö¶Î */
-    PACK_STRUCT_FLD_S(struct eth_addr shwaddr);             /* Ô´MACµØÖ· */
-    PACK_STRUCT_FLD_S(struct ip4_addr_wordaligned sipaddr); /* Ô´IPµØÖ· */
-    PACK_STRUCT_FLD_S(struct eth_addr dhwaddr);             /* Ä¿±êMACµØÖ· */
-    PACK_STRUCT_FLD_S(struct ip4_addr_wordaligned dipaddr); /* Ä¿±êIPµØÖ· */
+    PACK_STRUCT_FIELD(u16_t hwtype);        /* ç¡¬ä»¶ç±»å‹ */
+    PACK_STRUCT_FIELD(u16_t proto);         /* åè®®ç±»å‹ */
+    PACK_STRUCT_FLD_8(u8_t  hwlen);         /* ç¡¬ä»¶åœ°å€é•¿åº¦ */
+    PACK_STRUCT_FLD_8(u8_t  protolen);      /* åè®®åœ°å€é•¿åº¦ */
+    PACK_STRUCT_FIELD(u16_t opcode);        /* æ“ä½œå­—æ®µ */
+    PACK_STRUCT_FLD_S(struct eth_addr shwaddr);             /* æºMACåœ°å€ */
+    PACK_STRUCT_FLD_S(struct ip4_addr_wordaligned sipaddr); /* æºIPåœ°å€ */
+    PACK_STRUCT_FLD_S(struct eth_addr dhwaddr);             /* ç›®æ ‡MACåœ°å€ */
+    PACK_STRUCT_FLD_S(struct ip4_addr_wordaligned dipaddr); /* ç›®æ ‡IPåœ°å€ */
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -103,10 +103,10 @@ PACK_STRUCT_END
 #define SIZEOF_ETHARP_HDR 28
 
 /* ARP message types (opcodes) */
-enum etharp_opcode      /* ARP±¨ÎÄOP²Ù×÷×Ö¶Î */
+enum etharp_opcode      /* ARPæŠ¥æ–‡OPæ“ä½œå­—æ®µ */
 {
-    ARP_REQUEST = 1,    /* ÇëÇó°ü */
-    ARP_REPLY   = 2     /* Ó¦´ğ°ü */
+    ARP_REQUEST = 1,    /* è¯·æ±‚åŒ… */
+    ARP_REPLY   = 2     /* åº”ç­”åŒ… */
 };
 
 #ifdef __cplusplus

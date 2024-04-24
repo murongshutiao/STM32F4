@@ -52,7 +52,7 @@
 int errno;
 
 
-u32_t lwip_sys_now; /* lwipÏµÍ³Ê±»ù¼ÆÊıÆ÷ */
+u32_t lwip_sys_now; /* lwipç³»ç»Ÿæ—¶åŸºè®¡æ•°å™¨ */
 
 struct sys_timeouts 
 {
@@ -77,7 +77,7 @@ u32_t sys_jiffies(void)
     return lwip_sys_now;
 }
 
-/* LwipµÄÏµÍ³Ê±»ù,´ÓSystick»ñÈ¡ */
+/* Lwipçš„ç³»ç»Ÿæ—¶åŸº,ä»Systickè·å– */
 u32_t sys_now(void)
 {
     lwip_sys_now = xTaskGetTickCount();
@@ -119,14 +119,14 @@ struct sys_timeouts *sys_arch_timeouts(void)
 	return NULL;
 }
 
-/* ½øÈëÁÙ½ç¶Î */
+/* è¿›å…¥ä¸´ç•Œæ®µ */
 sys_prot_t sys_arch_protect(void)
 {
 	vPortEnterCritical();
 	return 1;
 }
 
-/* ÍË³öÁÙ½ç¶Î */
+/* é€€å‡ºä¸´ç•Œæ®µ */
 void sys_arch_unprotect(sys_prot_t pval)
 {
 	( void ) pval;
@@ -143,10 +143,10 @@ void sys_arch_unprotect(sys_prot_t pval)
 //  the_waiting_fn = waiting_fn;
 //}
 
-/* ´´½¨ĞÅºÅÁ¿ */
+/* åˆ›å»ºä¿¡å·é‡ */
 err_t sys_sem_new(sys_sem_t *sem, u8_t count)
 {
-    /* ´´½¨ sem */
+    /* åˆ›å»º sem */
     if(count <= 1)
     {    
         *sem = xSemaphoreCreateBinary();
@@ -183,53 +183,53 @@ err_t sys_sem_new(sys_sem_t *sem, u8_t count)
     }
 }
 
-/* É¾³ıĞÅºÅÁ¿ */
+/* åˆ é™¤ä¿¡å·é‡ */
 void sys_sem_free(sys_sem_t *sem)
 {
 #if SYS_STATS
     --lwip_stats.sys.sem.used;
 #endif /* SYS_STATS */
-    /* É¾³ı sem */
+    /* åˆ é™¤ sem */
     vSemaphoreDelete(*sem);
     *sem = SYS_SEM_NULL;
 }
 
-/* ĞÅºÅÁ¿ÊÇ·ñÓĞĞ§ */
+/* ä¿¡å·é‡æ˜¯å¦æœ‰æ•ˆ */
 int sys_sem_valid(sys_sem_t *sem)                                               
 {
     return (*sem != SYS_SEM_NULL);                                    
 }
 
-/* ÉèÖÃĞÅºÅÁ¿ÎŞĞ§ */
+/* è®¾ç½®ä¿¡å·é‡æ— æ•ˆ */
 void sys_sem_set_invalid(sys_sem_t *sem)
 {
     *sem = SYS_SEM_NULL;
 }
 
 /* 
- Èç¹ûtimeout²ÎÊı²»ÎªÁã£¬Ôò·µ»ØÖµÎª
- µÈ´ıĞÅºÅÁ¿Ëù»¨·ÑµÄºÁÃëÊı¡£Èç¹û
- ĞÅºÅÁ¿Î´ÔÚÖ¸¶¨Ê±¼äÄÚ·¢³öĞÅºÅ£¬·µ»ØÖµÎª
- SYS_ARCH_TIMEOUT¡£Èç¹ûÏß³Ì²»±ØµÈ´ıĞÅºÅÁ¿
- ¸Ãº¯Êı·µ»ØÁã¡£ */
+ å¦‚æœtimeoutå‚æ•°ä¸ä¸ºé›¶ï¼Œåˆ™è¿”å›å€¼ä¸º
+ ç­‰å¾…ä¿¡å·é‡æ‰€èŠ±è´¹çš„æ¯«ç§’æ•°ã€‚å¦‚æœ
+ ä¿¡å·é‡æœªåœ¨æŒ‡å®šæ—¶é—´å†…å‘å‡ºä¿¡å·ï¼Œè¿”å›å€¼ä¸º
+ SYS_ARCH_TIMEOUTã€‚å¦‚æœçº¿ç¨‹ä¸å¿…ç­‰å¾…ä¿¡å·é‡
+ è¯¥å‡½æ•°è¿”å›é›¶ã€‚ */
 u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
 {
     u32_t wait_tick = 0;
     u32_t start_tick = 0 ;
     
-    //¿´¿´ĞÅºÅÁ¿ÊÇ·ñÓĞĞ§
+    //çœ‹çœ‹ä¿¡å·é‡æ˜¯å¦æœ‰æ•ˆ
     if(*sem == SYS_SEM_NULL)
     {
         return SYS_ARCH_TIMEOUT;
     }
     
-    //Ê×ÏÈ»ñÈ¡¿ªÊ¼µÈ´ıĞÅºÅÁ¿µÄÊ±ÖÓ½ÚÅÄ
+    //é¦–å…ˆè·å–å¼€å§‹ç­‰å¾…ä¿¡å·é‡çš„æ—¶é’ŸèŠ‚æ‹
     start_tick = xTaskGetTickCount();
     
-    //timeout != 0£¬ĞèÒª½«ms»»³ÉÏµÍ³µÄÊ±ÖÓ½ÚÅÄ
+    //timeout != 0ï¼Œéœ€è¦å°†msæ¢æˆç³»ç»Ÿçš„æ—¶é’ŸèŠ‚æ‹
     if(timeout != 0)
     {
-        //½«ms×ª»»³ÉÊ±ÖÓ½ÚÅÄ
+        //å°†msè½¬æ¢æˆæ—¶é’ŸèŠ‚æ‹
         wait_tick = timeout / portTICK_PERIOD_MS;
 
         if (wait_tick == 0)
@@ -239,10 +239,10 @@ u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
     }
     else
     {
-        wait_tick = portMAX_DELAY;  //Ò»Ö±×èÈû
+        wait_tick = portMAX_DELAY;  //ä¸€ç›´é˜»å¡
     }
     
-    //µÈ´ı³É¹¦£¬¼ÆËãµÈ´ıµÄÊ±¼ä£¬·ñÔò¾Í±íÊ¾µÈ´ı³¬Ê±
+    //ç­‰å¾…æˆåŠŸï¼Œè®¡ç®—ç­‰å¾…çš„æ—¶é—´ï¼Œå¦åˆ™å°±è¡¨ç¤ºç­‰å¾…è¶…æ—¶
     if(xSemaphoreTake(*sem, wait_tick) == pdTRUE)
     {
         return ((xTaskGetTickCount()-start_tick)*portTICK_RATE_MS);
@@ -263,7 +263,7 @@ void sys_sem_signal(sys_sem_t *sem)
 
 err_t sys_mutex_new(sys_mutex_t *mutex)
 {
-    /* ´´½¨ sem */   
+    /* åˆ›å»º sem */   
     *mutex = xSemaphoreCreateMutex();
 
     if(*mutex != SYS_MRTEX_NULL)
@@ -289,13 +289,13 @@ void sys_mutex_set_invalid(sys_mutex_t *mutex)
 
 void sys_mutex_lock(sys_mutex_t *mutex)
 {
-    xSemaphoreTake(*mutex,/* »¥³âÁ¿¾ä±ú */
-                    portMAX_DELAY); /* µÈ´ıÊ±¼ä */
+    xSemaphoreTake(*mutex,/* äº’æ–¥é‡å¥æŸ„ */
+                    portMAX_DELAY); /* ç­‰å¾…æ—¶é—´ */
 }
 
 void sys_mutex_unlock(sys_mutex_t *mutex)
 {
-    xSemaphoreGive( *mutex );//¸ø³ö»¥³âÁ¿
+    xSemaphoreGive( *mutex );//ç»™å‡ºäº’æ–¥é‡
 }
 
 
@@ -303,13 +303,13 @@ sys_thread_t sys_thread_new(const char *name, lwip_thread_fn function, void *arg
 {
     sys_thread_t handle = NULL;
     BaseType_t xReturn = pdPASS;
-    /* ´´½¨MidPriority_TaskÈÎÎñ */
-    xReturn = xTaskCreate((TaskFunction_t )function,  /* ÈÎÎñÈë¿Úº¯Êı */
-                            (const char*    )name,/* ÈÎÎñÃû×Ö */
-                            (uint16_t       )stacksize,  /* ÈÎÎñÕ»´óĞ¡ */
-                            (void*          )arg,/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-                            (UBaseType_t    )prio, /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-                            (TaskHandle_t*  )&handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+    /* åˆ›å»ºMidPriority_Taskä»»åŠ¡ */
+    xReturn = xTaskCreate((TaskFunction_t )function,  /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                            (const char*    )name,/* ä»»åŠ¡åå­— */
+                            (uint16_t       )stacksize,  /* ä»»åŠ¡æ ˆå¤§å° */
+                            (void*          )arg,/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                            (UBaseType_t    )prio, /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+                            (TaskHandle_t*  )&handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
     if(xReturn != pdPASS)
     {
         printf("[sys_arch]:create task fail!err:%#lx\n",xReturn);
@@ -320,9 +320,9 @@ sys_thread_t sys_thread_new(const char *name, lwip_thread_fn function, void *arg
 
 err_t sys_mbox_new(sys_mbox_t *mbox, int size)
 {
-    /* ´´½¨Test_Queue */
-    *mbox = xQueueCreate((UBaseType_t ) size,/* ÏûÏ¢¶ÓÁĞµÄ³¤¶È */
-                        (UBaseType_t ) sizeof(void *));/* ÏûÏ¢µÄ´óĞ¡ */
+    /* åˆ›å»ºTest_Queue */
+    *mbox = xQueueCreate((UBaseType_t ) size,/* æ¶ˆæ¯é˜Ÿåˆ—çš„é•¿åº¦ */
+                        (UBaseType_t ) sizeof(void *));/* æ¶ˆæ¯çš„å¤§å° */
 #if SYS_STATS
     ++lwip_stats.sys.mbox.used;
 
@@ -377,9 +377,9 @@ sys_mbox_set_invalid(sys_mbox_t *mbox)
 void
 sys_mbox_post(sys_mbox_t *q, void *msg)
 {
-    while(xQueueSend( *q, /* ÏûÏ¢¶ÓÁĞµÄ¾ä±ú */
-                        &msg,/* ·¢ËÍµÄÏûÏ¢ÄÚÈİ */
-                        portMAX_DELAY) != pdTRUE); /* µÈ´ıÊ±¼ä */
+    while(xQueueSend( *q, /* æ¶ˆæ¯é˜Ÿåˆ—çš„å¥æŸ„ */
+                        &msg,/* å‘é€çš„æ¶ˆæ¯å†…å®¹ */
+                        portMAX_DELAY) != pdTRUE); /* ç­‰å¾…æ—¶é—´ */
 }
 
 err_t sys_mbox_trypost(sys_mbox_t *q, void *msg)
@@ -405,25 +405,25 @@ u32_t sys_arch_mbox_fetch(sys_mbox_t *q, void **msg, u32_t timeout)
     u32_t wait_tick = 0;
     u32_t start_tick = 0 ;
     
-    if ( msg == NULL )  //¿´¿´´æ´¢ÏûÏ¢µÄµØ·½ÊÇ·ñÓĞĞ§
+    if ( msg == NULL )  //çœ‹çœ‹å­˜å‚¨æ¶ˆæ¯çš„åœ°æ–¹æ˜¯å¦æœ‰æ•ˆ
             msg = &dummyptr;
     
-    //Ê×ÏÈ»ñÈ¡¿ªÊ¼µÈ´ıĞÅºÅÁ¿µÄÊ±ÖÓ½ÚÅÄ
+    //é¦–å…ˆè·å–å¼€å§‹ç­‰å¾…ä¿¡å·é‡çš„æ—¶é’ŸèŠ‚æ‹
     start_tick = sys_now();
     
-    //timeout != 0£¬ĞèÒª½«ms»»³ÉÏµÍ³µÄÊ±ÖÓ½ÚÅÄ
+    //timeout != 0ï¼Œéœ€è¦å°†msæ¢æˆç³»ç»Ÿçš„æ—¶é’ŸèŠ‚æ‹
     if(timeout != 0)
     {
-        //½«ms×ª»»³ÉÊ±ÖÓ½ÚÅÄ
+        //å°†msè½¬æ¢æˆæ—¶é’ŸèŠ‚æ‹
         wait_tick = timeout / portTICK_PERIOD_MS;
         if (wait_tick == 0)
         wait_tick = 1;
     }
-    //Ò»Ö±×èÈû
+    //ä¸€ç›´é˜»å¡
     else
         wait_tick = portMAX_DELAY;
     
-    //µÈ´ı³É¹¦£¬¼ÆËãµÈ´ıµÄÊ±¼ä£¬·ñÔò¾Í±íÊ¾µÈ´ı³¬Ê±
+    //ç­‰å¾…æˆåŠŸï¼Œè®¡ç®—ç­‰å¾…çš„æ—¶é—´ï¼Œå¦åˆ™å°±è¡¨ç¤ºç­‰å¾…è¶…æ—¶
     if(xQueueReceive(*q,&(*msg), wait_tick) == pdTRUE)
         return ((sys_now() - start_tick)*portTICK_PERIOD_MS);
     else
@@ -439,7 +439,7 @@ u32_t sys_arch_mbox_tryfetch(sys_mbox_t *q, void **msg)
         if ( msg == NULL )
             msg = &dummyptr;
     
-    //µÈ´ı³É¹¦£¬¼ÆËãµÈ´ıµÄÊ±¼ä
+    //ç­‰å¾…æˆåŠŸï¼Œè®¡ç®—ç­‰å¾…çš„æ—¶é—´
     if(xQueueReceive(*q,&(*msg), 0) == pdTRUE)
         return ERR_OK;
     else
@@ -453,7 +453,7 @@ u32_t sys_arch_mbox_tryfetch(sys_mbox_t *q, void **msg)
 #endif /* !NO_SYS */
 
 /* Variables Initialization */
-struct netif gnetif;
+struct netif gnetif;        /* å®šä¹‰ä¸€ä¸ªç½‘å¡ */
 ip4_addr_t ipaddr;
 ip4_addr_t netmask;
 ip4_addr_t gw;
@@ -463,10 +463,10 @@ uint8_t GATEWAY_ADDRESS[4];
 
 void TCPIP_Init(void)
 {
-    /* lwipĞ­Òé³õÊ¼»¯£¬²Ù×÷ÏµÍ³Ïß³Ì³õÊ¼»¯£¬¸ù¾İÅäÖÃ³õÊ¼»¯ÄÚ´æµÈ²ÎÊı */
+    /* lwipåè®®åˆå§‹åŒ–ï¼Œæ“ä½œç³»ç»Ÿçº¿ç¨‹åˆå§‹åŒ–ï¼Œæ ¹æ®é…ç½®åˆå§‹åŒ–å†…å­˜ç­‰å‚æ•° */
     tcpip_init(NULL, NULL);
     
-    /* Èç¹û¶¨ÒåÁËDHCP,ÔòÅäÖÃ²ÎÊıÄ¬ÈÏÎªNULL,·ñÔò°´ÕÕÉèÖÃµÄÅäÖÃ */
+    /* å¦‚æœå®šä¹‰äº†DHCP,åˆ™é…ç½®å‚æ•°é»˜è®¤ä¸ºNULL,å¦åˆ™æŒ‰ç…§è®¾ç½®çš„é…ç½® */
 #if LWIP_DHCP
     ip_addr_set_zero_ip4(&ipaddr);
     ip_addr_set_zero_ip4(&netmask);
@@ -477,13 +477,13 @@ void TCPIP_Init(void)
     IP4_ADDR(&gw,GW_ADDR0,GW_ADDR1,GW_ADDR2,GW_ADDR3);
 #endif /* USE_DHCP */
 
-    /* Ìí¼ÓÒÔÌ«ÍøÍø¿¨,²¢½«ĞÅÏ¢ÅäÖÃµ½gnetifÖĞ,³õÊ¼»¯º¯Êı£¬ÒÔÌ«ÍøÊı¾İ½ÓÊÕº¯Êı */
+    /* æ·»åŠ ä»¥å¤ªç½‘ç½‘å¡,å¹¶å°†ä¿¡æ¯é…ç½®åˆ°gnetifä¸­,ä»¥å¤ªç½‘åˆå§‹åŒ–å‡½æ•°ï¼ŒTCP/IPåè®®å¤„ç†å‡½æ•° */
     netif_add(&gnetif, &ipaddr, &netmask, &gw, NULL, &ethernetif_init, &tcpip_input);
 
-    /* ÉèÖÃÎªÄ¬ÈÏÍø¿¨£¿ */
+    /* è®¾ç½®ä¸ºé»˜è®¤ç½‘å¡ï¼Ÿ */
     netif_set_default(&gnetif);
 
-    /* ²é¿´Íø¿¨µÄÁ¬½Ó±êÖ¾Î» */
+    /* æŸ¥çœ‹ç½‘å¡çš„è¿æ¥æ ‡å¿—ä½ */
     if (netif_is_link_up(&gnetif))
     {
         /* When the netif is fully configured this function must be called */
@@ -495,14 +495,14 @@ void TCPIP_Init(void)
         netif_set_down(&gnetif);
     }
     
-#if LWIP_DHCP	   			//ÈôÊ¹ÓÃÁËDHCP
+#if LWIP_DHCP	   			//è‹¥ä½¿ç”¨äº†DHCP
     int err;
     /*  Creates a new DHCP client for this interface on the first call.
     Note: you must call dhcp_fine_tmr() and dhcp_coarse_tmr() at
     the predefined regular intervals after starting the client.
     You can peek in the netif->dhcp struct for the actual DHCP status.*/
     
-    err = dhcp_start(&gnetif);      //¿ªÆôdhcp
+    err = dhcp_start(&gnetif);      //å¼€å¯dhcp
 
     if(err == ERR_OK)
     {
@@ -513,12 +513,12 @@ void TCPIP_Init(void)
         printf("lwip dhcp init fail...\n\n");
     }
 
-    while(ip_addr_cmp(&(gnetif.ip_addr),&ipaddr))   //µÈ´ıdhcp·ÖÅäµÄipÓĞĞ§
+    while(ip_addr_cmp(&(gnetif.ip_addr),&ipaddr))   //ç­‰å¾…dhcpåˆ†é…çš„ipæœ‰æ•ˆ
     {
         vTaskDelay(1);
     } 
 #endif
-    printf("±¾µØIPµØÖ·ÊÇ:%d.%d.%d.%d\n\n",  \
+    printf("æœ¬åœ°IPåœ°å€æ˜¯:%d.%d.%d.%d\n\n",  \
             ((gnetif.ip_addr.addr)&0x000000ff),       \
             (((gnetif.ip_addr.addr)&0x0000ff00)>>8),  \
             (((gnetif.ip_addr.addr)&0x00ff0000)>>16), \

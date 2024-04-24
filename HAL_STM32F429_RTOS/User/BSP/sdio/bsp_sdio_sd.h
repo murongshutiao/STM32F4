@@ -90,13 +90,13 @@
 
 #define SD_DATATIMEOUT           ((uint32_t)100000000)
     
-//等待时间
+//绛夊緟鏃堕棿
 #define SD_TIMEOUT             ((uint32_t)0x00100000U)
-//块的大小（以字节为单位）
+//鍧楃殑澶у皬锛堜互瀛楄妭涓哄崟浣嶏級
 #define BLOCK_SIZE            512 
-//块的数目
+//鍧楃殑鏁扮洰
 #define NUMBER_OF_BLOCKS      50
-//块的数据大小
+//鍧楃殑鏁版嵁澶у皬
 #define MULTI_BUFFER_SIZE    (BLOCK_SIZE * NUMBER_OF_BLOCKS)
 
 

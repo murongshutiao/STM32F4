@@ -10,7 +10,7 @@ void DMA_MemToMem_Config(void);
 void DMA_MemToMem_Test(void);
 
 //DMA
-#define SENDBUFF_SIZE                     		10//·¢ËÍµÄÊı¾İÁ¿
+#define SENDBUFF_SIZE                     		10//å‘é€çš„æ•°æ®é‡
 
 
 void Debug_Uart_Dma_Config(void);

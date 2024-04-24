@@ -15,9 +15,9 @@
 
 
 /*-----------------------------------------------------------------------*/
-/* »ñÈ¡Éè±¸×´Ì¬                                                          */
+/* èŽ·å–è®¾å¤‡çŠ¶æ€                                                          */
 /*-----------------------------------------------------------------------*/
-DSTATUS disk_status (BYTE pdrv)		/* ÎïÀí±àºÅ */
+DSTATUS disk_status (BYTE pdrv)		/* ç‰©ç†ç¼–å· */
 {
 
 	DSTATUS status = STA_NOINIT;
@@ -29,15 +29,15 @@ DSTATUS disk_status (BYTE pdrv)		/* ÎïÀí±àºÅ */
 			break;
     
 		case SPI_FLASH:      
-			/* SPI Flash×´Ì¬¼ì²â£º¶ÁÈ¡SPI Flash Éè±¸ID */
+			/* SPI FlashçŠ¶æ€æ£€æµ‹ï¼šè¯»å–SPI Flash è®¾å¤‡ID */
 			if(sFLASH_ID == SPI_FLASH_ReadID())
 			{
-				/* Éè±¸ID¶ÁÈ¡½á¹ûÕýÈ· */
+				/* è®¾å¤‡IDè¯»å–ç»“æžœæ­£ç¡® */
 				status &= ~STA_NOINIT;
 			}
 			else
 			{
-				/* Éè±¸ID¶ÁÈ¡½á¹û´íÎó */
+				/* è®¾å¤‡IDè¯»å–ç»“æžœé”™è¯¯ */
 				status = STA_NOINIT;;
 			}
 			break;
@@ -51,9 +51,9 @@ DSTATUS disk_status (BYTE pdrv)		/* ÎïÀí±àºÅ */
 
 
 /*-----------------------------------------------------------------------*/
-/* Éè±¸³õÊ¼»¯                                                            */
+/* è®¾å¤‡åˆå§‹åŒ–                                                            */
 /*-----------------------------------------------------------------------*/
-DSTATUS disk_initialize (BYTE pdrv)				/* ÎïÀí±àºÅ */
+DSTATUS disk_initialize (BYTE pdrv)				/* ç‰©ç†ç¼–å· */
 {
   uint16_t i;
 	DSTATUS status = STA_NOINIT;	
@@ -65,15 +65,15 @@ DSTATUS disk_initialize (BYTE pdrv)				/* ÎïÀí±àºÅ */
 			break;
     
 		case SPI_FLASH:    /* SPI Flash */ 
-			/* ³õÊ¼»¯SPI Flash */
+			/* åˆå§‹åŒ–SPI Flash */
 			Flash_SPI_Init();
 			
-			/* ÑÓÊ±Ò»Ð¡¶ÎÊ±¼ä */
+			/* å»¶æ—¶ä¸€å°æ®µæ—¶é—´ */
 			i=500;
 			while(--i);	
-			/* »½ÐÑSPI Flash */
+			/* å”¤é†’SPI Flash */
 			SPI_Flash_WAKEUP();
-			/* »ñÈ¡SPI FlashÐ¾Æ¬×´Ì¬ */
+			/* èŽ·å–SPI FlashèŠ¯ç‰‡çŠ¶æ€ */
 			status=disk_status(SPI_FLASH);
 				break;
       
@@ -85,13 +85,13 @@ DSTATUS disk_initialize (BYTE pdrv)				/* ÎïÀí±àºÅ */
 
 
 /*-----------------------------------------------------------------------*/
-/* ¶ÁÉÈÇø£º¶ÁÈ¡ÉÈÇøÄÚÈÝµ½Ö¸¶¨´æ´¢Çø                                              */
+/* è¯»æ‰‡åŒºï¼šè¯»å–æ‰‡åŒºå†…å®¹åˆ°æŒ‡å®šå­˜å‚¨åŒº                                              */
 /*-----------------------------------------------------------------------*/
 DRESULT disk_read (
-	BYTE pdrv,		/* Éè±¸ÎïÀí±àºÅ(0..) */
-	BYTE *buff,		/* Êý¾Ý»º´æÇø */
-	DWORD sector,	/* ÉÈÇøÊ×µØÖ· */
-	UINT count		/* ÉÈÇø¸öÊý(1..128) */
+	BYTE pdrv,		/* è®¾å¤‡ç‰©ç†ç¼–å·(0..) */
+	BYTE *buff,		/* æ•°æ®ç¼“å­˜åŒº */
+	DWORD sector,	/* æ‰‡åŒºé¦–åœ°å€ */
+	UINT count		/* æ‰‡åŒºä¸ªæ•°(1..128) */
 )
 {
 	DRESULT status = RES_PARERR;
@@ -102,7 +102,7 @@ DRESULT disk_read (
 			break;
     
 		case SPI_FLASH:
-		/* ÉÈÇøÆ«ÒÆ6MB£¬Íâ²¿FlashÎÄ¼þÏµÍ³¿Õ¼ä·ÅÔÚSPI FlashºóÃæ10MB¿Õ¼ä */
+		/* æ‰‡åŒºåç§»6MBï¼Œå¤–éƒ¨Flashæ–‡ä»¶ç³»ç»Ÿç©ºé—´æ”¾åœ¨SPI FlashåŽé¢10MBç©ºé—´ */
 		sector += 1536;      
 		SPI_FLASH_BufferRead(buff, sector << 12, count << 12);
 		status = RES_OK;
@@ -115,14 +115,14 @@ DRESULT disk_read (
 }
 
 /*-----------------------------------------------------------------------*/
-/* Ð´ÉÈÇø£º¼ûÊý¾ÝÐ´ÈëÖ¸¶¨ÉÈÇø¿Õ¼äÉÏ                                      */
+/* å†™æ‰‡åŒºï¼šè§æ•°æ®å†™å…¥æŒ‡å®šæ‰‡åŒºç©ºé—´ä¸Š                                      */
 /*-----------------------------------------------------------------------*/
 #if _USE_WRITE
 DRESULT disk_write (
-	BYTE pdrv,			  /* Éè±¸ÎïÀí±àºÅ(0..) */
-	const BYTE *buff,		/* ÓûÐ´ÈëÊý¾ÝµÄ»º´æÇø */
-	DWORD sector,		  /* ÉÈÇøÊ×µØÖ· */
-	UINT count			  /* ÉÈÇø¸öÊý(1..128) */
+	BYTE pdrv,			  /* è®¾å¤‡ç‰©ç†ç¼–å·(0..) */
+	const BYTE *buff,		/* æ¬²å†™å…¥æ•°æ®çš„ç¼“å­˜åŒº */
+	DWORD sector,		  /* æ‰‡åŒºé¦–åœ°å€ */
+	UINT count			  /* æ‰‡åŒºä¸ªæ•°(1..128) */
 )
 {
   	uint32_t write_addr; 
@@ -140,7 +140,7 @@ DRESULT disk_write (
 		break;
 
 		case SPI_FLASH:
-		/* ÉÈÇøÆ«ÒÆ6MB£¬Íâ²¿FlashÎÄ¼þÏµÍ³¿Õ¼ä·ÅÔÚSPI FlashºóÃæ10MB¿Õ¼ä */
+		/* æ‰‡åŒºåç§»6MBï¼Œå¤–éƒ¨Flashæ–‡ä»¶ç³»ç»Ÿç©ºé—´æ”¾åœ¨SPI FlashåŽé¢10MBç©ºé—´ */
 		sector+=1536;
 		write_addr = sector<<12;    
 		SPI_FLASH_SectorErase(write_addr);
@@ -157,14 +157,14 @@ DRESULT disk_write (
 
 
 /*-----------------------------------------------------------------------*/
-/* ÆäËû¿ØÖÆ                                                              */
+/* å…¶ä»–æŽ§åˆ¶                                                              */
 /*-----------------------------------------------------------------------*/
 
 #if _USE_IOCTL
 DRESULT disk_ioctl (
-	BYTE pdrv,		/* ÎïÀí±àºÅ */
-	BYTE cmd,		  /* ¿ØÖÆÖ¸Áî */
-	void *buff		/* Ð´Èë»òÕß¶ÁÈ¡Êý¾ÝµØÖ·Ö¸Õë */
+	BYTE pdrv,		/* ç‰©ç†ç¼–å· */
+	BYTE cmd,		  /* æŽ§åˆ¶æŒ‡ä»¤ */
+	void *buff		/* å†™å…¥æˆ–è€…è¯»å–æ•°æ®åœ°å€æŒ‡é’ˆ */
 )
 {
 	DRESULT status = RES_PARERR;
@@ -173,11 +173,11 @@ DRESULT disk_ioctl (
 		case ATA:	/* SD CARD */
 			switch (cmd) 
 			{
-				/* ÉÈÇøÊýÁ¿£º2560*4096/1024/1024=10(MB) */
+				/* æ‰‡åŒºæ•°é‡ï¼š2560*4096/1024/1024=10(MB) */
 				case GET_SECTOR_COUNT:*(DWORD * )buff = 2560;break;
-				/* ÉÈÇø´óÐ¡  */
+				/* æ‰‡åŒºå¤§å°  */
 				case GET_SECTOR_SIZE :*(WORD * )buff = 512;break;
-				/* Í¬Ê±²Á³ýÉÈÇø¸öÊý */
+				/* åŒæ—¶æ“¦é™¤æ‰‡åŒºä¸ªæ•° */
 				case GET_BLOCK_SIZE :*(DWORD * )buff = 1;break;        
       		}
       		status = RES_OK;
@@ -186,11 +186,11 @@ DRESULT disk_ioctl (
 		case SPI_FLASH:
 			switch (cmd) 
 			{
-				/* ÉÈÇøÊýÁ¿£º2560*4096/1024/1024=10(MB) */
+				/* æ‰‡åŒºæ•°é‡ï¼š2560*4096/1024/1024=10(MB) */
 				case GET_SECTOR_COUNT:*(DWORD * )buff = 2560;break;
-				/* ÉÈÇø´óÐ¡  */
+				/* æ‰‡åŒºå¤§å°  */
 				case GET_SECTOR_SIZE :*(WORD * )buff = 4096;break;
-				/* Í¬Ê±²Á³ýÉÈÇø¸öÊý */
+				/* åŒæ—¶æ“¦é™¤æ‰‡åŒºä¸ªæ•° */
 				case GET_BLOCK_SIZE :*(DWORD * )buff = 1;break;        
       		}
       		status = RES_OK;
@@ -206,7 +206,7 @@ DRESULT disk_ioctl (
 
 __weak DWORD get_fattime(void) 
 {
-	/* ·µ»Øµ±Ç°Ê±¼ä´Á */
+	/* è¿”å›žå½“å‰æ—¶é—´æˆ³ */
 	return	  ((DWORD)(2015 - 1980) << 25)	/* Year - bit31:25 */
 			| ((DWORD)1 << 21)				/* Month - bit24:21 */
 			| ((DWORD)1 << 16)				/* Mday - bit20:16 */

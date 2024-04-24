@@ -15,7 +15,7 @@
 #define SPI_FLASH_PerWritePageSize      256
 
 /* Private define ------------------------------------------------------------*/
-/*ÃüÁî¶¨Òå-¿ªÍ·*******************************/
+/*å‘½ä»¤å®šä¹‰-å¼€å¤´*******************************/
 #define W25X_WriteEnable		      0x06 
 #define W25X_WriteDisable		      0x04 
 #define W25X_ReadStatusReg		    0x05 
@@ -37,17 +37,17 @@
 
 #define WIP_Flag                  0x01  /* Write In Progress (WIP) flag */
 #define Dummy_Byte                0xFF
-/*ÃüÁî¶¨Òå-½áÎ²*******************************/
+/*å‘½ä»¤å®šä¹‰-ç»“å°¾*******************************/
 
 
 
 
 
-/*µÈ´ý³¬Ê±Ê±¼ä*/
+/*ç­‰å¾…è¶…æ—¶æ—¶é—´*/
 #define SPIT_FLAG_TIMEOUT         ((uint32_t)0x1000)
 #define SPIT_LONG_TIMEOUT         ((uint32_t)(10 * SPIT_FLAG_TIMEOUT))
 
-/*ÐÅÏ¢Êä³ö*/
+/*ä¿¡æ¯è¾“å‡º*/
 #define FLASH_DEBUG_ON         0
 
 #if (FLASH_DEBUG_ON == 1)
@@ -65,7 +65,7 @@
 #endif
 
 
-/* SPIÍâÉè */
+/* SPIå¤–è®¾ */
 #define Flash_SPI                             SPI5
 #define Flash_SPI_CLK_ENABLE()                __HAL_RCC_SPI5_CLK_ENABLE()
 #define Flash_SPI_SCK_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOF_CLK_ENABLE()
@@ -91,8 +91,8 @@
 #define FLASH_SPI_CS_GPIO_PORT               GPIOF   
 
 
-#define	digitalHi(p,i)			    {p->BSRR=i;}			  //ÉèÖÃÎª¸ßµçÆ½		
-#define digitalLo(p,i)			    {p->BSRR=(uint32_t)i << 16;}				//Êä³öµÍµçÆ½
+#define	digitalHi(p,i)			    {p->BSRR=i;}			  //è®¾ç½®ä¸ºé«˜ç”µå¹³		
+#define digitalLo(p,i)			    {p->BSRR=(uint32_t)i << 16;}				//è¾“å‡ºä½Žç”µå¹³
 #define SPI_FLASH_CS_LOW()      digitalLo(FLASH_SPI_CS_GPIO_PORT,FLASH_SPI_CS_PIN )
 #define SPI_FLASH_CS_HIGH()     digitalHi(FLASH_SPI_CS_GPIO_PORT,FLASH_SPI_CS_PIN )
 

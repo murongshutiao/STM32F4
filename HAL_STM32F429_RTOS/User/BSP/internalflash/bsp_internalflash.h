@@ -13,7 +13,7 @@
 #define ADDR_FLASH_SECTOR_6         ((uint32_t)0x08040000) /* Base address of Sector 6, 128 Kbytes  */
 #define ADDR_FLASH_SECTOR_7         ((uint32_t)0x08060000) /* Base address of Sector 7, 128 Kbytes  */
 
-/* F429,8µ½11ÉÈÇø¿ÉÒÔ±»Ï¸·Ö,¼°ÉÈÇø¿ÉÓĞ8-11±äÎª12-19ÉÈÇø */
+/* F429,8åˆ°11æ‰‡åŒºå¯ä»¥è¢«ç»†åˆ†,åŠæ‰‡åŒºå¯æœ‰8-11å˜ä¸º12-19æ‰‡åŒº */
 #define ADDR_FLASH_SECTOR_8         ((uint32_t)0x08080000) /* Base address of Sector 7, 128 Kbytes  */
 #define ADDR_FLASH_SECTOR_9         ((uint32_t)0x080A0000) /* Base address of Sector 7, 128 Kbytes  */
 #define ADDR_FLASH_SECTOR_10        ((uint32_t)0x080C0000) /* Base address of Sector 7, 128 Kbytes  */

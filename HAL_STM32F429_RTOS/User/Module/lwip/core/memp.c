@@ -221,7 +221,7 @@ void memp_init_pool(const struct memp_desc *desc)
  * Related functions: memp_malloc, memp_free
  *
  * Carves out memp_memory into linked lists for each pool-type.
- * @note  �ڴ�س�ʼ������
+ * @note  ÄÚ´æ³Ø³õÊ¼»¯º¯Êý
  */
 void memp_init(void)
 {

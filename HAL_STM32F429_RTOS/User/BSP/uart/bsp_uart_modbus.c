@@ -4,13 +4,13 @@
   * @author  fire
   * @version V1.0
   * @date    2016-xx-xx
-  * @brief   Ê¹ÓÃ´®¿Ú1£¬ÖØ¶¨Ïòc¿âprintfº¯Êıµ½usart¶Ë¿Ú£¬ÖĞ¶Ï½ÓÊÕÄ£Ê½
+  * @brief   ä½¿ç”¨ä¸²å£1ï¼Œé‡å®šå‘cåº“printfå‡½æ•°åˆ°usartç«¯å£ï¼Œä¸­æ–­æ¥æ”¶æ¨¡å¼
   ******************************************************************************
   * @attention
   *
-  * ÊµÑéÆ½Ì¨:Ò°»ğ STM32 F429 ¿ª·¢°å  
-  * ÂÛÌ³    :http://www.firebbs.cn
-  * ÌÔ±¦    :http://fire-stm32.taobao.com
+  * å®éªŒå¹³å°:é‡ç« STM32 F429 å¼€å‘æ¿  
+  * è®ºå›    :http://www.firebbs.cn
+  * æ·˜å®    :http://fire-stm32.taobao.com
   *
   ******************************************************************************
   */ 
@@ -22,9 +22,9 @@ UART_HandleTypeDef MBSlaveUartHandler;
 
 
  /**
-  * @brief  MBMaster_USART GPIO ÅäÖÃ,¹¤×÷Ä£Ê½ÅäÖÃ¡£115200 8-N-1
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  MBMaster_USART GPIO é…ç½®,å·¥ä½œæ¨¡å¼é…ç½®ã€‚115200 8-N-1
+  * @param  æ— 
+  * @retval æ— 
   */  
 void MBMaster_Uart_Config(void)
 { 
@@ -40,15 +40,15 @@ void MBMaster_Uart_Config(void)
   
   HAL_UART_Init(&MBMasterUartHandler);
     
- /*Ê¹ÄÜ´®¿Ú½ÓÊÕ¶Ï */
+ /*ä½¿èƒ½ä¸²å£æ¥æ”¶æ–­ */
   __HAL_UART_ENABLE_IT(&MBMasterUartHandler,UART_IT_RXNE);  
 }
 
 
  /**
-  * @brief  MBSlave_USART GPIO ÅäÖÃ,¹¤×÷Ä£Ê½ÅäÖÃ¡£115200 8-N-1
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  MBSlave_USART GPIO é…ç½®,å·¥ä½œæ¨¡å¼é…ç½®ã€‚115200 8-N-1
+  * @param  æ— 
+  * @retval æ— 
   */  
 void MBSlave_Uart_Config(void)
 { 
@@ -64,15 +64,15 @@ void MBSlave_Uart_Config(void)
   
   HAL_UART_Init(&MBSlaveUartHandler);
     
- /*Ê¹ÄÜ´®¿Ú½ÓÊÕ¶Ï */
+ /*ä½¿èƒ½ä¸²å£æ¥æ”¶æ–­ */
   __HAL_UART_ENABLE_IT(&MBSlaveUartHandler,UART_IT_RXNE);  
 }
 
 
 /**
-  * @brief UART MSP ³õÊ¼»¯ 
+  * @brief UART MSP åˆå§‹åŒ– 
   * @param huart: UART handle
-  * @retval ÎŞ
+  * @retval æ— 
   */
 void MBMaster_Uart_Init(void)
 {  
@@ -83,7 +83,7 @@ void MBMaster_Uart_Init(void)
 	MBMaster_USART_RX_GPIO_CLK_ENABLE();
   MBMaster_USART_TX_GPIO_CLK_ENABLE();
   
-  /* ÅäÖÃTxÒı½ÅÎª¸´ÓÃ¹¦ÄÜ  */
+  /* é…ç½®Txå¼•è„šä¸ºå¤ç”¨åŠŸèƒ½  */
   GPIO_InitStruct.Pin = MBMaster_USART_TX_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
@@ -91,13 +91,13 @@ void MBMaster_Uart_Init(void)
   GPIO_InitStruct.Alternate = MBMaster_USART_TX_AF;
   HAL_GPIO_Init(MBMaster_USART_TX_GPIO_PORT, &GPIO_InitStruct);
   
-  /* ÅäÖÃRxÒı½ÅÎª¸´ÓÃ¹¦ÄÜ */
+  /* é…ç½®Rxå¼•è„šä¸ºå¤ç”¨åŠŸèƒ½ */
   GPIO_InitStruct.Pin = MBMaster_USART_RX_PIN;
   GPIO_InitStruct.Alternate = MBMaster_USART_RX_AF;
   HAL_GPIO_Init(MBMaster_USART_RX_GPIO_PORT, &GPIO_InitStruct); 
  
-  HAL_NVIC_SetPriority(MBMaster_USART_IRQ ,0,1);	//ÇÀÕ¼ÓÅÏÈ¼¶0£¬×ÓÓÅÏÈ¼¶1
-  HAL_NVIC_EnableIRQ(MBMaster_USART_IRQ );		    //Ê¹ÄÜUSART1ÖĞ¶ÏÍ¨µÀ  
+  HAL_NVIC_SetPriority(MBMaster_USART_IRQ ,0,1);	//æŠ¢å ä¼˜å…ˆçº§0ï¼Œå­ä¼˜å…ˆçº§1
+  HAL_NVIC_EnableIRQ(MBMaster_USART_IRQ );		    //ä½¿èƒ½USART1ä¸­æ–­é€šé“  
 
   MBMaster_Uart_Config();
 }
@@ -111,7 +111,7 @@ void MBSlave_Uart_Init(void)
 	MBSlave_USART_RX_GPIO_CLK_ENABLE();
   MBSlave_USART_TX_GPIO_CLK_ENABLE();
   
-  /* ÅäÖÃTxÒı½ÅÎª¸´ÓÃ¹¦ÄÜ  */
+  /* é…ç½®Txå¼•è„šä¸ºå¤ç”¨åŠŸèƒ½  */
   GPIO_InitStruct.Pin = MBSlave_USART_TX_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
@@ -119,18 +119,18 @@ void MBSlave_Uart_Init(void)
   GPIO_InitStruct.Alternate = MBSlave_USART_TX_AF;
   HAL_GPIO_Init(MBSlave_USART_TX_GPIO_PORT, &GPIO_InitStruct);
   
-  /* ÅäÖÃRxÒı½ÅÎª¸´ÓÃ¹¦ÄÜ */
+  /* é…ç½®Rxå¼•è„šä¸ºå¤ç”¨åŠŸèƒ½ */
   GPIO_InitStruct.Pin = MBSlave_USART_RX_PIN;
   GPIO_InitStruct.Alternate = MBSlave_USART_RX_AF;
   HAL_GPIO_Init(MBSlave_USART_RX_GPIO_PORT, &GPIO_InitStruct); 
  
-  HAL_NVIC_SetPriority(MBSlave_USART_IRQ ,0,1);	//ÇÀÕ¼ÓÅÏÈ¼¶0£¬×ÓÓÅÏÈ¼¶1
-  HAL_NVIC_EnableIRQ(MBSlave_USART_IRQ );		    //Ê¹ÄÜUSART1ÖĞ¶ÏÍ¨µÀ  
+  HAL_NVIC_SetPriority(MBSlave_USART_IRQ ,0,1);	//æŠ¢å ä¼˜å…ˆçº§0ï¼Œå­ä¼˜å…ˆçº§1
+  HAL_NVIC_EnableIRQ(MBSlave_USART_IRQ );		    //ä½¿èƒ½USART1ä¸­æ–­é€šé“  
 
   MBSlave_Uart_Config();
 }
 
-/*****************  ·¢ËÍ×Ö·û´® **********************/
+/*****************  å‘é€å­—ç¬¦ä¸² **********************/
 void MBMaster_Uart_SendString(uint8_t *str)
 {
 	unsigned int k=0;
@@ -142,7 +142,7 @@ void MBMaster_Uart_SendString(uint8_t *str)
   
 }
 
-/*****************  ·¢ËÍ×Ö·û´® **********************/
+/*****************  å‘é€å­—ç¬¦ä¸² **********************/
 void MBSlave_Uart_SendString(uint8_t *str)
 {
 	unsigned int k=0;

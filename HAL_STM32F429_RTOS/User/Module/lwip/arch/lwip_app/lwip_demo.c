@@ -1,19 +1,19 @@
 /**
  ****************************************************************************************************
  * @file        lwip_demo
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2022-8-01
- * @brief       lwIP WebServer ÊµÑé
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       lwIP WebServer å®éªŒ
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó °¢²¨ÂŞ F429¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ é˜¿æ³¢ç½— F429å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
  ****************************************************************************************************
  */
@@ -23,18 +23,18 @@
 #include "httpd_cgi_ssi.h"
 
 /**
- * @brief       lwip_demo ²âÊÔ
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @brief       lwip_demo æµ‹è¯•
+ * @param       æ— 
+ * @retval      æ— 
  */
 void lwip_demo(void)
 {
     /* Httpd Init */
     httpd_init();   /* */
 
-    /* ÅäÖÃSSI´¦Àí³ÌĞò */
+    /* é…ç½®SSIå¤„ç†ç¨‹åº */
     httpd_ssi_init();
 
-    /* ÅäÖÃCGI´¦ÀíÆ÷ */
+    /* é…ç½®CGIå¤„ç†å™¨ */
     httpd_cgi_init();
 }

@@ -37,14 +37,14 @@ static void timer_timeout_ind(void* parameter);
 
 
 /* ----------------------- Start implementation -----------------------------*/
-/* ¶¨Ê±Æ÷Ó²¼ş³õÊ¼»¯ */
+/* å®šæ—¶å™¨ç¡¬ä»¶åˆå§‹åŒ– */
 BOOL xMBMasterPortTimersInit(USHORT usTimeOut50us)
 {
     ModbusMasterTimer_Init(usTimeOut50us);
     return TRUE;
 }
 
-/* ÉèÖÃ¶¨Ê±Æ÷¼ÆÊıÎªT35Ê±¼ä */
+/* è®¾ç½®å®šæ—¶å™¨è®¡æ•°ä¸ºT35æ—¶é—´ */
 void vMBMasterPortTimersT35Enable()
 {
     /* Set current timer mode, don't change it.*/
@@ -55,23 +55,23 @@ void vMBMasterPortTimersT35Enable()
     LL_TIM_EnableIT_UPDATE(ModbusMaster_Tim);
 }
 
-/* ÉèÖÃ¶¨Ê±Æ÷°´ÕÕ¹ã²¥Ö¡µÄ×ª»»ÑÓÊ±Ê±¼ä¿ªÊ¼¼ÆÊı */
+/* è®¾ç½®å®šæ—¶å™¨æŒ‰ç…§å¹¿æ’­å¸§çš„è½¬æ¢å»¶æ—¶æ—¶é—´å¼€å§‹è®¡æ•° */
 void vMBMasterPortTimersConvertDelayEnable()
 {
     /* Set current timer mode, don't change it.*/
     vMBMasterSetCurTimerMode(MB_TMODE_CONVERT_DELAY);
 }
 
-/* ÉèÖÃ¶¨Ê±Æ÷°´ÕÕÏìÓ¦³¬Ê±Ê±¼ä¿ªÊ¼¼ÆÊı */
+/* è®¾ç½®å®šæ—¶å™¨æŒ‰ç…§å“åº”è¶…æ—¶æ—¶é—´å¼€å§‹è®¡æ•° */
 void vMBMasterPortTimersRespondTimeoutEnable()
 {
     /* Set current timer mode, don't change it.*/
     vMBMasterSetCurTimerMode(MB_TMODE_RESPOND_TIMEOUT);
 
-    /* ÕâÀïÓ¦ÉèÖÃ¶¨Ê±Æ÷Æô¶¯ */
+    /* è¿™é‡Œåº”è®¾ç½®å®šæ—¶å™¨å¯åŠ¨ */
 }
 
-/* Ê§ÄÜ¶¨Ê±Æ÷ */
+/* å¤±èƒ½å®šæ—¶å™¨ */
 void vMBMasterPortTimersDisable()
 {
     // NVIC_DisableIRQ(TIM8_TRG_COM_TIM14_IRQn);
@@ -82,7 +82,7 @@ void vMBMasterPortTimersDisable()
     
 }
 
-/* ¶¨Ê±Æ÷ÖĞ¶Ï»Øµ÷º¯Êı£¬¶¨•rÍê³É•rˆÌĞĞ */
+/* å®šæ—¶å™¨ä¸­æ–­å›è°ƒå‡½æ•°ï¼Œå®šæ™‚å®Œæˆæ™‚åŸ·è¡Œ */
 void prvvMasterTIMERExpiredISR(void)
 {
     (void)pxMBMasterPortCBTimerExpired();

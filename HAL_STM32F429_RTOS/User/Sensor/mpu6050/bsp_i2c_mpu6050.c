@@ -11,9 +11,9 @@ I2C_HandleTypeDef I2C_Handle;
 
 
 /**
-  * @brief  ³õÊ¼»¯I2C×ÜÏß£¬Ê¹ÓÃI2CÇ°ĞèÒªµ÷ÓÃ
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  åˆå§‹åŒ–I2Cæ€»çº¿ï¼Œä½¿ç”¨I2Cå‰éœ€è¦è°ƒç”¨
+  * @param  æ— 
+  * @retval æ— 
   */
 void MPU6050_I2C_Init(void) 
 {
@@ -23,7 +23,7 @@ void MPU6050_I2C_Init(void)
 	MPU6050_I2C_SCL_GPIO_CLK_ENABLE();
 	MPU6050_I2C_SDA_GPIO_CLK_ENABLE();
 
-	/* ÅäÖÃI2CxÒı½Å: SCL ----------------------------------------*/
+	/* é…ç½®I2Cxå¼•è„š: SCL ----------------------------------------*/
 	GPIO_InitStructure.Pin =  MPU6050_I2C_SCL_GPIO_PIN; 
 	GPIO_InitStructure.Mode = GPIO_MODE_AF_OD;
 	GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
@@ -31,19 +31,19 @@ void MPU6050_I2C_Init(void)
 	GPIO_InitStructure.Alternate=MPU6050_I2C_AF; 
 	HAL_GPIO_Init(MPU6050_I2C_SCL_GPIO_PORT, &GPIO_InitStructure);
 
-	/* ÅäÖÃI2CxÒı½Å: SDA ----------------------------------------*/
+	/* é…ç½®I2Cxå¼•è„š: SDA ----------------------------------------*/
 	GPIO_InitStructure.Pin = MPU6050_I2C_SDA_GPIO_PIN;  
 	HAL_GPIO_Init(MPU6050_I2C_SDA_GPIO_PORT, &GPIO_InitStructure); 
 	
 	if(HAL_I2C_GetState(&I2C_Handle) == HAL_I2C_STATE_RESET)
 	{	
-		/* Ç¿ÖÆ¸´Î»I2CÍâÉèÊ±ÖÓ */  
+		/* å¼ºåˆ¶å¤ä½I2Cå¤–è®¾æ—¶é’Ÿ */  
 		MPU6050_I2C_FORCE_RESET(); 
 
-		/* ÊÍ·ÅI2CÍâÉèÊ±ÖÓ¸´Î» */  
+		/* é‡Šæ”¾I2Cå¤–è®¾æ—¶é’Ÿå¤ä½ */  
 		MPU6050_I2C_RELEASE_RESET(); 
 		
-		/* I2C ÅäÖÃ */
+		/* I2C é…ç½® */
 		I2C_Handle.Instance = MPU6050_I2C;
 		I2C_Handle.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
 		I2C_Handle.Init.ClockSpeed      = 400000;
@@ -55,7 +55,7 @@ void MPU6050_I2C_Init(void)
 		I2C_Handle.Init.OwnAddress2     = 0;     
 
 		HAL_I2C_Init(&I2C_Handle);	
-		/* Ê¹ÄÜÄ£ÄâÂË²¨Æ÷ */
+		/* ä½¿èƒ½æ¨¡æ‹Ÿæ»¤æ³¢å™¨ */
 		HAL_I2CEx_AnalogFilter_Config(&I2C_Handle, I2C_ANALOGFILTER_ENABLE); 
 	}
 }
@@ -69,21 +69,21 @@ void MPU6050_I2C_Init(void)
   */
 static void I2Cx_Error(uint8_t Addr)
 {
-	/* »Ö¸´I2C¼Ä´æÆ÷ÎªÄ¬ÈÏÖµ */
+	/* æ¢å¤I2Cå¯„å­˜å™¨ä¸ºé»˜è®¤å€¼ */
 	HAL_I2C_DeInit(&I2C_Handle); 
-	/* ÖØĞÂ³õÊ¼»¯I2CÍâÉè */
+	/* é‡æ–°åˆå§‹åŒ–I2Cå¤–è®¾ */
 	MPU6050_I2C_Init();
 }
 
 
 
 /**
-  * @brief  Ğ´¼Ä´æÆ÷£¬ÕâÊÇÌá¹©¸øÉÏ²ãµÄ½Ó¿Ú
-  * @param  slave_addr: ´Ó»úµØÖ·
-  * @param 	reg_addr:¼Ä´æÆ÷µØÖ·
-  * @param  len£ºĞ´ÈëµÄ³¤¶È
-  * @param  data_ptr:Ö¸ÏòÒªĞ´ÈëµÄÊı¾İ
-  * @retval Õı³£Îª0£¬²»Õı³£Îª·Ç0
+  * @brief  å†™å¯„å­˜å™¨ï¼Œè¿™æ˜¯æä¾›ç»™ä¸Šå±‚çš„æ¥å£
+  * @param  slave_addr: ä»æœºåœ°å€
+  * @param 	reg_addr:å¯„å­˜å™¨åœ°å€
+  * @param  lenï¼šå†™å…¥çš„é•¿åº¦
+  * @param  data_ptr:æŒ‡å‘è¦å†™å…¥çš„æ•°æ®
+  * @retval æ­£å¸¸ä¸º0ï¼Œä¸æ­£å¸¸ä¸ºé0
   */
 int MPU6050_I2C_WriteRegister(unsigned char slave_addr,
                                         unsigned char reg_addr,
@@ -94,10 +94,10 @@ int MPU6050_I2C_WriteRegister(unsigned char slave_addr,
 
 	status = HAL_I2C_Mem_Write(&I2C_Handle, slave_addr, reg_addr, I2C_MEMADD_SIZE_8BIT,data_ptr, len,I2Cx_FLAG_TIMEOUT); 
 
-	/* ¼ì²éÍ¨Ñ¶×´Ì¬ */
+	/* æ£€æŸ¥é€šè®¯çŠ¶æ€ */
 	if(status != HAL_OK)
 	{
-		/* ×ÜÏß³ö´í´¦Àí */
+		/* æ€»çº¿å‡ºé”™å¤„ç† */
 		I2Cx_Error(slave_addr);
 	}
 
@@ -106,10 +106,10 @@ int MPU6050_I2C_WriteRegister(unsigned char slave_addr,
 		
 	}
 
-	/* ¼ì²éSENSORÊÇ·ñ¾ÍĞ÷½øĞĞÏÂÒ»´Î¶ÁĞ´²Ù×÷ */
+	/* æ£€æŸ¥SENSORæ˜¯å¦å°±ç»ªè¿›è¡Œä¸‹ä¸€æ¬¡è¯»å†™æ“ä½œ */
 	while (HAL_I2C_IsDeviceReady(&I2C_Handle, slave_addr, I2Cx_FLAG_TIMEOUT, I2Cx_FLAG_TIMEOUT) == HAL_TIMEOUT);
 
-	/* µÈ´ı´«Êä½áÊø */
+	/* ç­‰å¾…ä¼ è¾“ç»“æŸ */
 	while (HAL_I2C_GetState(&I2C_Handle) != HAL_I2C_STATE_READY)
 	{
 		
@@ -120,12 +120,12 @@ int MPU6050_I2C_WriteRegister(unsigned char slave_addr,
 
 
 /**
-  * @brief  ¶Á¼Ä´æÆ÷£¬ÕâÊÇÌá¹©¸øÉÏ²ãµÄ½Ó¿Ú
-	* @param  slave_addr: ´Ó»úµØÖ·
-	* @param 	reg_addr:¼Ä´æÆ÷µØÖ·
-	* @param len£ºÒª¶ÁÈ¡µÄ³¤¶È
-	*	@param data_ptr:Ö¸ÏòÒª´æ´¢Êı¾İµÄÖ¸Õë
-  * @retval Õı³£Îª0£¬²»Õı³£Îª·Ç0
+  * @brief  è¯»å¯„å­˜å™¨ï¼Œè¿™æ˜¯æä¾›ç»™ä¸Šå±‚çš„æ¥å£
+	* @param  slave_addr: ä»æœºåœ°å€
+	* @param 	reg_addr:å¯„å­˜å™¨åœ°å€
+	* @param lenï¼šè¦è¯»å–çš„é•¿åº¦
+	*	@param data_ptr:æŒ‡å‘è¦å­˜å‚¨æ•°æ®çš„æŒ‡é’ˆ
+  * @retval æ­£å¸¸ä¸º0ï¼Œä¸æ­£å¸¸ä¸ºé0
   */
 int MPU6050_I2C_ReadRegister(unsigned char slave_addr,
                                        unsigned char reg_addr,
@@ -134,19 +134,19 @@ int MPU6050_I2C_ReadRegister(unsigned char slave_addr,
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	status =HAL_I2C_Mem_Read(&I2C_Handle,slave_addr,reg_addr,I2C_MEMADD_SIZE_8BIT,data_ptr,len,I2Cx_FLAG_TIMEOUT);    
-	/* ¼ì²éÍ¨Ñ¶×´Ì¬ */
+	/* æ£€æŸ¥é€šè®¯çŠ¶æ€ */
 	if(status != HAL_OK)
 	{
-		/* ×ÜÏß³ö´í´¦Àí */
+		/* æ€»çº¿å‡ºé”™å¤„ç† */
 		I2Cx_Error(slave_addr);
 	}
 	while (HAL_I2C_GetState(&I2C_Handle) != HAL_I2C_STATE_READY)
 	{
 		
 	}
-	/* ¼ì²éSENSORÊÇ·ñ¾ÍĞ÷½øĞĞÏÂÒ»´Î¶ÁĞ´²Ù×÷ */
+	/* æ£€æŸ¥SENSORæ˜¯å¦å°±ç»ªè¿›è¡Œä¸‹ä¸€æ¬¡è¯»å†™æ“ä½œ */
 	while (HAL_I2C_IsDeviceReady(&I2C_Handle, slave_addr, I2Cx_FLAG_TIMEOUT, I2Cx_FLAG_TIMEOUT) == HAL_TIMEOUT);
-	/* µÈ´ı´«Êä½áÊø */
+	/* ç­‰å¾…ä¼ è¾“ç»“æŸ */
 	while (HAL_I2C_GetState(&I2C_Handle) != HAL_I2C_STATE_READY)
 	{
 		
@@ -157,9 +157,9 @@ int MPU6050_I2C_ReadRegister(unsigned char slave_addr,
 
 
 /**
-  * @brief   Ğ´Êı¾İµ½MPU6050¼Ä´æÆ÷
-  * @param   reg_add:¼Ä´æÆ÷µØÖ·
-	* @param	 reg_data:ÒªĞ´ÈëµÄÊı¾İ
+  * @brief   å†™æ•°æ®åˆ°MPU6050å¯„å­˜å™¨
+  * @param   reg_add:å¯„å­˜å™¨åœ°å€
+	* @param	 reg_data:è¦å†™å…¥çš„æ•°æ®
   * @retval  
   */
 void MPU6050_WriteReg(uint8_t reg_add,uint8_t reg_dat)
@@ -168,10 +168,10 @@ void MPU6050_WriteReg(uint8_t reg_add,uint8_t reg_dat)
 }
 
 /**
-  * @brief   ´ÓMPU6050¼Ä´æÆ÷¶ÁÈ¡Êı¾İ
-  * @param   reg_add:¼Ä´æÆ÷µØÖ·
-	* @param	 Read£º´æ´¢Êı¾İµÄ»º³åÇø
-	* @param	 num£ºÒª¶ÁÈ¡µÄÊı¾İÁ¿
+  * @brief   ä»MPU6050å¯„å­˜å™¨è¯»å–æ•°æ®
+  * @param   reg_add:å¯„å­˜å™¨åœ°å€
+	* @param	 Readï¼šå­˜å‚¨æ•°æ®çš„ç¼“å†²åŒº
+	* @param	 numï¼šè¦è¯»å–çš„æ•°æ®é‡
   * @retval  
   */
 void MPU6050_ReadData(uint8_t reg_add,unsigned char* Read,uint8_t num)
@@ -181,7 +181,7 @@ void MPU6050_ReadData(uint8_t reg_add,unsigned char* Read,uint8_t num)
 
 
 /**
-  * @brief   ³õÊ¼»¯MPU6050Ğ¾Æ¬
+  * @brief   åˆå§‹åŒ–MPU6050èŠ¯ç‰‡
   * @param   
   * @retval  
   */
@@ -189,28 +189,28 @@ void MPU6050_Init(void)
 {
 	MPU6050_I2C_Init();
 
-	//ÔÚ³õÊ¼»¯Ö®Ç°ÒªÑÓÊ±Ò»¶ÎÊ±¼ä£¬ÈôÃ»ÓĞÑÓÊ±£¬Ôò¶ÏµçºóÔÙÉÏµçÊı¾İ¿ÉÄÜ»á³ö´í
+	//åœ¨åˆå§‹åŒ–ä¹‹å‰è¦å»¶æ—¶ä¸€æ®µæ—¶é—´ï¼Œè‹¥æ²¡æœ‰å»¶æ—¶ï¼Œåˆ™æ–­ç”µåå†ä¸Šç”µæ•°æ®å¯èƒ½ä¼šå‡ºé”™
 	Delay(100);
-	MPU6050_WriteReg(MPU6050_RA_PWR_MGMT_1, 0x00);	     //½â³ıĞİÃß×´Ì¬
-	MPU6050_WriteReg(MPU6050_RA_SMPLRT_DIV , 0x07);	    //ÍÓÂİÒÇ²ÉÑùÂÊ
+	MPU6050_WriteReg(MPU6050_RA_PWR_MGMT_1, 0x00);	     //è§£é™¤ä¼‘çœ çŠ¶æ€
+	MPU6050_WriteReg(MPU6050_RA_SMPLRT_DIV , 0x07);	    //é™€èºä»ªé‡‡æ ·ç‡
 	MPU6050_WriteReg(MPU6050_RA_CONFIG , 0x06);	
-	MPU6050_WriteReg(MPU6050_RA_ACCEL_CONFIG , 0x01);	  //ÅäÖÃ¼ÓËÙ¶È´«¸ĞÆ÷¹¤×÷ÔÚ16GÄ£Ê½
-	MPU6050_WriteReg(MPU6050_RA_GYRO_CONFIG, 0x18);     //ÍÓÂİÒÇ×Ô¼ì¼°²âÁ¿·¶Î§£¬µäĞÍÖµ£º0x18(²»×Ô¼ì£¬2000deg/s)
+	MPU6050_WriteReg(MPU6050_RA_ACCEL_CONFIG , 0x01);	  //é…ç½®åŠ é€Ÿåº¦ä¼ æ„Ÿå™¨å·¥ä½œåœ¨16Gæ¨¡å¼
+	MPU6050_WriteReg(MPU6050_RA_GYRO_CONFIG, 0x18);     //é™€èºä»ªè‡ªæ£€åŠæµ‹é‡èŒƒå›´ï¼Œå…¸å‹å€¼ï¼š0x18(ä¸è‡ªæ£€ï¼Œ2000deg/s)
 	Delay(200);
 }
 
 /**
-  * @brief   ¶ÁÈ¡MPU6050µÄID
+  * @brief   è¯»å–MPU6050çš„ID
   * @param   
-  * @retval  Õı³£·µ»Ø1£¬Òì³£·µ»Ø0
+  * @retval  æ­£å¸¸è¿”å›1ï¼Œå¼‚å¸¸è¿”å›0
   */
 uint8_t MPU6050ReadID(void)
 {
 	unsigned char Re = 0;
-    MPU6050_ReadData(MPU6050_RA_WHO_AM_I,&Re,1);    //¶ÁÆ÷¼şµØÖ·
+    MPU6050_ReadData(MPU6050_RA_WHO_AM_I,&Re,1);    //è¯»å™¨ä»¶åœ°å€
 	if(Re != 0x68)
 	{
-		MPU_ERROR("MPU6050 dectected error!\r\n¼ì²â²»µ½MPU6050Ä£¿é£¬Çë¼ì²éÄ£¿éÓë¿ª·¢°åµÄ½ÓÏß");
+		MPU_ERROR("MPU6050 dectected error!\r\næ£€æµ‹ä¸åˆ°MPU6050æ¨¡å—ï¼Œè¯·æ£€æŸ¥æ¨¡å—ä¸å¼€å‘æ¿çš„æ¥çº¿");
 		return 0;
 	}
 	else
@@ -224,7 +224,7 @@ uint8_t MPU6050ReadID(void)
 
 
 /**
-  * @brief   ¶ÁÈ¡MPU6050µÄ¼ÓËÙ¶ÈÊı¾İ
+  * @brief   è¯»å–MPU6050çš„åŠ é€Ÿåº¦æ•°æ®
   * @param   
   * @retval  
   */
@@ -240,7 +240,7 @@ void MPU6050ReadAcc(short *accData)
 
 
 /**
-  * @brief   ¶ÁÈ¡MPU6050µÄ½Ç¼ÓËÙ¶ÈÊı¾İ
+  * @brief   è¯»å–MPU6050çš„è§’åŠ é€Ÿåº¦æ•°æ®
   * @param   
   * @retval  
   */
@@ -256,19 +256,19 @@ void MPU6050ReadGyro(short *gyroData)
 
 
 /**
-  * @brief   ¶ÁÈ¡MPU6050µÄÔ­Ê¼ÎÂ¶ÈÊı¾İ
+  * @brief   è¯»å–MPU6050çš„åŸå§‹æ¸©åº¦æ•°æ®
   * @param   
   * @retval  
   */
 void MPU6050ReadTemp(short *tempData)
 {
 	uint8_t buf[2];
-    MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2);     //¶ÁÈ¡ÎÂ¶ÈÖµ
+    MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2);     //è¯»å–æ¸©åº¦å€¼
     *tempData = (buf[0] << 8) | buf[1];
 }
 
 /**
-  * @brief   ¶ÁÈ¡MPU6050µÄÎÂ¶ÈÊı¾İ£¬×ª»¯³ÉÉãÊÏ¶È
+  * @brief   è¯»å–MPU6050çš„æ¸©åº¦æ•°æ®ï¼Œè½¬åŒ–æˆæ‘„æ°åº¦
   * @param   
   * @retval  
   */
@@ -277,7 +277,7 @@ void MPU6050_ReturnTemp(float *Temperature)
 	short temp3;
 	uint8_t buf[2];
 	
-	MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2);     //¶ÁÈ¡ÎÂ¶ÈÖµ
+	MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2);     //è¯»å–æ¸©åº¦å€¼
     temp3= (buf[0] << 8) | buf[1];	
 	*Temperature=((double) temp3/340.0)+36.53;
 
@@ -287,9 +287,9 @@ void MPU6050_ReturnTemp(float *Temperature)
 
 void MPU6050_Test_CallBack(void)
 {
-	short Acel[3];	/* ¼ÓËÙ¶È */
-	short Gyro[3];	/* ½Ç¼ÓËÙ¶È */
-	float Temp;		/* ÎÂ¶È */
+	short Acel[3];	/* åŠ é€Ÿåº¦ */
+	short Gyro[3];	/* è§’åŠ é€Ÿåº¦ */
+	float Temp;		/* æ¸©åº¦ */
 
 	MPU6050ReadAcc(Acel);
 	MPU6050ReadGyro(Gyro);
@@ -302,7 +302,7 @@ void MPU6050_Test(void)
 
 	if(MPU6050ReadID() == 1)
 	{
-		/* Æô¶¯¶¨Ê±Æ÷ */
+		/* å¯åŠ¨å®šæ—¶å™¨ */
 		LED_RED;
 		multi_timer_start(&Timer_MPU6050_Handler,5000,Timer_MPU6050_CallBack,&MPU6050_Test_CallBack);
 	}

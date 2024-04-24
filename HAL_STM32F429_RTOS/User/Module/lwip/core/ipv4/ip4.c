@@ -448,8 +448,8 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
      MIB2_STATS_INC(mib2.ipinreceives);
 
     /* identify the IP header */
-    iphdr = (struct ip_hdr *)p->payload;  /* »ñÈ¡ipÊı¾İ±¨Ê×²¿ */
-    if (IPH_V(iphdr) != 4)                /* ÅĞ¶Ï°æ±¾ */
+    iphdr = (struct ip_hdr *)p->payload;  /* è·å–ipæ•°æ®æŠ¥é¦–éƒ¨ */
+    if (IPH_V(iphdr) != 4)                /* åˆ¤æ–­ç‰ˆæœ¬ */
     {
         LWIP_DEBUGF(IP_DEBUG | LWIP_DBG_LEVEL_WARNING, ("IP packet dropped due to bad version number %"U16_F"\n", (u16_t)IPH_V(iphdr)));
         ip4_debug_print(p);
@@ -469,9 +469,9 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
 #endif
 
     /* obtain IP header length in bytes */
-    iphdr_hlen = IPH_HL_BYTES(iphdr);         /* »ñÈ¡IPÊ×²¿³¤¶È */
+    iphdr_hlen = IPH_HL_BYTES(iphdr);         /* è·å–IPé¦–éƒ¨é•¿åº¦ */
     /* obtain ip length in bytes */
-    iphdr_len = lwip_ntohs(IPH_LEN(iphdr));   /* »ñÈ¡IP±¨ÎÄ×Ü³¤¶È */
+    iphdr_len = lwip_ntohs(IPH_LEN(iphdr));   /* è·å–IPæŠ¥æ–‡æ€»é•¿åº¦ */
 
     /* Trim pbuf. This is especially required for packets < 60 bytes. */
     if (iphdr_len < p->tot_len) 
@@ -480,15 +480,15 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
     }
 
     /* header length exceeds first pbuf length, or ip length exceeds total pbuf length? */
-    if ((iphdr_hlen > p->len) || (iphdr_len > p->tot_len) || (iphdr_hlen < IP_HLEN))  /* ¶ÔÒ»Ğ©±¨ÎÄ³¤¶ÈµÈ½øĞĞÅĞ¶Ï */
+    if ((iphdr_hlen > p->len) || (iphdr_len > p->tot_len) || (iphdr_hlen < IP_HLEN))  /* å¯¹ä¸€äº›æŠ¥æ–‡é•¿åº¦ç­‰è¿›è¡Œåˆ¤æ–­ */
     {
-        if (iphdr_hlen < IP_HLEN)   /* Ê×²¿³¤¶È²»¶Ô */
+        if (iphdr_hlen < IP_HLEN)   /* é¦–éƒ¨é•¿åº¦ä¸å¯¹ */
         {
             LWIP_DEBUGF(IP_DEBUG | LWIP_DBG_LEVEL_SERIOUS,
                     ("ip4_input: short IP header (%"U16_F" bytes) received, IP packet dropped\n", iphdr_hlen));
         }
 
-        if (iphdr_hlen > p->len)  /* ipÊı¾İ±¨³¤¶È±Èpbuf½ÓÊÕµÄ»¹Òª´ó£¬ËµÃ÷Êı¾İÉÙÁË£¬ÓĞÒì³£ */
+        if (iphdr_hlen > p->len)  /* ipæ•°æ®æŠ¥é•¿åº¦æ¯”pbufæ¥æ”¶çš„è¿˜è¦å¤§ï¼Œè¯´æ˜æ•°æ®å°‘äº†ï¼Œæœ‰å¼‚å¸¸ */
         {
             LWIP_DEBUGF(IP_DEBUG | LWIP_DBG_LEVEL_SERIOUS,
                     ("IP header (len %"U16_F") does not fit in first pbuf (len %"U16_F"), IP packet dropped.\n",
@@ -528,12 +528,12 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
     }
 #endif
 
-    /* ¸´ÖÆipÔ´µØÖ·ºÍÄ¿µÄµØÖ· */
+    /* å¤åˆ¶ipæºåœ°å€å’Œç›®çš„åœ°å€ */
     ip_addr_copy_from_ip4(ip_data.current_iphdr_dest, iphdr->dest);
     ip_addr_copy_from_ip4(ip_data.current_iphdr_src, iphdr->src);
 
     /* match packet against an interface, i.e. is this packet for us? */
-    if (ip4_addr_ismulticast(ip4_current_dest_addr()))    /* È·ÈÏÕâ¸ö±¨ÎÄÊÇ·¢ËÍ¸øÕâ¸öÍø¿¨µÄ */
+    if (ip4_addr_ismulticast(ip4_current_dest_addr()))    /* ç¡®è®¤è¿™ä¸ªæŠ¥æ–‡æ˜¯å‘é€ç»™è¿™ä¸ªç½‘å¡çš„ */
     {
 #if LWIP_IGMP
         if ((inp->flags & NETIF_FLAG_IGMP) && (igmp_lookfor_group(inp, ip4_current_dest_addr()))) 
@@ -565,10 +565,10 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
 #endif /* LWIP_IGMP */
     } 
     else      
-    { /* Êı¾İ²»ÊÇ·¢¸øÎÒÃÇµÄ */
+    { /* æ•°æ®ä¸æ˜¯å‘ç»™æˆ‘ä»¬çš„ */
     /* start trying with inp. if that's not acceptable, start walking the
        list of configured netifs. */
-    if (ip4_input_accept(inp))  /* ¼ì²éµ±Ç°ÊäÈëµÄÍø¿¨ÊÇ·ñÓĞÎÊÌâ */
+    if (ip4_input_accept(inp))  /* æ£€æŸ¥å½“å‰è¾“å…¥çš„ç½‘å¡æ˜¯å¦æœ‰é—®é¢˜ */
     {
         netif = inp;
     } 
@@ -576,7 +576,7 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
     {
         netif = NULL;
 #if !LWIP_NETIF_LOOPBACK || LWIP_HAVE_LOOPIF
-        if (!ip4_addr_isloopback(ip4_current_dest_addr()))    /* ¼ì²éÊÇ·ñ»·»ØµØÖ· */
+        if (!ip4_addr_isloopback(ip4_current_dest_addr()))    /* æ£€æŸ¥æ˜¯å¦ç¯å›åœ°å€ */
 #endif /* !LWIP_NETIF_LOOPBACK || LWIP_HAVE_LOOPIF */
         {
 #if !LWIP_SINGLE_NETIF
@@ -650,13 +650,13 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
     }
 
     /* packet not for us? */
-    if (netif == NULL)    /* ipÊı¾İ°ü²»ÊÇ¸øÕâ¸öÍø¿¨µÄ£¬Ñ¡Ôñ×ª·¢»ò¶ªÆú */
+    if (netif == NULL)    /* ipæ•°æ®åŒ…ä¸æ˜¯ç»™è¿™ä¸ªç½‘å¡çš„ï¼Œé€‰æ‹©è½¬å‘æˆ–ä¸¢å¼ƒ */
     {
         /* packet not for us, route or discard */
         LWIP_DEBUGF(IP_DEBUG | LWIP_DBG_TRACE, ("ip4_input: packet not for us.\n"));
 #if IP_FORWARD
         /* non-broadcast packet? */
-        if (!ip4_addr_isbroadcast(ip4_current_dest_addr(), inp))    /* ½øĞĞ×ª·¢ */
+        if (!ip4_addr_isbroadcast(ip4_current_dest_addr(), inp))    /* è¿›è¡Œè½¬å‘ */
         {
         /* try to forward IP packet on (other) interfaces */
         ip4_forward(p, (struct ip_hdr *)p->payload, inp);
@@ -672,13 +672,13 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
         return ERR_OK;
     }
 
-    /* ÅĞ¶ÏipÊı¾İ°üÊÇ·ñ·ÖÆ¬£¬²¢½øĞĞ·ÖÆ¬´¦Àí */
+    /* åˆ¤æ–­ipæ•°æ®åŒ…æ˜¯å¦åˆ†ç‰‡ï¼Œå¹¶è¿›è¡Œåˆ†ç‰‡å¤„ç† */
     if ((IPH_OFFSET(iphdr) & PP_HTONS(IP_OFFMASK | IP_MF)) != 0) 
     {
 #if IP_REASSEMBLY /* packet fragment reassembly code present? */
         LWIP_DEBUGF(IP_DEBUG, ("IP packet is a fragment (id=0x%04"X16_F" tot_len=%"U16_F" len=%"U16_F" MF=%"U16_F" offset=%"U16_F"), calling ip4_reass()\n",
                             lwip_ntohs(IPH_ID(iphdr)), p->tot_len, lwip_ntohs(IPH_LEN(iphdr)), (u16_t)!!(IPH_OFFSET(iphdr) & PP_HTONS(IP_MF)), (u16_t)((lwip_ntohs(IPH_OFFSET(iphdr)) & IP_OFFMASK) * 8)));
-        /* ÖØ×°Êı¾İ±¨ */
+        /* é‡è£…æ•°æ®æŠ¥ */
         p = ip4_reass(p);
         /* packet not fully reassembled yet? */
         if (p == NULL) 
@@ -686,7 +686,7 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
             return ERR_OK;
         }
 
-        /* ÖØ×°Íê³É£¬»ñÈ¡ipÊ×²¿ */
+        /* é‡è£…å®Œæˆï¼Œè·å–ipé¦–éƒ¨ */
         iphdr = (const struct ip_hdr *)p->payload;
 #else /* IP_REASSEMBLY == 0, no packet fragment reassembly code present */
     pbuf_free(p);
@@ -738,7 +738,7 @@ err_t ip4_input(struct pbuf *p, struct netif *inp)
     {
         pbuf_remove_header(p, iphdr_hlen); /* Move to payload, no check necessary. */
 
-        switch (IPH_PROTO(iphdr))   /* ´ÓipÊ×²¿»ñÈ¡ÉÏ²ãĞ­Òé */
+        switch (IPH_PROTO(iphdr))   /* ä»ipé¦–éƒ¨è·å–ä¸Šå±‚åè®® */
         {
 #if LWIP_UDP
             case IP_PROTO_UDP:
@@ -853,7 +853,7 @@ ip4_output_if_opt(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *dest,
     const ip4_addr_t *src_used = src;
     if (dest != LWIP_IP_HDRINCL) 
     {
-        if (ip4_addr_isany(src))    /* IPµØÖ·Îª0£¬ÌîÈëÍø¿¨µÄIP */
+        if (ip4_addr_isany(src))    /* IPåœ°å€ä¸º0ï¼Œå¡«å…¥ç½‘å¡çš„IP */
         {
             src_used = netif_ip4_addr(netif);
         }
@@ -900,10 +900,10 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
 
     MIB2_STATS_INC(mib2.ipoutrequests);
 
-    /* Ä¿µÄipÎª¿Õ,ĞèÒª²¹³äÊı¾İ */
+    /* ç›®çš„ipä¸ºç©º,éœ€è¦è¡¥å……æ•°æ® */
     if (dest != LWIP_IP_HDRINCL) 
     {
-        u16_t ip_hlen = IP_HLEN;  /* »ñÈ¡Ê×²¿³¤¶È(²»°üº¬Ñ¡Ïî×Ö½Ú) */
+        u16_t ip_hlen = IP_HLEN;  /* è·å–é¦–éƒ¨é•¿åº¦(ä¸åŒ…å«é€‰é¡¹å­—èŠ‚) */
 #if IP_OPTIONS_SEND
         u16_t optlen_aligned = 0;
         if (optlen != 0) 
@@ -963,29 +963,29 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
     LWIP_ASSERT("check that first pbuf can hold struct ip_hdr",
                 (p->len >= sizeof(struct ip_hdr)));
 
-    IPH_TTL_SET(iphdr, ttl);      /* ÌîĞ´Éú´æÊ±¼ä */
-    IPH_PROTO_SET(iphdr, proto);  /* ÌîĞ´ÉÏ²ãĞ­Òé */
+    IPH_TTL_SET(iphdr, ttl);      /* å¡«å†™ç”Ÿå­˜æ—¶é—´ */
+    IPH_PROTO_SET(iphdr, proto);  /* å¡«å†™ä¸Šå±‚åè®® */
 #if CHECKSUM_GEN_IP_INLINE
     chk_sum += PP_NTOHS(proto | (ttl << 8));
 #endif /* CHECKSUM_GEN_IP_INLINE */
 
     /* dest cannot be NULL here */
-    ip4_addr_copy(iphdr->dest, *dest);    /* ÌîĞ´Ä¿±êip */
+    ip4_addr_copy(iphdr->dest, *dest);    /* å¡«å†™ç›®æ ‡ip */
 #if CHECKSUM_GEN_IP_INLINE
     chk_sum += ip4_addr_get_u32(&iphdr->dest) & 0xFFFF;
     chk_sum += ip4_addr_get_u32(&iphdr->dest) >> 16;
 #endif /* CHECKSUM_GEN_IP_INLINE */
 
-    IPH_VHL_SET(iphdr, 4, ip_hlen / 4); /* ÌîĞ´°æ±¾ºÅºÍ±¨ÎÄÊ×²¿ */
-    IPH_TOS_SET(iphdr, tos);            /* ÌîĞ´·şÎñÀàĞÍ */
+    IPH_VHL_SET(iphdr, 4, ip_hlen / 4); /* å¡«å†™ç‰ˆæœ¬å·å’ŒæŠ¥æ–‡é¦–éƒ¨ */
+    IPH_TOS_SET(iphdr, tos);            /* å¡«å†™æœåŠ¡ç±»å‹ */
 #if CHECKSUM_GEN_IP_INLINE
     chk_sum += PP_NTOHS(tos | (iphdr->_v_hl << 8));
 #endif /* CHECKSUM_GEN_IP_INLINE */
-    IPH_LEN_SET(iphdr, lwip_htons(p->tot_len));   /* ÌîĞ´Êı¾İ°ü×Ü³¤¶È */
+    IPH_LEN_SET(iphdr, lwip_htons(p->tot_len));   /* å¡«å†™æ•°æ®åŒ…æ€»é•¿åº¦ */
 #if CHECKSUM_GEN_IP_INLINE
     chk_sum += iphdr->_len;
 #endif /* CHECKSUM_GEN_IP_INLINE */
-    IPH_OFFSET_SET(iphdr, 0);                     /* ÌîĞ´±êÖ¾Î»ºÍ·ÖÆ¬Æ«ÒÆÁ¿ */
+    IPH_OFFSET_SET(iphdr, 0);                     /* å¡«å†™æ ‡å¿—ä½å’Œåˆ†ç‰‡åç§»é‡ */
     IPH_ID_SET(iphdr, lwip_htons(ip_id));
 #if CHECKSUM_GEN_IP_INLINE
     chk_sum += iphdr->_id;
@@ -1049,13 +1049,13 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
     ip4_debug_print(p);
 
 #if ENABLE_LOOPBACK
-    if (ip4_addr_cmp(dest, netif_ip4_addr(netif)) /* ÅĞ¶ÏÄ¿µÄipÊÇ·ñÍø¿¨ip */
+    if (ip4_addr_cmp(dest, netif_ip4_addr(netif)) /* åˆ¤æ–­ç›®çš„ipæ˜¯å¦ç½‘å¡ip */
 #if !LWIP_HAVE_LOOPIF
       || ip4_addr_isloopback(dest)
 #endif /* !LWIP_HAVE_LOOPIF */
      ) 
     {
-    /* µ÷ÓÃ»·»ØÊäÈëµØÖ· */
+    /* è°ƒç”¨ç¯å›è¾“å…¥åœ°å€ */
     LWIP_DEBUGF(IP_DEBUG, ("netif_loop_output()"));
     return netif_loop_output(netif, p);
   }
@@ -1068,7 +1068,7 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
 #if IP_FRAG
   /* don't fragment if interface has mtu set to 0 [loopif] */
   if (netif->mtu && (p->tot_len > netif->mtu)) {
-    return ip4_frag(p, netif, dest);    /* Êı¾İ°üÌ«³¤£¬½øĞĞ·ÖÆ¬ */
+    return ip4_frag(p, netif, dest);    /* æ•°æ®åŒ…å¤ªé•¿ï¼Œè¿›è¡Œåˆ†ç‰‡ */
   }
 #endif /* IP_FRAG */
 
@@ -1092,7 +1092,7 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
  *
  * @return ERR_RTE if no route is found
  *         see ip_output_if() for more return values
- * @note    IPÊı¾İ°ü·¢ËÍº¯Êı
+ * @note    IPæ•°æ®åŒ…å‘é€å‡½æ•°
  */
 err_t ip4_output(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *dest,
            u8_t ttl, u8_t tos, u8_t proto)
@@ -1101,7 +1101,7 @@ err_t ip4_output(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *dest,
 
     LWIP_IP_CHECK_PBUF_REF_COUNT_FOR_TX(p);
 
-    /* ¸ù¾İÄ¿±êipÑ¡ÔñºÏÊÊµÄÍø¿¨ */
+    /* æ ¹æ®ç›®æ ‡ipé€‰æ‹©åˆé€‚çš„ç½‘å¡ */
     if ((netif = ip4_route_src(src, dest)) == NULL) 
     {
         LWIP_DEBUGF(IP_DEBUG, ("ip4_output: No route to %"U16_F".%"U16_F".%"U16_F".%"U16_F"\n",

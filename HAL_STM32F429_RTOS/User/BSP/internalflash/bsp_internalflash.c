@@ -2,31 +2,31 @@
   
 #include "./internalflash/bsp_internalflash.h"   
 
-/*×¼±¸Ğ´ÈëµÄ²âÊÔÊı¾İ*/
+/*å‡†å¤‡å†™å…¥çš„æµ‹è¯•æ•°æ®*/
 #define DATA_32                 ((uint32_t)0x87654321)
 
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/* Òª²Á³ıÄÚ²¿FLASHµÄÆğÊ¼µØÖ· */
+/* è¦æ“¦é™¤å†…éƒ¨FLASHçš„èµ·å§‹åœ°å€ */
 #define FLASH_USER_START_ADDR   ADDR_FLASH_SECTOR_5   
-/* Òª²Á³ıÄÚ²¿FLASHµÄ½áÊøµØÖ· */
+/* è¦æ“¦é™¤å†…éƒ¨FLASHçš„ç»“æŸåœ°å€ */
 #define FLASH_USER_END_ADDR     ADDR_FLASH_SECTOR_7  
 
 
 static uint32_t GetSector(uint32_t Address);
 
 /**
-  * @brief  InternalFlash_Test,¶ÔÄÚ²¿FLASH½øĞĞ¶ÁĞ´²âÊÔ
+  * @brief  InternalFlash_Test,å¯¹å†…éƒ¨FLASHè¿›è¡Œè¯»å†™æµ‹è¯•
   * @param  None
   * @retval None
   */
 int InternalFlash_Test(void)
 {
-	/*Òª²Á³ıµÄÆğÊ¼ÉÈÇø(°üº¬)¼°½áÊøÉÈÇø(²»°üº¬)£¬Èç8-12£¬±íÊ¾²Á³ı8¡¢9¡¢10¡¢11ÉÈÇø*/
+	/*è¦æ“¦é™¤çš„èµ·å§‹æ‰‡åŒº(åŒ…å«)åŠç»“æŸæ‰‡åŒº(ä¸åŒ…å«)ï¼Œå¦‚8-12ï¼Œè¡¨ç¤ºæ“¦é™¤8ã€9ã€10ã€11æ‰‡åŒº*/
 	uint32_t FirstSector = 0;
 	uint32_t NbOfSectors = 0;
-	uint32_t SECTORError = 0;	/* ²ÁĞ´·µ»Ø½á¹û */
+	uint32_t SECTORError = 0;	/* æ“¦å†™è¿”å›ç»“æœ */
 	
 	uint32_t Address = 0;
 
@@ -36,23 +36,23 @@ int InternalFlash_Test(void)
 	
 	HAL_FLASH_Unlock();
 
-	FirstSector = GetSector(FLASH_USER_START_ADDR);	/* »ñÈ¡ÉÈÇøºÅ */
-	NbOfSectors = GetSector(FLASH_USER_END_ADDR)- FirstSector + 1;	/* »ñÈ¡ÉÈÇøÊıÁ¿ */
+	FirstSector = GetSector(FLASH_USER_START_ADDR);	/* è·å–æ‰‡åŒºå· */
+	NbOfSectors = GetSector(FLASH_USER_END_ADDR)- FirstSector + 1;	/* è·å–æ‰‡åŒºæ•°é‡ */
 	
-	/* ²Á³ıÓÃ»§ÇøÓò (ÓÃ»§ÇøÓòÖ¸³ÌĞò±¾ÉíÃ»ÓĞÊ¹ÓÃµÄ¿Õ¼ä£¬¿ÉÒÔ×Ô¶¨Òå)**/
+	/* æ“¦é™¤ç”¨æˆ·åŒºåŸŸ (ç”¨æˆ·åŒºåŸŸæŒ‡ç¨‹åºæœ¬èº«æ²¡æœ‰ä½¿ç”¨çš„ç©ºé—´ï¼Œå¯ä»¥è‡ªå®šä¹‰)**/
 	/* Fill EraseInit structure*/
-	EraseInitStruct.TypeErase     = FLASH_TYPEERASE_SECTORS;	/* ²ÁĞ´ÀàĞÍ:ÉÈÇø */
-	EraseInitStruct.VoltageRange  = FLASH_VOLTAGE_RANGE_3;		/* ÒÔ¡°×Ö¡±µÄ´óĞ¡½øĞĞ²Ù×÷ */ 
-	EraseInitStruct.Sector        = FirstSector;				/* ²ÁĞ´µÄÉÈÇøºÅ */
-	EraseInitStruct.NbSectors     = NbOfSectors;				/* ²ÁĞ´µÄÉÈÇøÊıÁ¿ */
-	/* ¿ªÊ¼²Á³ı²Ù×÷ */
+	EraseInitStruct.TypeErase     = FLASH_TYPEERASE_SECTORS;	/* æ“¦å†™ç±»å‹:æ‰‡åŒº */
+	EraseInitStruct.VoltageRange  = FLASH_VOLTAGE_RANGE_3;		/* ä»¥â€œå­—â€çš„å¤§å°è¿›è¡Œæ“ä½œ */ 
+	EraseInitStruct.Sector        = FirstSector;				/* æ“¦å†™çš„æ‰‡åŒºå· */
+	EraseInitStruct.NbSectors     = NbOfSectors;				/* æ“¦å†™çš„æ‰‡åŒºæ•°é‡ */
+	/* å¼€å§‹æ“¦é™¤æ“ä½œ */
 	if (HAL_FLASHEx_Erase(&EraseInitStruct, &SECTORError) != HAL_OK)
 	{
-		/*²Á³ı³ö´í£¬·µ»Ø£¬Êµ¼ÊÓ¦ÓÃÖĞ¿É¼ÓÈë´¦Àí */
+		/*æ“¦é™¤å‡ºé”™ï¼Œè¿”å›ï¼Œå®é™…åº”ç”¨ä¸­å¯åŠ å…¥å¤„ç† */
 		return -1;
 	}
 
-	/* ÒÔ¡°×Ö¡±µÄ´óĞ¡Îªµ¥Î»Ğ´ÈëÊı¾İ ********************************/
+	/* ä»¥â€œå­—â€çš„å¤§å°ä¸ºå•ä½å†™å…¥æ•°æ® ********************************/
 	Address = FLASH_USER_START_ADDR;
 
 	while (Address < FLASH_USER_END_ADDR)
@@ -63,19 +63,19 @@ int InternalFlash_Test(void)
 		}
 		else
 		{ 
-		  /*Ğ´Èë³ö´í£¬·µ»Ø£¬Êµ¼ÊÓ¦ÓÃÖĞ¿É¼ÓÈë´¦Àí */
+		  /*å†™å…¥å‡ºé”™ï¼Œè¿”å›ï¼Œå®é™…åº”ç”¨ä¸­å¯åŠ å…¥å¤„ç† */
 				return -1;
 		}
 	}
 
 
-	/* ¸øFLASHÉÏËø£¬·ÀÖ¹ÄÚÈİ±»´Û¸Ä*/
+	/* ç»™FLASHä¸Šé”ï¼Œé˜²æ­¢å†…å®¹è¢«ç¯¡æ”¹*/
 	HAL_FLASH_Lock(); 
 
 
-	/* ´ÓFLASHÖĞ¶ÁÈ¡³öÊı¾İ½øĞĞĞ£Ñé***************************************/
-	/*  MemoryProgramStatus = 0: Ğ´ÈëµÄÊı¾İÕıÈ·
-	  MemoryProgramStatus != 0: Ğ´ÈëµÄÊı¾İ´íÎó£¬ÆäÖµÎª´íÎóµÄ¸öÊı */
+	/* ä»FLASHä¸­è¯»å–å‡ºæ•°æ®è¿›è¡Œæ ¡éªŒ***************************************/
+	/*  MemoryProgramStatus = 0: å†™å…¥çš„æ•°æ®æ­£ç¡®
+	  MemoryProgramStatus != 0: å†™å…¥çš„æ•°æ®é”™è¯¯ï¼Œå…¶å€¼ä¸ºé”™è¯¯çš„ä¸ªæ•° */
 	Address = FLASH_USER_START_ADDR;
 	MemoryProgramStatus = 0;
 
@@ -90,12 +90,12 @@ int InternalFlash_Test(void)
 
 		Address = Address + 4;
 	}  
-	/* Êı¾İĞ£Ñé²»ÕıÈ· */
+	/* æ•°æ®æ ¡éªŒä¸æ­£ç¡® */
 	if(MemoryProgramStatus)
 	{    
 		return -1;
 	}
-	else /*Êı¾İĞ£ÑéÕıÈ·*/
+	else /*æ•°æ®æ ¡éªŒæ­£ç¡®*/
 	{ 
 		return 0;   
 	}
@@ -104,12 +104,12 @@ int InternalFlash_Test(void)
 
 
 /**
-  * @brief  ¸ù¾İÊäÈëµÄµØÖ·¸ø³öËüËùÔÚµÄsector
-  *					ÀıÈç£º
+  * @brief  æ ¹æ®è¾“å…¥çš„åœ°å€ç»™å‡ºå®ƒæ‰€åœ¨çš„sector
+  *					ä¾‹å¦‚ï¼š
 						uwStartSector = GetSector(FLASH_USER_START_ADDR);
 						uwEndSector = GetSector(FLASH_USER_END_ADDR);	
-  * @param  Address£ºµØÖ·
-  * @retval µØÖ·ËùÔÚµÄsector
+  * @param  Addressï¼šåœ°å€
+  * @retval åœ°å€æ‰€åœ¨çš„sector
   */
 static uint32_t GetSector(uint32_t Address)
 {
@@ -167,26 +167,26 @@ static uint32_t GetSector(uint32_t Address)
 }
 
 
-/* Ê¹ÓÃ´Ëº¯ÊıÒªÏÈ½âËø */
+/* ä½¿ç”¨æ­¤å‡½æ•°è¦å…ˆè§£é” */
 int8_t InternalFlashEraseSector(uint32_t EraseStartAddr,uint32_t EraseEndAddr)
 {
 	static FLASH_EraseInitTypeDef EraseInitStruct;
 	uint32_t SECTORError = 0;
 	uint32_t NbOfSectors = 0;
-	uint32_t FirstSector = 0;	/* µÚÒ»¸öÉÈÇø */
+	uint32_t FirstSector = 0;	/* ç¬¬ä¸€ä¸ªæ‰‡åŒº */
 	
-	FirstSector = GetSector(EraseStartAddr);	/* »ñÈ¡ÉÈÇøºÅ */
-	NbOfSectors = GetSector(EraseEndAddr) - FirstSector + 1;	/* »ñÈ¡ÉÈÇøÊıÁ¿ */
+	FirstSector = GetSector(EraseStartAddr);	/* è·å–æ‰‡åŒºå· */
+	NbOfSectors = GetSector(EraseEndAddr) - FirstSector + 1;	/* è·å–æ‰‡åŒºæ•°é‡ */
 
-	EraseInitStruct.TypeErase     = FLASH_TYPEERASE_SECTORS;	/* ²ÁĞ´ÀàĞÍ:ÉÈÇø */
-	EraseInitStruct.VoltageRange  = FLASH_VOLTAGE_RANGE_3;		/* ÒÔ¡°×Ö¡±µÄ´óĞ¡½øĞĞ²Ù×÷ */ 
-	EraseInitStruct.Sector        = FirstSector;				/* ²ÁĞ´µÄÉÈÇøºÅ */
-	EraseInitStruct.NbSectors     = NbOfSectors;				/* ²ÁĞ´µÄÉÈÇøÊıÁ¿ */
+	EraseInitStruct.TypeErase     = FLASH_TYPEERASE_SECTORS;	/* æ“¦å†™ç±»å‹:æ‰‡åŒº */
+	EraseInitStruct.VoltageRange  = FLASH_VOLTAGE_RANGE_3;		/* ä»¥â€œå­—â€çš„å¤§å°è¿›è¡Œæ“ä½œ */ 
+	EraseInitStruct.Sector        = FirstSector;				/* æ“¦å†™çš„æ‰‡åŒºå· */
+	EraseInitStruct.NbSectors     = NbOfSectors;				/* æ“¦å†™çš„æ‰‡åŒºæ•°é‡ */
 
-	/* ¿ªÊ¼²Á³ı²Ù×÷ */
+	/* å¼€å§‹æ“¦é™¤æ“ä½œ */
 	if (HAL_FLASHEx_Erase(&EraseInitStruct, &SECTORError) != HAL_OK)
 	{
-		/*²Á³ı³ö´í£¬·µ»Ø£¬Êµ¼ÊÓ¦ÓÃÖĞ¿É¼ÓÈë´¦Àí */
+		/*æ“¦é™¤å‡ºé”™ï¼Œè¿”å›ï¼Œå®é™…åº”ç”¨ä¸­å¯åŠ å…¥å¤„ç† */
 		return -1;
 	}
 
@@ -210,12 +210,12 @@ int8_t InternalFlash_WriteData(uint32_t WriteStartAddr,uint32_t *pWriteData,uint
 		}
 		else
 		{ 
-		  	/*Ğ´Èë³ö´í£¬·µ»Ø£¬Êµ¼ÊÓ¦ÓÃÖĞ¿É¼ÓÈë´¦Àí */
+		  	/*å†™å…¥å‡ºé”™ï¼Œè¿”å›ï¼Œå®é™…åº”ç”¨ä¸­å¯åŠ å…¥å¤„ç† */
 			return -1;
 		}
 	}
 
-	/* ¸øFLASHÉÏËø£¬·ÀÖ¹ÄÚÈİ±»´Û¸Ä*/
+	/* ç»™FLASHä¸Šé”ï¼Œé˜²æ­¢å†…å®¹è¢«ç¯¡æ”¹*/
 	HAL_FLASH_Lock(); 
     
     return 0;
@@ -242,12 +242,12 @@ int8_t InternalFlash_EraseWriteData(uint32_t WriteStartAddr,uint32_t *pWriteData
 		}
 		else
 		{ 
-		  	/*Ğ´Èë³ö´í£¬·µ»Ø£¬Êµ¼ÊÓ¦ÓÃÖĞ¿É¼ÓÈë´¦Àí */
+		  	/*å†™å…¥å‡ºé”™ï¼Œè¿”å›ï¼Œå®é™…åº”ç”¨ä¸­å¯åŠ å…¥å¤„ç† */
 			return -1;
 		}
 	}
 
-	/* ¸øFLASHÉÏËø£¬·ÀÖ¹ÄÚÈİ±»´Û¸Ä*/
+	/* ç»™FLASHä¸Šé”ï¼Œé˜²æ­¢å†…å®¹è¢«ç¯¡æ”¹*/
 	HAL_FLASH_Lock(); 
     
     return 0;

@@ -26,19 +26,19 @@
 #define          M_DI_RESERVE                     0
 
 
-/* ²âÊÔ¹¦ÄÜ²ÎÊý */
-#define MB_SAMPLE_TEST_SLAVE_ADDR						1			//´Ó»úÉè±¸µØÖ·
-#define MB_REG_START  											1			//·¢ËÍÊý¾ÝÆðÊ¼Î»ÖÃ
-#define MB_SEND_REG_NUM    									4			//·¢ËÍÊý¾ÝÊýÁ¿
-#define MB_READ_REG_NUM    									1			//½ÓÊÕÊý¾ÝÊýÁ¿
-#define WAITING_FOREVER											-1		//ÓÀ¾ÃµÈ´ý
+/* æµ‹è¯•åŠŸèƒ½å‚æ•° */
+#define MB_SAMPLE_TEST_SLAVE_ADDR						1			//ä»Žæœºè®¾å¤‡åœ°å€
+#define MB_REG_START  											1			//å‘é€æ•°æ®èµ·å§‹ä½ç½®
+#define MB_SEND_REG_NUM    									4			//å‘é€æ•°æ®æ•°é‡
+#define MB_READ_REG_NUM    									1			//æŽ¥æ”¶æ•°æ®æ•°é‡
+#define WAITING_FOREVER											-1		//æ°¸ä¹…ç­‰å¾…
 
-/* Í¨¹ýºê¶¨ÒåÑ¡Ôñ¹¦ÄÜ */
-#define MB_USER_HOLD 												1			//Ð´¶à¸ö±£³Ö¼Ä´æÆ÷
-#define MB_USER_COILS 											2			//Ð´¶à¸öÏßÈ¦
-#define MB_USER_INPUT_REG										3			//¶ÁÊäÈë¼Ä´æÆ÷
+/* é€šè¿‡å®å®šä¹‰é€‰æ‹©åŠŸèƒ½ */
+#define MB_USER_HOLD 												1			//å†™å¤šä¸ªä¿æŒå¯„å­˜å™¨
+#define MB_USER_COILS 											2			//å†™å¤šä¸ªçº¿åœˆ
+#define MB_USER_INPUT_REG										3			//è¯»è¾“å…¥å¯„å­˜å™¨
 
-extern void test(char MB);												//²âÊÔ³ÌÐò
+extern void test(char MB);												//æµ‹è¯•ç¨‹åº
 
 
 /* -----------------------Slave Defines -------------------------------------*/

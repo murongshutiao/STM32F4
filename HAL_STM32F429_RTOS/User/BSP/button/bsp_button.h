@@ -5,15 +5,15 @@
 
 
 
- /** °´¼ü°´ÏÂ±êÖÃºê
-	* °´¼ü°´ÏÂÎª¸ßµçÆ½£¬ÉèÖÃ Button_ON=1£¬ Button_OFF=0
-	* Èô°´¼ü°´ÏÂÎªµÍµçÆ½£¬°ÑºêÉèÖÃ³ÉButton_ON=0 £¬Button_OFF=1 ¼´¿É
+ /** æŒ‰é”®æŒ‰ä¸‹æ ‡ç½®å®
+	* æŒ‰é”®æŒ‰ä¸‹ä¸ºé«˜ç”µå¹³ï¼Œè®¾ç½® Button_ON=1ï¼Œ Button_OFF=0
+	* è‹¥æŒ‰é”®æŒ‰ä¸‹ä¸ºä½Žç”µå¹³ï¼ŒæŠŠå®è®¾ç½®æˆButton_ON=0 ï¼ŒButton_OFF=1 å³å¯
 	*/
 #define Button_ON	1
 #define Button_OFF	0
 
 
-//Òý½Å¶¨Òå
+//å¼•è„šå®šä¹‰
 /*******************************************************/
 #define Button1_PIN                  GPIO_PIN_0                 
 #define Button1_GPIO_PORT            GPIOA                      

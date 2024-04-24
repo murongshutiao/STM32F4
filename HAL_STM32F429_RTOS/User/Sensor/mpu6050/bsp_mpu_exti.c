@@ -4,13 +4,13 @@
   * @author  fire
   * @version V1.0
   * @date    2013-xx-xx
-  * @brief   ÍÓÂİÒÇÊı¾İÖĞ¶ÏÅäÖÃ
+  * @brief   é™€èºä»ªæ•°æ®ä¸­æ–­é…ç½®
   ******************************************************************************
   * @attention
   *
-  * ÊµÑéÆ½Ì¨:Ò°»ğ  STM32 F767 ¿ª·¢°å 
-  * ÂÛÌ³    :http://www.firebbs.cn
-  * ÌÔ±¦    :http://fire-stm32.taobao.com
+  * å®éªŒå¹³å°:é‡ç«  STM32 F767 å¼€å‘æ¿ 
+  * è®ºå›    :http://www.firebbs.cn
+  * æ·˜å®    :http://fire-stm32.taobao.com
   *
   ******************************************************************************
   */
@@ -18,28 +18,28 @@
 #include "./mpu6050/bsp_mpu_exti.h"
 
  /**
-  * @brief  ÅäÖÃÖĞ¶Ï¿Ú£¬²¢ÉèÖÃÖĞ¶ÏÓÅÏÈ¼¶
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  é…ç½®ä¸­æ–­å£ï¼Œå¹¶è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§
+  * @param  æ— 
+  * @retval æ— 
   */
 void EXTI_MPU_Config(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure; 
 
-    /*¿ªÆôGPIO¿ÚµÄÊ±ÖÓ*/
+    /*å¼€å¯GPIOå£çš„æ—¶é’Ÿ*/
     MPU_INT_GPIO_CLK_ENABLE();
 
-    /* Ñ¡ÔñÖĞ¶ÏµÄÒı½Å */ 
+    /* é€‰æ‹©ä¸­æ–­çš„å¼•è„š */ 
     GPIO_InitStructure.Pin = MPU_INT_GPIO_PIN;
-    /* ÉèÖÃÒı½ÅÎªÊäÈëÄ£Ê½ */ 
+    /* è®¾ç½®å¼•è„šä¸ºè¾“å…¥æ¨¡å¼ */ 
     GPIO_InitStructure.Mode = GPIO_MODE_IT_RISING;	    		
-    /* ÉèÖÃÒı½Å²»ÉÏÀ­Ò²²»ÏÂÀ­ */
+    /* è®¾ç½®å¼•è„šä¸ä¸Šæ‹‰ä¹Ÿä¸ä¸‹æ‹‰ */
     GPIO_InitStructure.Pull = GPIO_NOPULL;
-    /* Ê¹ÓÃÉÏÃæµÄ½á¹¹Ìå³õÊ¼»¯°´¼ü */
+    /* ä½¿ç”¨ä¸Šé¢çš„ç»“æ„ä½“åˆå§‹åŒ–æŒ‰é”® */
     HAL_GPIO_Init(MPU_INT_GPIO_PORT, &GPIO_InitStructure); 
-    /* ÅäÖÃ EXTI ÖĞ¶ÏÔ´ µ½key1 Òı½Å¡¢ÅäÖÃÖĞ¶ÏÓÅÏÈ¼¶*/
+    /* é…ç½® EXTI ä¸­æ–­æº åˆ°key1 å¼•è„šã€é…ç½®ä¸­æ–­ä¼˜å…ˆçº§*/
     HAL_NVIC_SetPriority(MPU_INT_EXTI_IRQ, 1, 1);
-    /* Ê¹ÄÜÖĞ¶Ï */
+    /* ä½¿èƒ½ä¸­æ–­ */
     HAL_NVIC_EnableIRQ(MPU_INT_EXTI_IRQ);
 }
 /*********************************************END OF FILE**********************/

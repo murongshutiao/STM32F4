@@ -8,59 +8,59 @@
 typedef uint8_t bool;
 #endif
 
-//ÒÔÏÂLLEDÎªLED LIGHTËõĞ´£¬²¢½«LIGHTËõĞ´LĞ´ÔÚÇ°Ãæ
-//LEDËø(·ÇOSÊ¹ÓÃ)
+//ä»¥ä¸‹LLEDä¸ºLED LIGHTç¼©å†™ï¼Œå¹¶å°†LIGHTç¼©å†™Lå†™åœ¨å‰é¢
+//LEDé”(éOSä½¿ç”¨)
 typedef enum 
 {
   	LLED_UNLOCKED,
   	LLED_LOCKED  
 }tLLed_Lock;
 
-//LEDµÆ×´Ì¬ 
+//LEDç¯çŠ¶æ€ 
 typedef enum
 {
-	LLED_STATUS_ON,										//µãÁÁ×´Ì¬
-	LLED_STATUS_OFF										//Ï¨Ãğ×´Ì¬
+	LLED_STATUS_ON,										//ç‚¹äº®çŠ¶æ€
+	LLED_STATUS_OFF										//ç†„ç­çŠ¶æ€
 }tLLedStatus;
 
-//LED Êä³öÇ¿ÖÆ´¥·¢±êÖ¾
+//LED è¾“å‡ºå¼ºåˆ¶è§¦å‘æ ‡å¿—
 typedef enum
 {
-	LLED_TRIG_ON,										//´¥·¢´ò¿ª
-	LLED_TRIG_OFF										//´¥·¢¹Ø±Õ
+	LLED_TRIG_ON,										//è§¦å‘æ‰“å¼€
+	LLED_TRIG_OFF										//è§¦å‘å…³é—­
 }tLLedTrig;
 
-//LEDµÆ¹¤×÷·½Ê½
+//LEDç¯å·¥ä½œæ–¹å¼
 typedef enum
 {
-	LLED_MODE_BRIGHT,									//³£ÁÁ·½Ê½
-	LLED_MODE_DARKNESS,									//Ï¨Ãğ·½Ê½
-	LLED_MODE_FLASH,									//ÉÁË¸·½Ê½
-	LLED_MODE_FLASH_INTERVAL							//¼äĞªĞÔÉÁË¸·½Ê½
+	LLED_MODE_BRIGHT,									//å¸¸äº®æ–¹å¼
+	LLED_MODE_DARKNESS,									//ç†„ç­æ–¹å¼
+	LLED_MODE_FLASH,									//é—ªçƒæ–¹å¼
+	LLED_MODE_FLASH_INTERVAL							//é—´æ­‡æ€§é—ªçƒæ–¹å¼
 }tLLedMode;
 /*----------------------------------------------------------------------
-	¼äĞªĞÔÉÁË¸ËµÃ÷:·ÖÈı¸ö²½ÖèÖ´ĞĞ
-	1	FIRST FLASH(¶Ì»ò³¤) ,ÒÔÉè¶¨ÆµÂÊÉÁË¸N´Î;
-	2	SECOND FLASH(³¤»ò¶Ì),ÒÔÉè¶¨ÆµÂÊÉÁË¸M´Î;
-	3	DARK,Ï¨ÃğÒ»¶¨Ê±¼ä;
-	×¢:FIRST FLASHÓëSECOND FLASHÓ¦¸ÃÉèÖÃÎª²»Í¬ÆµÂÊÒÔÊµÏÖ
-		¶ÌÉÁ»ò³¤ÉÁ;Í¬Ê±,Èç¹ûN»òMµÈÓÚ0,ÔòÌø¹ı,µ«MÓëN
-		²»ÄÜÍ¬Ê±Îª	0.
+	é—´æ­‡æ€§é—ªçƒè¯´æ˜:åˆ†ä¸‰ä¸ªæ­¥éª¤æ‰§è¡Œ
+	1	FIRST FLASH(çŸ­æˆ–é•¿) ,ä»¥è®¾å®šé¢‘ç‡é—ªçƒNæ¬¡;
+	2	SECOND FLASH(é•¿æˆ–çŸ­),ä»¥è®¾å®šé¢‘ç‡é—ªçƒMæ¬¡;
+	3	DARK,ç†„ç­ä¸€å®šæ—¶é—´;
+	æ³¨:FIRST FLASHä¸SECOND FLASHåº”è¯¥è®¾ç½®ä¸ºä¸åŒé¢‘ç‡ä»¥å®ç°
+		çŸ­é—ªæˆ–é•¿é—ª;åŒæ—¶,å¦‚æœNæˆ–Mç­‰äº0,åˆ™è·³è¿‡,ä½†Mä¸N
+		ä¸èƒ½åŒæ—¶ä¸º	0.
 		
-	ÁíÍâ,Í¨¹ı´Ë²ÎÊı¿ÉÊµÏÖÒÔÏÂ¹¦ÄÜ:
-	1)	N ¶ÌÉÁ+ M³¤ÉÁ+ ¼äĞª;
-	2)	N ¶ÌÉÁ+ M³¤ÉÁ;
-	3)	N ¶ÌÉÁ+ ¼äĞª;
-	4)	N ¶ÌÉÁ;
-	»òÒÔÉÏ¶ÌÉÁÓë³¤ÉÁ½»»»µÄĞ§¹û
+	å¦å¤–,é€šè¿‡æ­¤å‚æ•°å¯å®ç°ä»¥ä¸‹åŠŸèƒ½:
+	1)	N çŸ­é—ª+ Mé•¿é—ª+ é—´æ­‡;
+	2)	N çŸ­é—ª+ Mé•¿é—ª;
+	3)	N çŸ­é—ª+ é—´æ­‡;
+	4)	N çŸ­é—ª;
+	æˆ–ä»¥ä¸ŠçŸ­é—ªä¸é•¿é—ªäº¤æ¢çš„æ•ˆæœ
 ----------------------------------------------------------------------*/
-#define	LLED_FLASH_INTERVAL_FIRST		0				//¼äĞªĞÔÔËĞĞµÚÒ»¸ö½×¶Î(ÉÁË¸ N´Î)
-#define	LLED_FLASH_INTERVAL_SECOND		1				//¼äĞªĞÔÔËĞĞµÚ¶ş¸ö½×¶Î(ÉÁË¸M´Î)
-#define	LLED_FLASH_INTERVAL_DARK		2				//¼äĞªĞÔÔËĞĞµÚÈı¸ö½×¶Î(Ï¨Ãğ)
-#define	LLED_FLASH_INTERVAL_FINISH		3				//¼äÏ¶ĞÔÔËĞĞÒ»×éÍê³É
+#define	LLED_FLASH_INTERVAL_FIRST		0				//é—´æ­‡æ€§è¿è¡Œç¬¬ä¸€ä¸ªé˜¶æ®µ(é—ªçƒ Næ¬¡)
+#define	LLED_FLASH_INTERVAL_SECOND		1				//é—´æ­‡æ€§è¿è¡Œç¬¬äºŒä¸ªé˜¶æ®µ(é—ªçƒMæ¬¡)
+#define	LLED_FLASH_INTERVAL_DARK		2				//é—´æ­‡æ€§è¿è¡Œç¬¬ä¸‰ä¸ªé˜¶æ®µ(ç†„ç­)
+#define	LLED_FLASH_INTERVAL_FINISH		3				//é—´éš™æ€§è¿è¡Œä¸€ç»„å®Œæˆ
 
-//LEDµÆÉÁË¸ÆµÂÊ £¨ÓĞĞ©ÆµÂÊÆäÊµ²¢Ã»ÓĞ±È½ÏÃ÷ÏÔµÄĞ§¹û,²»ÓÃ¶¨ÒåÃ¿Ò»¸öÆµÂÊ£©
-#define	LLED_BASETIME					100				//»ù±¾Ê±¼ä(ms)
+//LEDç¯é—ªçƒé¢‘ç‡ ï¼ˆæœ‰äº›é¢‘ç‡å…¶å®å¹¶æ²¡æœ‰æ¯”è¾ƒæ˜æ˜¾çš„æ•ˆæœ,ä¸ç”¨å®šä¹‰æ¯ä¸€ä¸ªé¢‘ç‡ï¼‰
+#define	LLED_BASETIME					100				//åŸºæœ¬æ—¶é—´(ms)
 typedef enum
 {
 	LLED_FREQ_1_10Hz=100,								//0.1Hz
@@ -70,120 +70,120 @@ typedef enum
 	LLED_FREQ_2Hz=5,									//2Hz
 	LLED_FREQ_5Hz=2,									//5Hz
 	LLED_FREQ_10Hz=1,									//10Hz
-}tLLedFreq;//LEDµÆÉÁË¸ÆµÂÊ 
+}tLLedFreq;//LEDç¯é—ªçƒé¢‘ç‡ 
 
-//²¿·ÖµÆÉÁË¸²ÎÊıÏŞ¶¨Öµ
-#define	LLED_DUTY_MIN					10				//Õ¼¿Õ±È×îĞ¡Öµ
-#define	LLED_DUTY_MAX					90				//Õ¼¿Õ±È×î´óÖµ
-#define	LLED_SCAN_MIN					10				//É¨ÃèÊ±¼ä×îĞ¡Öµ
-#define	LLED_SCAN_MAX					50				//É¨ÃèÊ±¼ä×î´óÖµ
-//LEDµÆÉÁË¸²ÎÊı
+//éƒ¨åˆ†ç¯é—ªçƒå‚æ•°é™å®šå€¼
+#define	LLED_DUTY_MIN					10				//å ç©ºæ¯”æœ€å°å€¼
+#define	LLED_DUTY_MAX					90				//å ç©ºæ¯”æœ€å¤§å€¼
+#define	LLED_SCAN_MIN					10				//æ‰«ææ—¶é—´æœ€å°å€¼
+#define	LLED_SCAN_MAX					50				//æ‰«ææ—¶é—´æœ€å¤§å€¼
+//LEDç¯é—ªçƒå‚æ•°
 typedef struct
 {
-	tLLedFreq				freq;						//ÉÁË¸ÆµÂÊ
-	tLLedStatus				endStatus;					//ÉÁË¸½áÊøLEDµÆ×´Ì¬
-	uint8_t					dutyRatio;					//È¡Öµ·¶Î§[10/20/30/40/50/60/70/80/90]
-	uint8_t					counter;					//ÉÁË¸´ÎÊı[0--255],0±íÊ¾³ÖĞøÉÁË¸
+	tLLedFreq				freq;						//é—ªçƒé¢‘ç‡
+	tLLedStatus				endStatus;					//é—ªçƒç»“æŸLEDç¯çŠ¶æ€
+	uint8_t					dutyRatio;					//å–å€¼èŒƒå›´[10/20/30/40/50/60/70/80/90]
+	uint8_t					counter;					//é—ªçƒæ¬¡æ•°[0--255],0è¡¨ç¤ºæŒç»­é—ªçƒ
 }tLLedFlashParam;
-//¼äĞªĞÔÉÁË¸²ÎÊı
+//é—´æ­‡æ€§é—ªçƒå‚æ•°
 typedef struct
 {
-	uint8_t					count;						//¼äĞªÉÁË¸Ö´ĞĞ´ÎÊı
-	uint16_t				darkTime;					//Ï¨ÃğÊ±¼ä,µ¥Î»ms,µ«±ØĞëÉèÖÃÎªÉ¨ÃèÊ±¼äµÄÕûÊıÖµ
-	tLLedFlashParam			first;						//ÉÁË¸first²ÎÊı
-	tLLedFlashParam			second;						//ÉÁË¸second²ÎÊı
+	uint8_t					count;						//é—´æ­‡é—ªçƒæ‰§è¡Œæ¬¡æ•°
+	uint16_t				darkTime;					//ç†„ç­æ—¶é—´,å•ä½ms,ä½†å¿…é¡»è®¾ç½®ä¸ºæ‰«ææ—¶é—´çš„æ•´æ•°å€¼
+	tLLedFlashParam			first;						//é—ªçƒfirstå‚æ•°
+	tLLedFlashParam			second;						//é—ªçƒsecondå‚æ•°
 }tLLedFlashIntervalParam;
-//LEDµÆÉÁË¸Óë¼äĞªĞÔÉÁË¸¼ÆÊıÆ÷
+//LEDç¯é—ªçƒä¸é—´æ­‡æ€§é—ªçƒè®¡æ•°å™¨
 typedef struct
 {
-	uint8_t					max;						//×î´ó¼ÆÊıÖµ
-	uint8_t					exec;						//Ö´ĞĞ¼ÆÊıÖµ
+	uint8_t					max;						//æœ€å¤§è®¡æ•°å€¼
+	uint8_t					exec;						//æ‰§è¡Œè®¡æ•°å€¼
 }tLLedCnt;
 
-//LEDµÆÉÁË¸ÔËĞĞÊı¾İ
+//LEDç¯é—ªçƒè¿è¡Œæ•°æ®
 typedef struct
 {
-	bool					cntDetect;					//¼ÆÊı¼ì²â±êÖ¾£¨È¡ÖµTRUE²Å¿ÉÒÔ¼ì²â¼ÆÊıÖµ£©
-	uint8_t					intervalLevel;				//¼ÇÂ¼¼äĞªĞÔÔËĞĞµÄ½×¶Î
-	uint16_t				count;						//¼ÆÊıÆ÷
-	uint16_t				onCntMax;					//µãÁÁ¼ÆÊıÆ÷×î´óÖµ
-	uint16_t				offCntMax;					//Ï¨Ãğ¼ÆÊıÆ÷×î´óÖµ
-	tLLedCnt				flashCnt;					//ÉÁË¸¼ÆÊıÆ÷
-	tLLedCnt				intervalCnt;				//¼äĞªÉÁË¸¼ÆÊıÆ÷
-	tLLedStatus				endStatus;					//ÉÁË¸½áÊøLEDµÆ×´Ì¬
+	bool					cntDetect;					//è®¡æ•°æ£€æµ‹æ ‡å¿—ï¼ˆå–å€¼TRUEæ‰å¯ä»¥æ£€æµ‹è®¡æ•°å€¼ï¼‰
+	uint8_t					intervalLevel;				//è®°å½•é—´æ­‡æ€§è¿è¡Œçš„é˜¶æ®µ
+	uint16_t				count;						//è®¡æ•°å™¨
+	uint16_t				onCntMax;					//ç‚¹äº®è®¡æ•°å™¨æœ€å¤§å€¼
+	uint16_t				offCntMax;					//ç†„ç­è®¡æ•°å™¨æœ€å¤§å€¼
+	tLLedCnt				flashCnt;					//é—ªçƒè®¡æ•°å™¨
+	tLLedCnt				intervalCnt;				//é—´æ­‡é—ªçƒè®¡æ•°å™¨
+	tLLedStatus				endStatus;					//é—ªçƒç»“æŸLEDç¯çŠ¶æ€
 }tLLedFlashRun;
 /*----------------------------------------------------------------------
-ÉÁË¸¿ªÊ¼Ö´ĞĞÊ±LED×´Ì¬ËµÃ÷:
-µ±Ç°×´Ì¬Îª:µãÁÁ,Ôò»áÏÈ´ÓÏ¨Ãğ¿ªÊ¼Ö´ĞĞ,Í¬Ê±»áÔÚÏÂ
-				 Ò»¸öµãÁÁ¿ªÊ¼¼ÆÊı
-µ±Ç°×´Ì¬Îª:Ï¨Ãğ,ÔòÖ±½Ó´ÓµãÁÁ¿ªÊ¼Ö´ĞĞ,²¢¿ªÊ¼¼ÆÊı
+é—ªçƒå¼€å§‹æ‰§è¡Œæ—¶LEDçŠ¶æ€è¯´æ˜:
+å½“å‰çŠ¶æ€ä¸º:ç‚¹äº®,åˆ™ä¼šå…ˆä»ç†„ç­å¼€å§‹æ‰§è¡Œ,åŒæ—¶ä¼šåœ¨ä¸‹
+				 ä¸€ä¸ªç‚¹äº®å¼€å§‹è®¡æ•°
+å½“å‰çŠ¶æ€ä¸º:ç†„ç­,åˆ™ç›´æ¥ä»ç‚¹äº®å¼€å§‹æ‰§è¡Œ,å¹¶å¼€å§‹è®¡æ•°
 ----------------------------------------------------------------------*/
-//LEDµÆ¿ØÖÆ²ÎÊı£¨µ÷ÓÃLEDµÆ¿ØÖÆÊä³öÊ±µÄÈë¿Ú²ÎÊı£©
+//LEDç¯æ§åˆ¶å‚æ•°ï¼ˆè°ƒç”¨LEDç¯æ§åˆ¶è¾“å‡ºæ—¶çš„å…¥å£å‚æ•°ï¼‰
 typedef struct
 {
-	tLLedMode				mode;						//LEDµÆ¹¤×÷Ä£Ê½
-	void*					runParam;					//LED¹¤×÷ÔËĞĞ²ÎÊı
+	tLLedMode				mode;						//LEDç¯å·¥ä½œæ¨¡å¼
+	void*					runParam;					//LEDå·¥ä½œè¿è¡Œå‚æ•°
 }tLLedCtrlParam;
 /*----------------------------------------------------------------------
-	²ÎÊırunParamËµÃ÷:
-	1	µ±mode=LLED_MODE_BRIGHT/LLED_MODE_DARKNESSÊ±
-		runParamÎ´Ê¹ÓÃ,¿ÉÉèÖÃÎªNULL;
-	2	µ±mode=LLED_MODE_FLASHÊ±
-		runParamĞèÊ¹ÓÃtLLedFlashParamÀàĞÍµÄ²ÎÊıÖ¸Õë;
-	3	µ±mode=LLED_MODE_FLASH_INTERVALÊ±
-		runParamĞèÊ¹ÓÃtLLedFlashIntervalParamÀàĞÍµÄ²ÎÊıÖ¸Õë;
+	å‚æ•°runParamè¯´æ˜:
+	1	å½“mode=LLED_MODE_BRIGHT/LLED_MODE_DARKNESSæ—¶
+		runParamæœªä½¿ç”¨,å¯è®¾ç½®ä¸ºNULL;
+	2	å½“mode=LLED_MODE_FLASHæ—¶
+		runParaméœ€ä½¿ç”¨tLLedFlashParamç±»å‹çš„å‚æ•°æŒ‡é’ˆ;
+	3	å½“mode=LLED_MODE_FLASH_INTERVALæ—¶
+		runParaméœ€ä½¿ç”¨tLLedFlashIntervalParamç±»å‹çš„å‚æ•°æŒ‡é’ˆ;
 ----------------------------------------------------------------------*/
-//LEDµÆÇı¶¯º¯ÊıÔ­ĞÍ¶¨Òå
-typedef void(*tLLedVoid)(void);							//LEDÎŞ²Îº¯ÊıÔ­ĞÍ
-typedef bool(*tLLedCtrlFunc)(uint8_t,void*);			//LEDµÆ¹¤×÷¿ØÖÆº¯ÊıÔ­ĞÍ
-typedef void(*tLLedOutputFunc)(tLLedStatus);			//LEDµÆÊä³ö¿ØÖÆº¯ÊıÔ­ĞÍ
+//LEDç¯é©±åŠ¨å‡½æ•°åŸå‹å®šä¹‰
+typedef void(*tLLedVoid)(void);							//LEDæ— å‚å‡½æ•°åŸå‹
+typedef bool(*tLLedCtrlFunc)(uint8_t,void*);			//LEDç¯å·¥ä½œæ§åˆ¶å‡½æ•°åŸå‹
+typedef void(*tLLedOutputFunc)(tLLedStatus);			//LEDç¯è¾“å‡ºæ§åˆ¶å‡½æ•°åŸå‹
 
-//LEDµÆÓ¦ÓÃ²ãÌá¹©µÄÇı¶¯º¯Êı
+//LEDç¯åº”ç”¨å±‚æä¾›çš„é©±åŠ¨å‡½æ•°
 typedef struct
 {
-	tLLedOutputFunc			*output;					//°²×°µÄLEDµÆÊä³ö¿ØÖÆº¯Êı
-	tLLedVoid				init;						//°²×°µÄLEDµÆµ×²ã³õÊ¼»¯º¯Êı(¿ÉÒÔÉèÖÃÎª¿Õ£©
-	tLLedVoid				unInit;						//°²×°µÄLEDµÆµ×²ãÈ¥³õÊ¼»¯º¯Êı(¿ÉÒÔÉèÖÃÎª¿Õ£©
-	tLLedVoid				lock;						//°²×°µÄLEDµÆ»¥³âËø»ñÈ¡º¯Êı(¿ÉÒÔÉèÖÃÎª¿Õ£©
-	tLLedVoid				unLock;						//°²×°µÄLEDµÆ»¥³âËø¹é»¹º¯Êı(¿ÉÒÔÉèÖÃÎª¿Õ£©
+	tLLedOutputFunc			*output;					//å®‰è£…çš„LEDç¯è¾“å‡ºæ§åˆ¶å‡½æ•°
+	tLLedVoid				init;						//å®‰è£…çš„LEDç¯åº•å±‚åˆå§‹åŒ–å‡½æ•°(å¯ä»¥è®¾ç½®ä¸ºç©ºï¼‰
+	tLLedVoid				unInit;						//å®‰è£…çš„LEDç¯åº•å±‚å»åˆå§‹åŒ–å‡½æ•°(å¯ä»¥è®¾ç½®ä¸ºç©ºï¼‰
+	tLLedVoid				lock;						//å®‰è£…çš„LEDç¯äº’æ–¥é”è·å–å‡½æ•°(å¯ä»¥è®¾ç½®ä¸ºç©ºï¼‰
+	tLLedVoid				unLock;						//å®‰è£…çš„LEDç¯äº’æ–¥é”å½’è¿˜å‡½æ•°(å¯ä»¥è®¾ç½®ä¸ºç©ºï¼‰
 }tLLedDrvFunc;
 
-//LEDµÆÇı¶¯°²×°²ÎÊı
+//LEDç¯é©±åŠ¨å®‰è£…å‚æ•°
 typedef struct
 {	
-	uint8_t					scanUnit;					//LEDµÆÉ¨ÃèÊ±¼ä[10/20/30/40/50]
-	uint8_t					lightMax;					//LEDµÆ×î´óÊıÄ¿
-	tLLedDrvFunc			drvFunc;					//LEDµÆÇı¶¯º¯Êı	
+	uint8_t					scanUnit;					//LEDç¯æ‰«ææ—¶é—´[10/20/30/40/50]
+	uint8_t					lightMax;					//LEDç¯æœ€å¤§æ•°ç›®
+	tLLedDrvFunc			drvFunc;					//LEDç¯é©±åŠ¨å‡½æ•°	
 }tLLedInitParam;
 
-//LEDµÆ»ù±¾½á¹¹
+//LEDç¯åŸºæœ¬ç»“æ„
 typedef struct
 {
-	tLLedMode				mode;						//LEDµÆ¹¤×÷Ä£Ê½
-	tLLedTrig				trig;						//LEDµãÁÁ¼°Ï¨Ãğ´¥·¢±êÖ¾
-	tLLedStatus				status;						//LEDµÆ×´Ì¬
-	tLLedFlashRun			run;						//LEDµÆÉÁË¸ÔËĞĞ
-	tLLedFlashIntervalParam	flashIntervalParam;			//LEDµÆ¼äĞªĞÔÉÁË¸±£´æ²ÎÊı
+	tLLedMode				mode;						//LEDç¯å·¥ä½œæ¨¡å¼
+	tLLedTrig				trig;						//LEDç‚¹äº®åŠç†„ç­è§¦å‘æ ‡å¿—
+	tLLedStatus				status;						//LEDç¯çŠ¶æ€
+	tLLedFlashRun			run;						//LEDç¯é—ªçƒè¿è¡Œ
+	tLLedFlashIntervalParam	flashIntervalParam;			//LEDç¯é—´æ­‡æ€§é—ªçƒä¿å­˜å‚æ•°
 }tLLed;
 
-//LED µÆÇı¶¯Ìá¹©¸øÓ¦ÓÃ²ãµÄ²Ù×÷¾ä±ú
+//LED ç¯é©±åŠ¨æä¾›ç»™åº”ç”¨å±‚çš„æ“ä½œå¥æŸ„
 typedef struct
 {
-	tLLedVoid				poll;						//pollº¯Êı
-	tLLedCtrlFunc			ctrl;						//LEDµÆ¿ØÖÆ¹¦ÄÜº¯Êı
+	tLLedVoid				poll;						//pollå‡½æ•°
+	tLLedCtrlFunc			ctrl;						//LEDç¯æ§åˆ¶åŠŸèƒ½å‡½æ•°
 }tLLedHandle;
 /*----------------------------------------------------------------------
-							ctrl¹¦ÄÜº¯ÊıÊ¹ÓÃËµÃ÷:
+							ctrlåŠŸèƒ½å‡½æ•°ä½¿ç”¨è¯´æ˜:
 							
-	lightÎªĞèÒªÉèÖÃµÄLEDµÆĞòºÅ		
-	ledHandleÎªLED²Ù×÷¾ä±ú
-	1,¿ØÖÆLEDµÆ³£ÁÁ»ò³£Ãğ:
+	lightä¸ºéœ€è¦è®¾ç½®çš„LEDç¯åºå·		
+	ledHandleä¸ºLEDæ“ä½œå¥æŸ„
+	1,æ§åˆ¶LEDç¯å¸¸äº®æˆ–å¸¸ç­:
 		tLLedCtrlParam	ctrlParam;
 
 		ctrlParam.mode=LLED_MODE_BRIGHT;//LLED_MODE_DARKNESS;
 		ctrlParam.runParam=NULL;
 		ledHandle->ctrl(light,&ctrlParam);
-	2,¿ØÖÆLEDµÆÉÁË¸
+	2,æ§åˆ¶LEDç¯é—ªçƒ
 		tLLedCtrlParam	ctrlParam;
 		tLLedFlashParam	flashParam;
 
@@ -194,10 +194,10 @@ typedef struct
 		flashParam.counter=LLED_FLASHKEEP_CNT;
 		ctrlParam.runParam=&flashParam;
 		ledHandle->ctrl(light,&ctrlParam);
-	3,¿ØÖÆLEDµÆÎª¼äĞªĞÔÉÁË¸
+	3,æ§åˆ¶LEDç¯ä¸ºé—´æ­‡æ€§é—ªçƒ
 		tLLedCtrlParam			ctrlParam;
 		tLLedFlashIntervalParam	flashIntervalParam;
-		//ÒÔÏÂÉèÖÃ3¶Ì1³¤ÉÁË¸(³ÖĞøÖ´ĞĞ)
+		//ä»¥ä¸‹è®¾ç½®3çŸ­1é•¿é—ªçƒ(æŒç»­æ‰§è¡Œ)
 		ctrlParam.mode=LLED_MODE_FLASH_INTERVAL;
 		flashIntervalParam.first.freq=LLED_FREQ_5Hz;
 		flashIntervalParam.first.dutyRatio=50;
@@ -212,19 +212,19 @@ typedef struct
 		ctrlParam.runParam=&flashIntervalParam;
 		ledHandle->ctrl(light,&ctrlParam);
 -----------------------------------------------------------------------*/
-//LEDµÆÇı¶¯³ÌĞòÊ¹ÓÃµÄÊı¾İ½á¹¹
+//LEDç¯é©±åŠ¨ç¨‹åºä½¿ç”¨çš„æ•°æ®ç»“æ„
 typedef struct
 {
-	uint8_t					scanUnit;					//LEDÉ¨ÃèÊ±¼äµ¥Î»,ms
-	uint8_t					lightMax;					//LEDµÆ×î´óÊıÄ¿
-	bool					needChange;					//LEDµÆĞèÒª¸Ä±ä×´Ì¬Ê±,½«±»ÉèÖÃÎªTRUE)
-	tLLed_Lock				swLock;						//LEDÈí¼ş»¥³âËø
-	tLLed					*led;						//LEDµÆ×é
-	tLLedDrvFunc			drvFunc;					//Íâ²¿°²×°µÄÇı¶¯º¯Êı
-	tLLedHandle				handle;						//Íâ²¿µ÷ÓÃµÄ¹¦ÄÜº¯Êı(´ËÀàĞÍËµÃ÷ÔÚºóÃæ°²×°Çı¶¯ÖĞËµÃ÷)
+	uint8_t					scanUnit;					//LEDæ‰«ææ—¶é—´å•ä½,ms
+	uint8_t					lightMax;					//LEDç¯æœ€å¤§æ•°ç›®
+	bool					needChange;					//LEDç¯éœ€è¦æ”¹å˜çŠ¶æ€æ—¶,å°†è¢«è®¾ç½®ä¸ºTRUE)
+	tLLed_Lock				swLock;						//LEDè½¯ä»¶äº’æ–¥é”
+	tLLed					*led;						//LEDç¯ç»„
+	tLLedDrvFunc			drvFunc;					//å¤–éƒ¨å®‰è£…çš„é©±åŠ¨å‡½æ•°
+	tLLedHandle				handle;						//å¤–éƒ¨è°ƒç”¨çš„åŠŸèƒ½å‡½æ•°(æ­¤ç±»å‹è¯´æ˜åœ¨åé¢å®‰è£…é©±åŠ¨ä¸­è¯´æ˜)
 }tLLedDriver;
 
-#define	LLED_FLASHKEEP_CNT	0							//³ÖĞøÉÁË¸(¼ÆÊıÖµÉèÖÃÎª0)
+#define	LLED_FLASHKEEP_CNT	0							//æŒç»­é—ªçƒ(è®¡æ•°å€¼è®¾ç½®ä¸º0)
 
 tLLedHandle* LLed_Initial(tLLedInitParam *pInitParam);
 bool LLed_UnInitial(void);

@@ -4,7 +4,7 @@
 
 
 /**
-  * @brief  ϵͳʱ������ 
+  * @brief  系统时钟配置 
   *            System Clock source            = PLL (HSE)
   *            SYSCLK(Hz)                     = 180000000
   *            HCLK(Hz)                       = 180000000
@@ -19,8 +19,8 @@
   *            VDD(V)                         = 3.3
   *            Main regulator output voltage  = Scale1 mode
   *            Flash Latency(WS)              = 5
-  * @param  ��
-  * @retval ��
+  * @param  无
+  * @retval 无
   */
 void SystemClock_Config(void)
 {
@@ -28,7 +28,7 @@ void SystemClock_Config(void)
     RCC_OscInitTypeDef RCC_OscInitStruct;
     HAL_StatusTypeDef ret = HAL_OK;
     
-    /* ʹ��HSE������HSEΪPLL��ʱ��Դ������PLL�ĸ��ַ�Ƶ����M N P Q 
+    /* 使能HSE，配置HSE为PLL的时钟源，配置PLL的各种分频因子M N P Q 
       * PLLCLK = HSE/M*N/P = 12M / 25 *336 / 2 = 168M
       * PLLCLK = HSE/M*N/P = 12M / 25 *360 / 2 = 180M
       */
@@ -47,21 +47,21 @@ void SystemClock_Config(void)
         while(1) {}
     }
 
-    /* ���� OverDrive ģʽ�Դﵽ180MƵ�� */
+    /* 激活 OverDrive 模式以达到180M频率 */
     ret = HAL_PWREx_EnableOverDrive();
     if( ret != HAL_OK)
     {
         while(1) {}
     }
   
-    /* ѡ��PLLCLK��ΪSYSCLK�������� HCLK, PCLK1 and PCLK2 ��ʱ�ӷ�Ƶ���� 
+    /* 选择PLLCLK作为SYSCLK，并配置 HCLK, PCLK1 and PCLK2 的时钟分频因子 
     * SYSCLK = PLLCLK     = 216M
     * HCLK   = SYSCLK / 1 = 216M
     * PCLK2  = SYSCLK / 2 = 108M
     * PCLK1  = SYSCLK / 4 = 54M
     */
     RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;   /* ����������systick Timer */
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;   /* 这里配置了systick Timer */
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;  
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
@@ -77,28 +77,28 @@ void SystemClock_Config(void)
 
 
 /*
- * ʹ��HSEʱ������ϵͳʱ�ӵĲ���
- * 1������HSE �����ȴ� HSE �ȶ�
- * 2������ AHB��APB2��APB1��Ԥ��Ƶ����
- * 3������PLL��ʱ����Դ
- *    ����VCO����ʱ�� ��Ƶ����        m
- *    ����VCO���ʱ�� ��Ƶ����        n
- *    ����PLLCLKʱ�ӷ�Ƶ����          p
- *    ����OTG FS,SDIO,RNGʱ�ӷ�Ƶ���� q
- * 4������PLL�����ȴ�PLL�ȶ�
- * 5����PLLCK�л�Ϊϵͳʱ��SYSCLK
- * 6����ȡʱ���л�״̬λ��ȷ��PLLCLK��ѡΪϵͳʱ��
+ * 使用HSE时，设置系统时钟的步骤
+ * 1、开启HSE ，并等待 HSE 稳定
+ * 2、设置 AHB、APB2、APB1的预分频因子
+ * 3、设置PLL的时钟来源
+ *    设置VCO输入时钟 分频因子        m
+ *    设置VCO输出时钟 倍频因子        n
+ *    设置PLLCLK时钟分频因子          p
+ *    设置OTG FS,SDIO,RNG时钟分频因子 q
+ * 4、开启PLL，并等待PLL稳定
+ * 5、把PLLCK切换为系统时钟SYSCLK
+ * 6、读取时钟切换状态位，确保PLLCLK被选为系统时钟
  */
 
 /*
- * m: VCO����ʱ�� ��Ƶ���ӣ�ȡֵ2~63
- * n: VCO���ʱ�� ��Ƶ���ӣ�ȡֵ50~432
- * p: PLLCLKʱ�ӷ�Ƶ����  ��ȡֵ2��4��6��8
- * q: OTG FS,SDIO,RNGʱ�ӷ�Ƶ���ӣ�ȡֵ4~15
- * �������þ�����ʹ��HSE����ʱ��
+ * m: VCO输入时钟 分频因子，取值2~63
+ * n: VCO输出时钟 倍频因子，取值50~432
+ * p: PLLCLK时钟分频因子  ，取值2，4，6，8
+ * q: OTG FS,SDIO,RNG时钟分频因子，取值4~15
+ * 函数调用举例，使用HSE设置时钟
  * SYSCLK=HCLK=180MHz,PCLK2=HCLK/2=90MHz,PCLK1=HCLK/4=15MHz
  * HSE_SetSysClock(25, 360, 2, 7);
- * HSE��Ϊʱ����Դ������PLL��Ƶ��Ϊϵͳʱ�ӣ�����ͨ��������
+ * HSE作为时钟来源，经过PLL倍频作为系统时钟，这是通常的做法
  */
 void HSE_SetSysClock(uint32_t m, uint32_t n, uint32_t p, uint32_t q)	
 {
@@ -106,7 +106,7 @@ void HSE_SetSysClock(uint32_t m, uint32_t n, uint32_t p, uint32_t q)
   RCC_OscInitTypeDef RCC_OscInitStruct;
   HAL_StatusTypeDef ret = HAL_OK;
 
-  /* ʹ��HSE������HSEΪPLL��ʱ��Դ������PLL�ĸ��ַ�Ƶ����M N P Q 
+  /* 使能HSE，配置HSE为PLL的时钟源，配置PLL的各种分频因子M N P Q 
 	 * PLLCLK = HSE/M*N/P = 25M / 25 *432 / 2 = 216M
 	 */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
@@ -124,14 +124,14 @@ void HSE_SetSysClock(uint32_t m, uint32_t n, uint32_t p, uint32_t q)
     while(1) { ; }
   }
   
-  /* ���� OverDrive ģʽ�Դﵽ216MƵ��  */ 
+  /* 激活 OverDrive 模式以达到216M频率  */ 
   ret = HAL_PWREx_EnableOverDrive();
   if(ret != HAL_OK)
   {
     while(1) { ; }
   }
   
-  /* ѡ��PLLCLK��ΪSYSCLK�������� HCLK, PCLK1 and PCLK2 ��ʱ�ӷ�Ƶ���� 
+  /* 选择PLLCLK作为SYSCLK，并配置 HCLK, PCLK1 and PCLK2 的时钟分频因子 
 	 * SYSCLK = PLLCLK     = 180M
 	 * HCLK   = SYSCLK / 1 = 180M
 	 * PCLK2  = SYSCLK / 2 = 90M
@@ -150,25 +150,25 @@ void HSE_SetSysClock(uint32_t m, uint32_t n, uint32_t p, uint32_t q)
   }    
 }
 /*
- * ʹ��HSIʱ������ϵͳʱ�ӵĲ���
- * 1������HSI �����ȴ� HSI �ȶ�
- * 2������ AHB��APB2��APB1��Ԥ��Ƶ����
- * 3������PLL��ʱ����Դ
- *    ����VCO����ʱ�� ��Ƶ����        m
- *    ����VCO���ʱ�� ��Ƶ����        n
- *    ����SYSCLKʱ�ӷ�Ƶ����          p
- *    ����OTG FS,SDIO,RNGʱ�ӷ�Ƶ���� q
- * 4������PLL�����ȴ�PLL�ȶ�
- * 5����PLLCK�л�Ϊϵͳʱ��SYSCLK
- * 6����ȡʱ���л�״̬λ��ȷ��PLLCLK��ѡΪϵͳʱ��
+ * 使用HSI时，设置系统时钟的步骤
+ * 1、开启HSI ，并等待 HSI 稳定
+ * 2、设置 AHB、APB2、APB1的预分频因子
+ * 3、设置PLL的时钟来源
+ *    设置VCO输入时钟 分频因子        m
+ *    设置VCO输出时钟 倍频因子        n
+ *    设置SYSCLK时钟分频因子          p
+ *    设置OTG FS,SDIO,RNG时钟分频因子 q
+ * 4、开启PLL，并等待PLL稳定
+ * 5、把PLLCK切换为系统时钟SYSCLK
+ * 6、读取时钟切换状态位，确保PLLCLK被选为系统时钟
  */
 
 /*
- * m: VCO����ʱ�� ��Ƶ���ӣ�ȡֵ2~63
- * n: VCO���ʱ�� ��Ƶ���ӣ�ȡֵ50~432
- * p: PLLCLKʱ�ӷ�Ƶ����  ��ȡֵ2��4��6��8
- * q: OTG FS,SDIO,RNGʱ�ӷ�Ƶ���ӣ�ȡֵ4~15
- * �������þ�����ʹ��HSI����ʱ��
+ * m: VCO输入时钟 分频因子，取值2~63
+ * n: VCO输出时钟 倍频因子，取值50~432
+ * p: PLLCLK时钟分频因子  ，取值2，4，6，8
+ * q: OTG FS,SDIO,RNG时钟分频因子，取值4~15
+ * 函数调用举例，使用HSI设置时钟
  * SYSCLK=HCLK=180MHz,PCLK1=HCLK/2=90M,PCLK2=HCLK/4=45MHz
  * HSI_SetSysClock(25, 360, 2, 7);
 
@@ -179,7 +179,7 @@ void HSI_SetSysClock(uint32_t m, uint32_t n, uint32_t p, uint32_t q)
   RCC_OscInitTypeDef RCC_OscInitStruct;
   HAL_StatusTypeDef ret = HAL_OK;
 
-  /* ʹ��HSE������HSEΪPLL��ʱ��Դ������PLL�ĸ��ַ�Ƶ����M N P Q 
+  /* 使能HSE，配置HSE为PLL的时钟源，配置PLL的各种分频因子M N P Q 
 	 * PLLCLK = HSE/M*N/P = 25M / 25 *432 / 2 = 216M
 	 */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
@@ -197,14 +197,14 @@ void HSI_SetSysClock(uint32_t m, uint32_t n, uint32_t p, uint32_t q)
     while(1) { ; }
   }
   
-  /* ���� OverDrive ģʽ�Դﵽ216MƵ��  */  
+  /* 激活 OverDrive 模式以达到216M频率  */  
   ret = HAL_PWREx_EnableOverDrive();
   if(ret != HAL_OK)
   {
     while(1) { ; }
   } 
     
-    /* ѡ��PLLCLK��ΪSYSCLK�������� HCLK, PCLK1 and PCLK2 ��ʱ�ӷ�Ƶ���� 
+    /* 选择PLLCLK作为SYSCLK，并配置 HCLK, PCLK1 and PCLK2 的时钟分频因子 
 		 * SYSCLK = PLLCLK     = 180M
 	   * HCLK   = SYSCLK / 1 = 180M
 	   * PCLK2  = SYSCLK / 2 = 90M

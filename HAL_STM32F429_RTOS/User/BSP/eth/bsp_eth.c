@@ -93,6 +93,7 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef* ethHandle)
     }
 }
 
+/* с╡╪Ч╦╢н╩ртл╚мЬ */
 static void Eth_Reset(void)
 { 
     /* PHY RESET: PI1 */
@@ -151,13 +152,9 @@ HAL_StatusTypeDef Bsp_Eth_Init(void)
     
     uint8_t MACAddr[6] ;
     
-    /* О©╫О©╫н╩ETHО©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ */
     HAL_ETH_DeInit(&heth);
-    
-    /* с╡О©╫О©╫О©╫О©╫н╩PHYп╬ф╛ */
     Eth_Reset();
-    
-    /* О©╫О©╫н╩ETH DMAО©╫О©╫О©╫О©╫О©╫О©╫ */
+
     ETH->DMABMR |= ETH_DMABMR_SR;
     
     /* Init ETH */
@@ -168,14 +165,14 @@ HAL_StatusTypeDef Bsp_Eth_Init(void)
     MACAddr[4] = 0x00;
     MACAddr[5] = 0x00;
     heth.Instance = ETH;
-    heth.Init.AutoNegotiation = ETH_AUTONEGOTIATION_ENABLE;   /* О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫с╕О©╫О©╫О©╫О©╫ */
-    heth.Init.PhyAddress = LAN8720_PHY_ADDRESS;               /* О©╫О©╫О©╫О©╫PHYО©╫О©╫ж╥ */
-    heth.Init.MACAddr = &MACAddr[0];                          /* О©╫О©╫О©╫О©╫MACО©╫О©╫ж╥ */          
-    heth.Init.RxMode = ETH_RXINTERRUPT_MODE;                  /* О©╫О©╫О©╫О©╫н╙О©╫О©╫О©╫О©╫О©╫п╤О©╫ */   
-    heth.Init.ChecksumMode = ETH_CHECKSUM_BY_HARDWARE;        /* с╡О©╫О©╫О©╫О©╫О©╫О©╫пёО©╫О©╫ */
-    heth.Init.MediaInterface = ETH_MEDIA_INTERFACE_RMII;      /* RMIIО©╫с©О©╫дёй╫ */
-    heth.Init.Speed = ETH_SPEED_100M;                         /* О©╫ы╤О©╫ */
-    heth.Init.DuplexMode = ETH_MODE_FULLDUPLEX;               /* х╚к╚О©╫О©╫дёй╫ */
+    heth.Init.AutoNegotiation = ETH_AUTONEGOTIATION_ENABLE;   
+    heth.Init.PhyAddress = LAN8720_PHY_ADDRESS;             
+    heth.Init.MACAddr = &MACAddr[0];                               
+    heth.Init.RxMode = ETH_RXINTERRUPT_MODE;                  
+    heth.Init.ChecksumMode = ETH_CHECKSUM_BY_HARDWARE;        
+    heth.Init.MediaInterface = ETH_MEDIA_INTERFACE_RMII;      
+    heth.Init.Speed = ETH_SPEED_100M;                        
+    heth.Init.DuplexMode = ETH_MODE_FULLDUPLEX;               
     
     /* configure ethernet peripheral (GPIOs, clocks, MAC, DMA) */
     ret = HAL_ETH_Init(&heth);
@@ -203,12 +200,12 @@ HAL_StatusTypeDef Bsp_Eth_Init(void)
 void ETH_IRQHandler(void)
 {
     uint32_t ulReturn;
-    /* О©╫О©╫О©╫О©╫О©╫ы╫О©╫нёО©╫О©╫ы╫О©╫н©О©╫О©╫О©╫г╤О©╫О©╫ */
+    /* ???????╕╡????╕о?????? */
     ulReturn = taskENTER_CRITICAL_FROM_ISR();
     
     HAL_ETH_IRQHandler(&heth);
     
-    /* О©╫кЁО©╫О©╫ы╫О©╫О©╫ */
+    /* ??????? */
     taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 }
 
@@ -222,7 +219,7 @@ void HAL_ETH_RxCpltCallback(ETH_HandleTypeDef *heth)
 {
     //  LED2_TOGGLE;
     portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-    /* И┤┼Ф■╬Д╦─Д╦╙Д©║Е▐╥И┤▐Е┬╟Г╨©Г╗▀ */
+    /* йм╥ер╩╦Жпе╨еа©╣╫оъЁл */
     xSemaphoreGiveFromISR( s_xSemaphore, &xHigherPriorityTaskWoken );
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }

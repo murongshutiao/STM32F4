@@ -38,7 +38,7 @@
 #define SYS_LIGHTWEIGHT_PROT    1
 
 
-#define NO_SYS                  0               /* 1:²»Ê¹ÓÃ²Ù×÷ÏµÍ³ 0:Ê¹ÓÃ²Ù×÷ÏµÍ³ */
+#define NO_SYS                  0               /* 1:ä¸ä½¿ç”¨æ“ä½œç³»ç»Ÿ 0:ä½¿ç”¨æ“ä½œç³»ç»Ÿ */
 
 /**
  * NO_SYS_NO_TIMERS==1: Drop support for sys_timeout when NO_SYS==1
@@ -47,9 +47,9 @@
 #define NO_SYS_NO_TIMERS        0
 
 
-#define MEM_ALIGNMENT           4               /* ÄÚ´æ¶ÔÆë£¬4×Ö½Ú¶ÔÆë */   
+#define MEM_ALIGNMENT           4               /* å†…å­˜å¯¹é½ï¼Œ4å­—èŠ‚å¯¹é½ */   
 
-#define MEM_SIZE                (25 * 1024)     /* ÄÚ´æ¶Ñ´óĞ¡ */
+#define MEM_SIZE                (25 * 1024)     /* å†…å­˜å †å¤§å° */
 
 /* MEMP_NUM_PBUF: the number of memp struct pbufs. If the application
    sends a lot of data out of ROM (or other static memory), this
@@ -73,7 +73,7 @@
 
 
 /* ---------- Pbuf options ---------- */
-#define PBUF_POOL_SIZE          45          /* ÄÚ´æ³ØÖĞÄÚ´æ¿éµÄÊıÁ¿ */                
+#define PBUF_POOL_SIZE          45          /* å†…å­˜æ± ä¸­å†…å­˜å—çš„æ•°é‡ */                
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
 #define PBUF_POOL_BUFSIZE       LWIP_MEM_ALIGN_SIZE(TCP_MSS+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)
 
@@ -86,10 +86,10 @@
    order. Define to 0 if your device is low on memory. */
 #define TCP_QUEUE_OOSEQ         0
 
-/* TCP Ğ­Òé±¨ÎÄ×î´ó³¤¶È */
+/* TCP åè®®æŠ¥æ–‡æœ€å¤§é•¿åº¦ */
 #define TCP_MSS                 (1500 - 40)	  /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
 
-/* TCP ÔÊĞíTCPĞ­ÒéÊ¹ÓÃµÄ×î´ó·¢ËÍ»º³åÇø¿Õ¼ä. */
+/* TCP å…è®¸TCPåè®®ä½¿ç”¨çš„æœ€å¤§å‘é€ç¼“å†²åŒºç©ºé—´. */
 #define TCP_SND_BUF             (13 * TCP_MSS)
 
 /*  TCP_SND_QUEUELEN: TCP sender buffer space (pbufs). This must be at least
@@ -97,7 +97,7 @@
 
 #define TCP_SND_QUEUELEN        (6* TCP_SND_BUF/TCP_MSS)
 
-/* TCP ½ÓÊÕ´°¿Ú´óĞ¡. */
+/* TCP æ¥æ”¶çª—å£å¤§å°. */
 #define TCP_WND                 (13 * TCP_MSS)
 
 
@@ -190,17 +190,17 @@ The STM32F4x7 allows computing and verifying the IP, UDP, TCP and ICMP checksums
 
 
 
-/*---------- ²Ù×÷ÏµÍ³ options ----------*/
+/*---------- æ“ä½œç³»ç»Ÿ options ----------*/
 #define DEFAULT_UDP_RECVMBOX_SIZE       10
 #define DEFAULT_TCP_RECVMBOX_SIZE       10
 #define DEFAULT_ACCEPTMBOX_SIZE         10
 #define DEFAULT_THREAD_STACKSIZE        1024
 
 
-#define TCPIP_THREAD_NAME              "lwip"   /* Ïß³ÌÃû×Ö */
+#define TCPIP_THREAD_NAME              "lwip"   /* çº¿ç¨‹åå­— */
 #define TCPIP_THREAD_STACKSIZE          2048
-#define TCPIP_MBOX_SIZE                 8       /* ÏûÏ¢ÓÊÏä´óĞ¡ */
-#define TCPIP_THREAD_PRIO               8       /* Ïß³ÌÓÅÏÈ¼¶ */
+#define TCPIP_MBOX_SIZE                 8       /* æ¶ˆæ¯é‚®ç®±å¤§å° */
+#define TCPIP_THREAD_PRIO               8       /* çº¿ç¨‹ä¼˜å…ˆçº§ */
 
 //#define IPERF_SERVER_THREAD_NAME            "iperf_server"
 //#define IPERF_SERVER_THREAD_STACKSIZE        1024
@@ -216,9 +216,9 @@ The STM32F4x7 allows computing and verifying the IP, UDP, TCP and ICMP checksums
 */
 //#define LWIP_DEBUG                      1
 
-#define LWIP_HTTPD_CGI     1           /* Ö§³ÖCGI */
-#define LWIP_HTTPD_SSI     1           /* Ö§³ÖSSI */
-#define HTTPD_USE_CUSTOM_FSDATA  0     /* 1:ÍøÒ³Êı¾İÊ¹ÓÃfsdata_custom.cÎÄ¼ş 0:Ê¹ÓÃfsdata.cÎÄ¼ş */
+#define LWIP_HTTPD_CGI     1           /* æ”¯æŒCGI */
+#define LWIP_HTTPD_SSI     1           /* æ”¯æŒSSI */
+#define HTTPD_USE_CUSTOM_FSDATA  0     /* 1:ç½‘é¡µæ•°æ®ä½¿ç”¨fsdata_custom.cæ–‡ä»¶ 0:ä½¿ç”¨fsdata.cæ–‡ä»¶ */
 // #define LWIP_HTTPD_SUPPORT_POST  1
 #endif /* __LWIPOPTS_H__ */
 

@@ -223,7 +223,7 @@ sys_timeout_abs(u32_t abs_time, sys_timeout_handler handler, void *arg)
     } 
     else 
     {
-        for (t = next_timeout; t != NULL; t = t->next) /* ±éÀúÁ´±íÊ±¼ä²åÈë */
+        for (t = next_timeout; t != NULL; t = t->next) /* éåŽ†é“¾è¡¨æ—¶é—´æ’å…¥ */
         {
             if ((t->next == NULL) || TIME_LESS_THAN(timeout->time, t->next->time)) 
             {
@@ -243,7 +243,7 @@ sys_timeout_abs(u32_t abs_time, sys_timeout_handler handler, void *arg)
 #if !LWIP_TESTMODE
 static
 #endif
-void lwip_cyclic_timer(void *arg)   /* lwipÖÜÆÚÑ­»·¶¨Ê±ÈÎÎñ */
+void lwip_cyclic_timer(void *arg)   /* lwipå‘¨æœŸå¾ªçŽ¯å®šæ—¶ä»»åŠ¡ */
 {
   u32_t now;
   u32_t next_timeout_time;
@@ -277,7 +277,7 @@ void lwip_cyclic_timer(void *arg)   /* lwipÖÜÆÚÑ­»·¶¨Ê±ÈÎÎñ */
 }
 
 /** Initialize this module */
-void sys_timeouts_init(void)    /* ??LwIP???§Ö????????????????????? */
+void sys_timeouts_init(void)    /* ??LwIP???Ðµ????????????????????? */
 {
     size_t i;
     /* tcp_tmr() at index 0 is started on demand */
@@ -290,13 +290,13 @@ void sys_timeouts_init(void)    /* ??LwIP???§Ö????????????????????? */
 }
 
 /**
- * ×¢²á³¬Ê±ÊÂ¼þ. Timeouts are processed in the
+ * æ³¨å†Œè¶…æ—¶äº‹ä»¶. Timeouts are processed in the
  * following cases:
  * - while waiting for a message using sys_timeouts_mbox_fetch()
  * - by calling sys_check_timeouts() (NO_SYS==1 only)
  *
- * @param msecs:³¬Ê±Ê±¼ä
- * @param handler ³¬Ê±»Øµ÷º¯Êý
+ * @param msecs:è¶…æ—¶æ—¶é—´
+ * @param handler è¶…æ—¶å›žè°ƒå‡½æ•°
  * @param arg argument to pass to the callback function
  */
 #if LWIP_DEBUG_TIMERNAMES
@@ -311,7 +311,7 @@ void sys_timeout(u32_t msecs, sys_timeout_handler handler, void *arg)
 
     LWIP_ASSERT("Timeout time too long, max is LWIP_UINT32_MAX/4 msecs", msecs <= (LWIP_UINT32_MAX / 4));
 
-    next_timeout_time = (u32_t)(sys_now() + msecs); /* ¼ÆËã³öÊ±¼ä */ 
+    next_timeout_time = (u32_t)(sys_now() + msecs); /* è®¡ç®—å‡ºæ—¶é—´ */ 
 
 #if LWIP_DEBUG_TIMERNAMES
     sys_timeout_abs(next_timeout_time, handler, arg, handler_name);

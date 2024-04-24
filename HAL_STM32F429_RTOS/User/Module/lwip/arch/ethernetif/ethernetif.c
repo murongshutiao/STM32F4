@@ -82,7 +82,7 @@ struct ethernetif
 /* Global Ethernet handle */
 extern ETH_HandleTypeDef heth;
 
-/* ÒÔÌ«Íø½ÓÊÕÖÐ¶ÏÐÅºÅÁ¿ */
+/* ä»¥å¤ªç½‘æŽ¥æ”¶ä¸­æ–­ä¿¡å·é‡ */
 xSemaphoreHandle s_xSemaphore = NULL;
 
 
@@ -105,21 +105,21 @@ static void arp_timer(void *arg);
  *
  * @param netif the already initialized lwip network interface structure
  *        for this ethernetif
- * @note  Íø¿¨³õÊ¼»¯º¯Êý
- *        1.Ó²¼þ³õÊ¼»¯
- *        2.²Ù×÷ÏµÍ³Ïß³Ì´´½¨£¬Êý¾Ý½á¹¹´´½¨
- *        3.ÍøÂç²ÎÊýÅäÖÃ
+ * @note  ç½‘å¡åˆå§‹åŒ–å‡½æ•°
+ *        1.ç¡¬ä»¶åˆå§‹åŒ–
+ *        2.æ“ä½œç³»ç»Ÿçº¿ç¨‹åˆ›å»ºï¼Œæ•°æ®ç»“æž„åˆ›å»º
+ *        3.ç½‘ç»œå‚æ•°é…ç½®
  */
 static void low_level_init(struct netif *netif)
 { 
     HAL_StatusTypeDef hal_eth_init_status;
     
-    //³õÊ¼»¯bsp¡ªeth,×¢Òâ¶à¸öÍø¿¨Ê±µÄ´¦Àí¡£
+    //åˆå§‹åŒ–bspâ€”eth,æ³¨æ„å¤šä¸ªç½‘å¡æ—¶çš„å¤„ç†ã€‚
     hal_eth_init_status = Bsp_Eth_Init();
 
     if (hal_eth_init_status == HAL_OK)
     {
-        /* ÉèÖÃÍø¿¨ÓëETHÍâÉèÁ¬½ÓÍê³É±êÖ¾Î» */  
+        /* è®¾ç½®ç½‘å¡ä¸ŽETHå¤–è®¾è¿žæŽ¥å®Œæˆæ ‡å¿—ä½ */  
         netif->flags |= NETIF_FLAG_LINK_UP;
     }
 
@@ -128,7 +128,7 @@ static void low_level_init(struct netif *netif)
     /* set MAC hardware address length */
     netif->hwaddr_len = ETH_HWADDR_LEN;
     
-    /* ÅäÖÃMACµØÖ·£¬´ËÀý³Ì»¹Ã»ÕýÈ·ÅäÖÃMACµØÖ· */
+    /* é…ç½®MACåœ°å€ï¼Œæ­¤ä¾‹ç¨‹è¿˜æ²¡æ­£ç¡®é…ç½®MACåœ°å€ */
     netif->hwaddr[0] =  heth.Init.MACAddr[0];
     netif->hwaddr[1] =  heth.Init.MACAddr[1];
     netif->hwaddr[2] =  heth.Init.MACAddr[2];
@@ -147,27 +147,27 @@ static void low_level_init(struct netif *netif)
         netif->flags |= NETIF_FLAG_BROADCAST;
     #endif /* LWIP_ARP */
 
-    /* ´´½¨ÒÔÌ«ÍøÊý¾Ý½ÓÊÕÐÅºÅÁ¿ */ 
+    /* åˆ›å»ºä»¥å¤ªç½‘æ•°æ®æŽ¥æ”¶ä¿¡å·é‡ */ 
     s_xSemaphore = xSemaphoreCreateCounting(40,0);
     
-    /* ¸úÉÏÃæµÄÖØ¸´ÁË£¿ºó±ßºÃÏñÃ»ÓÃµ½ */
+    /* è·Ÿä¸Šé¢çš„é‡å¤äº†ï¼ŸåŽè¾¹å¥½åƒæ²¡ç”¨åˆ° */
     if(sys_sem_new(&tx_sem , 0) == ERR_OK)
     {
         printf("sys_sem_new ok\n");
     }
     
-    /* Õâ¸öÏûÏ¢ÓÊÏäºÃÏñÒ²Ã»ÓÃµ½ */
+    /* è¿™ä¸ªæ¶ˆæ¯é‚®ç®±å¥½åƒä¹Ÿæ²¡ç”¨åˆ° */
     if(sys_mbox_new(&eth_tx_mb , 50) == ERR_OK)
     {
         printf("sys_mbox_new ok\n");
     }
 
-    /* ´´½¨ÒÔÌ«Íø½ÓÊÕµÄÏß³Ì */
+    /* åˆ›å»ºä»¥å¤ªç½‘æŽ¥æ”¶çš„çº¿ç¨‹ */
 	sys_thread_new("ETHIN",
-                  ethernetif_input,         /* ÈÎÎñÈë¿Úº¯Êý */
-                  netif,        	        /* ÈÎÎñÈë¿Úº¯Êý²ÎÊý */
-                  NETIF_IN_TASK_STACK_SIZE, /* ÈÎÎñÕ»´óÐ¡ */
-                  NETIF_IN_TASK_PRIORITY);  /* ÈÎÎñµÄÓÅÏÈ¼¶ */
+                  ethernetif_input,         /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                  netif,        	        /* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                  NETIF_IN_TASK_STACK_SIZE, /* ä»»åŠ¡æ ˆå¤§å° */
+                  NETIF_IN_TASK_PRIORITY);  /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
                   
 #endif /* LWIP_ARP || LWIP_ETHERNET */
   
@@ -182,8 +182,8 @@ static void low_level_init(struct netif *netif)
  * contained in the pbuf that is passed to the function. This pbuf
  * might be chained.
  *
- * @param netif Íø¿¨
- * @param p Òª·¢ËÍµÄpbufÊý¾Ý°üÀàÐÍ
+ * @param netif ç½‘å¡
+ * @param p è¦å‘é€çš„pbufæ•°æ®åŒ…ç±»åž‹
  * @return ERR_OK if the packet could be sent
  *         an err_t value if the packet couldn't be sent
  *
@@ -191,8 +191,8 @@ static void low_level_init(struct netif *netif)
  *       strange results. You might consider waiting for space in the DMA queue
  *       to become availale since the stack doesn't retry to send a packet
  *       dropped because of memory failure (except for the TCP timers).
- *       ÒÔÌ«Íø·¢ËÍº¯Êý£¬½«lwip Êý¾Ý½á¹¹ÌåpbufÊý¾ÝÍ¨¹ýÒÔÌ«Íøº¯ÊýHAL_ETH_TransmitFrame()·¢ËÍ³öÈ¥
- *      ´ËÊ±pbufµÄÊý¾ÝÒÑ¾­ÓÐÁË
+ *       ä»¥å¤ªç½‘å‘é€å‡½æ•°ï¼Œå°†lwip æ•°æ®ç»“æž„ä½“pbufæ•°æ®é€šè¿‡ä»¥å¤ªç½‘å‡½æ•°HAL_ETH_TransmitFrame()å‘é€å‡ºåŽ»
+ *      æ­¤æ—¶pbufçš„æ•°æ®å·²ç»æœ‰äº†
  */
 
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
@@ -206,19 +206,19 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     }
 
     err_t errval;
-    struct pbuf *q;                 /* ¶¨ÒåÒ»¸ölwip pbufÊý¾Ý½á¹¹ÌåÖ¸Õë */
+    struct pbuf *q;                 /* å®šä¹‰ä¸€ä¸ªlwip pbufæ•°æ®ç»“æž„ä½“æŒ‡é’ˆ */
 
-    uint8_t *buffer = (uint8_t *)(heth.TxDesc->Buffer1Addr);    /* ·¢ËÍµÄÊý¾Ý´æ·ÅµØÖ· */
-    __IO ETH_DMADescTypeDef *DmaTxDesc; /* ÒÔÌ«ÍøÊý¾Ý·¢ËÍµÄÊý¾Ý½á¹¹ */
+    uint8_t *buffer = (uint8_t *)(heth.TxDesc->Buffer1Addr);    /* å‘é€çš„æ•°æ®å­˜æ”¾åœ°å€ */
+    __IO ETH_DMADescTypeDef *DmaTxDesc; /* ä»¥å¤ªç½‘æ•°æ®å‘é€çš„æ•°æ®ç»“æž„ */
     uint32_t framelength = 0;
     uint32_t bufferoffset = 0;
-    uint32_t byteslefttocopy = 0;   /* STM32ÒÔÌ«Íø¿ØÖÆÆ÷·¢ËÍ»º³åÇøÓÐ´óÐ¡ÏÞÖÆ,³¬¹ýÏÞÖÆÔò·Ö´Î·¢ËÍ */
-    uint32_t payloadoffset = 0;     /* Í¬ÉÏ */
-    DmaTxDesc = heth.TxDesc;        /* ÒÔÌ«Íø·¢ËÍÖ¸Õë¸³Öµ */   
+    uint32_t byteslefttocopy = 0;   /* STM32ä»¥å¤ªç½‘æŽ§åˆ¶å™¨å‘é€ç¼“å†²åŒºæœ‰å¤§å°é™åˆ¶,è¶…è¿‡é™åˆ¶åˆ™åˆ†æ¬¡å‘é€ */
+    uint32_t payloadoffset = 0;     /* åŒä¸Š */
+    DmaTxDesc = heth.TxDesc;        /* ä»¥å¤ªç½‘å‘é€æŒ‡é’ˆèµ‹å€¼ */   
 
     bufferoffset = 0;
 
-    /* ÒÔÌ«Íø·¢ËÍ»º³åÇøÊÇ·ñ¿ÉÓÃ£¿ */
+    /* ä»¥å¤ªç½‘å‘é€ç¼“å†²åŒºæ˜¯å¦å¯ç”¨ï¼Ÿ */
     if((DmaTxDesc->Status & ETH_DMATXDESC_OWN) != (uint32_t)RESET)
     {
         errval = ERR_USE;
@@ -230,19 +230,19 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     for(q = p; q != NULL; q = q->next)
     {
         
-        byteslefttocopy = q->len;   /* »ñÈ¡pbufÊý¾Ý³¤¶È */
+        byteslefttocopy = q->len;   /* èŽ·å–pbufæ•°æ®é•¿åº¦ */
         payloadoffset = 0;          
         
-        /* ¼ì²éÒª¿½±´µÄÊý¾Ý³¤¶ÈÊÇ·ñ´óÓÚÒÔÌ«Íø¿ØÖÆÆ÷µÄ×î´ó·¢ËÍ×Ö½Ú£¬ÊÇµÄ»°Òª·ÖÅú´Î¿½±´ */
+        /* æ£€æŸ¥è¦æ‹·è´çš„æ•°æ®é•¿åº¦æ˜¯å¦å¤§äºŽä»¥å¤ªç½‘æŽ§åˆ¶å™¨çš„æœ€å¤§å‘é€å­—èŠ‚ï¼Œæ˜¯çš„è¯è¦åˆ†æ‰¹æ¬¡æ‹·è´ */
         while( (byteslefttocopy + bufferoffset) > ETH_TX_BUF_SIZE )
         {
-            /* ½«payload¿½±´µ½»º³åÇø */
+            /* å°†payloadæ‹·è´åˆ°ç¼“å†²åŒº */
             memcpy( (uint8_t*)((uint8_t*)buffer + bufferoffset), (uint8_t*)((uint8_t*)q->payload + payloadoffset), (ETH_TX_BUF_SIZE - bufferoffset) );
         
             /* Point to next descriptor */
             DmaTxDesc = (ETH_DMADescTypeDef *)(DmaTxDesc->Buffer2NextDescAddr);
         
-            /* ²é¿´Ö¸ÏòµÄ»º³åÇøÊÇ·ñ¿ÉÓÃ */
+            /* æŸ¥çœ‹æŒ‡å‘çš„ç¼“å†²åŒºæ˜¯å¦å¯ç”¨ */
             if((DmaTxDesc->Status & ETH_DMATXDESC_OWN) != (uint32_t)RESET)
             {
                 errval = ERR_USE;
@@ -263,7 +263,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         framelength = framelength + byteslefttocopy;
     }
   
-    /* ÒÔÌ«ÍøDMA¿ØÖÆÆ÷Æô¶¯·¢ËÍ */ 
+    /* ä»¥å¤ªç½‘DMAæŽ§åˆ¶å™¨å¯åŠ¨å‘é€ */ 
     HAL_ETH_TransmitFrame(&heth, framelength);
     
     errval = ERR_OK;
@@ -292,7 +292,7 @@ error:
  * @param netif the lwip network interface structure for this ethernetif
  * @return a pbuf filled with the received packet (including MAC header)
  *         NULL on memory error
- * @note    ÒÔÌ«Íø½ÓÊÕº¯Êý
+ * @note    ä»¥å¤ªç½‘æŽ¥æ”¶å‡½æ•°
    */
 static struct pbuf *low_level_input(struct netif *netif)
 {
@@ -307,26 +307,26 @@ static struct pbuf *low_level_input(struct netif *netif)
     uint32_t i=0;
   
   
-    /* ÒÔÌ«Íø¿ØÖÆÆ÷ÊÇ·ñ½ÓÊÕµ½Êý¾ÝÖ¡£¿ */
+    /* ä»¥å¤ªç½‘æŽ§åˆ¶å™¨æ˜¯å¦æŽ¥æ”¶åˆ°æ•°æ®å¸§ï¼Ÿ */
     if (HAL_ETH_GetReceivedFrame(&heth) != HAL_OK)
     {
         return NULL;
     }
 
     /* Obtain the size of the packet and put it into the "len" variable. */
-    len = heth.RxFrameInfos.length;                 /* »ñÈ¡½ÓÊÕÊý¾ÝµÄ³¤¶È */
-    buffer = (uint8_t *)heth.RxFrameInfos.buffer;   /* »ñÈ¡½ÓÊÕµÄÊý¾Ý°üÖ¸Õë */
+    len = heth.RxFrameInfos.length;                 /* èŽ·å–æŽ¥æ”¶æ•°æ®çš„é•¿åº¦ */
+    buffer = (uint8_t *)heth.RxFrameInfos.buffer;   /* èŽ·å–æŽ¥æ”¶çš„æ•°æ®åŒ…æŒ‡é’ˆ */
   
     
     if (len > 0)
     {
-        /* ÄÚ´æ³ØÖÐ·ÖÅäpbufÀ´´æ·ÅÒÔÌ«Íø¿ØÖÆÆ÷½ÓÊÕµ½µÄÒÔÌ«ÍøÊý¾Ý */
+        /* å†…å­˜æ± ä¸­åˆ†é…pbufæ¥å­˜æ”¾ä»¥å¤ªç½‘æŽ§åˆ¶å™¨æŽ¥æ”¶åˆ°çš„ä»¥å¤ªç½‘æ•°æ® */
         p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
     }
     
     if (p != NULL)
     {
-        dmarxdesc = heth.RxFrameInfos.FSRxDesc; /* ¸³ÖµÒÔÌ«Íø½ÓÊÕÊý¾ÝµÄÖ¸Õë */
+        dmarxdesc = heth.RxFrameInfos.FSRxDesc; /* èµ‹å€¼ä»¥å¤ªç½‘æŽ¥æ”¶æ•°æ®çš„æŒ‡é’ˆ */
         bufferoffset = 0;
 
         for(q = p; q != NULL; q = q->next)
@@ -437,8 +437,8 @@ static struct pbuf *low_level_input(struct netif *netif)
  * interface. Then the type of the received packet is determined and
  * the appropriate input function is called.
  *
- * @param netif Íø¿¨
- * @note    Íø¿¨Êý¾Ý°ü½âÎöº¯Êý£¬½âÎöÎªARP»¹ÊÇIP°ü,´Ëº¯Êý×÷ÎªÏß³ÌÊ¹ÓÃ
+ * @param netif ç½‘å¡
+ * @note    ç½‘å¡æ•°æ®åŒ…è§£æžå‡½æ•°ï¼Œè§£æžä¸ºARPè¿˜æ˜¯IPåŒ…,æ­¤å‡½æ•°ä½œä¸ºçº¿ç¨‹ä½¿ç”¨
  */
 void ethernetif_input(void *pParams) 
 {
@@ -449,12 +449,12 @@ void ethernetif_input(void *pParams)
   
 	while(1) 
     {
-        /* ÅÐ¶ÏÍø¿¨ÊÇ·ñ½ÓÊÕµ½Êý¾Ý */
+        /* åˆ¤æ–­ç½‘å¡æ˜¯å¦æŽ¥æ”¶åˆ°æ•°æ® */
         if(xSemaphoreTake( s_xSemaphore, portMAX_DELAY ) == pdTRUE)
         {
             /* move received packet into a new pbuf */
             taskENTER_CRITICAL();
-            p = low_level_input(netif); /* ½«ÒÔÌ«ÍøÍâÉè½ÓÊÕµ½µÄÊý¾Ý,netifÕâ¸ö²ÎÊýÔÚÕâÀïºÃÏñÃ»ÓÃ */
+            p = low_level_input(netif); /* å°†ä»¥å¤ªç½‘å¤–è®¾æŽ¥æ”¶åˆ°çš„æ•°æ®,netifè¿™ä¸ªå‚æ•°åœ¨è¿™é‡Œå¥½åƒæ²¡ç”¨ */
             taskEXIT_CRITICAL();
 
             /* points to packet payload, which starts with an Ethernet header */
@@ -462,7 +462,7 @@ void ethernetif_input(void *pParams)
             {
                 taskENTER_CRITICAL();
 
-                /* ½øÐÐTCP/IPÐ­Òé½âÎö */
+                /* è¿›è¡ŒTCP/IPåè®®è§£æž */
                 if (netif->input(p, netif) != ERR_OK)
                 {
                     LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
@@ -505,11 +505,11 @@ static err_t low_level_output_arp_off(struct netif *netif, struct pbuf *q, const
  *
  * This function should be passed as a parameter to netif_add().
  *
- * @param  ÒÔÌ«Íøº¯Êý½Ó¿Ú³õÊ¼»¯,STM32ÍâÉè³õÊ¼»¯
+ * @param  ä»¥å¤ªç½‘å‡½æ•°æŽ¥å£åˆå§‹åŒ–,STM32å¤–è®¾åˆå§‹åŒ–
  * @return ERR_OK if the loopif is initialized
  *         ERR_MEM if private data couldn't be allocated
  *         any other err_t on error
- * @note    lwipÐ­ÒéÍø¿¨¹ÜÀíº¯Êý£¬ÒÔÌ«Íø³õÊ¼»¯º¯Êý
+ * @note    lwipåè®®ç½‘å¡ç®¡ç†å‡½æ•°ï¼Œä»¥å¤ªç½‘åˆå§‹åŒ–å‡½æ•°
  */
 err_t ethernetif_init(struct netif *netif)
 {
@@ -531,14 +531,14 @@ err_t ethernetif_init(struct netif *netif)
 #endif /* LWIP_NETIF_HOSTNAME */
 
 
-    netif->state = ethernetif;  /* ÅäÖÃÍø¿¨×´Ì¬ */
-    netif->name[0] = IFNAME0;   /* ÅäÖÃÍø¿¨Ãû×Ö */
+    netif->state = ethernetif;  /* é…ç½®ç½‘å¡çŠ¶æ€ */
+    netif->name[0] = IFNAME0;   /* é…ç½®ç½‘å¡åå­— */
     netif->name[1] = IFNAME1;
 
 #if LWIP_IPV4
     #if LWIP_ARP || LWIP_ETHERNET
         #if LWIP_ARP
-        netif->output = etharp_output;  /* ÅäÖÃARPÐ­Òé´¦Àí½Ó¿Ú */
+        netif->output = etharp_output;  /* é…ç½®ARPåè®®å¤„ç†æŽ¥å£ */
         #else
         /* The user should write ist own code in low_level_output_arp_off function */
         netif->output = low_level_output_arp_off;
@@ -550,16 +550,16 @@ err_t ethernetif_init(struct netif *netif)
     netif->output_ip6 = ethip6_output;
 #endif /* LWIP_IPV6 */
 
-    /* ÅäÖÃÒÔÌ«Íø·¢ËÍº¯Êý */
+    /* é…ç½®ä»¥å¤ªç½‘å‘é€å‡½æ•° */
     netif->linkoutput = low_level_output;   
     
-    low_level_init(netif);  /* STM32ÍâÉè³õÊ¼»¯ */
+    low_level_init(netif);  /* STM32å¤–è®¾åˆå§‹åŒ– */
     ethernetif->ethaddr = (struct eth_addr *) &(netif->hwaddr[0]);
     //  etharp_init();
     //  sys_timeout(ARP_TMR_INTERVAL, arp_timer, NULL);
     return ERR_OK;
 }
-/* ARP¶¨Ê±Æ÷£¬1ÃëÖ´ÐÐÒ»´Î */
+/* ARPå®šæ—¶å™¨ï¼Œ1ç§’æ‰§è¡Œä¸€æ¬¡ */
 static void arp_timer(void *arg)
 {
     etharp_tmr();

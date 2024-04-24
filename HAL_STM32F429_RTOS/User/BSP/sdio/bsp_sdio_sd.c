@@ -98,9 +98,9 @@
   * @{
   */
 SD_HandleTypeDef uSdHandle;
-//·¢ËÍ±êÖ¾Î»
+//å‘é€æ ‡å¿—ä½
 volatile uint8_t TX_Flag=0;
-//½ÓÊÜ±êÖ¾Î»
+//æ¥å—æ ‡å¿—ä½
 volatile uint8_t RX_Flag=0; 
 /**
   * @}
@@ -454,7 +454,7 @@ void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
   */
 void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
 {
-  TX_Flag=1; //±ê¼ÇĞ´Íê³É 
+  TX_Flag=1; //æ ‡è®°å†™å®Œæˆ 
   BSP_SD_WriteCpltCallback();
 }
 

@@ -50,10 +50,10 @@ typedef enum
 
 typedef enum
 {
-    EV_MASTER_READY                    = 1<<0,  /*!< Ó²¼þ£¬Ð­Òé³õÊ¼»¯Íê³É,›]ÓÐ°lËÍ»òµÈ´ý½ÓÊÕ î‘B. */
-    EV_MASTER_FRAME_RECEIVED           = 1<<1,  /*!< Ò»Ö¡Ð­Òé½ÓÊÕÍê³É. */
-    EV_MASTER_EXECUTE                  = 1<<2,  /*!< Ö¡Êý¾Ý´¦Àí×´Ì¬ */
-    EV_MASTER_FRAME_SENT               = 1<<3,  /*!< Ö¡·¢ËÍ. */
+    EV_MASTER_READY                    = 1<<0,  /*!< ç¡¬ä»¶ï¼Œåè®®åˆå§‹åŒ–å®Œæˆ,æ²’æœ‰ç™¼é€æˆ–ç­‰å¾…æŽ¥æ”¶ç‹€æ…‹. */
+    EV_MASTER_FRAME_RECEIVED           = 1<<1,  /*!< ä¸€å¸§åè®®æŽ¥æ”¶å®Œæˆ. */
+    EV_MASTER_EXECUTE                  = 1<<2,  /*!< å¸§æ•°æ®å¤„ç†çŠ¶æ€ */
+    EV_MASTER_FRAME_SENT               = 1<<3,  /*!< å¸§å‘é€. */
     EV_MASTER_ERROR_PROCESS            = 1<<4,  /*!< Frame error process. */
     EV_MASTER_PROCESS_SUCESS           = 1<<5,  /*!< Request process success. */
     EV_MASTER_ERROR_RESPOND_TIMEOUT    = 1<<6,  /*!< Request respond timeout. */
@@ -63,7 +63,7 @@ typedef enum
 
 typedef enum
 {
-    EV_ERROR_RESPOND_TIMEOUT,         /*!< ÏìÓ¦³¬Ê±. */
+    EV_ERROR_RESPOND_TIMEOUT,         /*!< å“åº”è¶…æ—¶. */
     EV_ERROR_RECEIVE_DATA,            /*!< Receive frame data erroe. */
     EV_ERROR_EXECUTE_FUNCTION,        /*!< Execute function error. */
 } eMBMasterErrorEventType;

@@ -90,7 +90,7 @@ BOOL xMBMasterPortSerialPutByte(CHAR ucByte)
     return TRUE;
 }
 
-/* modbus½ÓÊÕÒ»‚€×Ö¹ */
+/* modbusÂ½Ã“Å¹Ã•Å…Â»Â‚Â€Ã—Ã–Â¹Â */
 BOOL xMBMasterPortSerialGetByte(CHAR * pucByte)
 {
 	*(uint8_t *)pucByte = LL_USART_ReceiveData8( ModbusMaster_Uart );

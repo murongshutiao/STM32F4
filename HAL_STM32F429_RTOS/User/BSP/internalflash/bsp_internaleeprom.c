@@ -22,14 +22,14 @@ static uint16_t EE_VerifyPageFullyErased(uint32_t Address);
   * @param  None.
   * @retval - Flash error code: on write Flash error
   *         - FLASH_COMPLETE: on success
-  * @note   EEPROM³õÊ¼»¯
-  *         Ò³0é¿Õ: Ò³1ÓĞĞ§ --> ²Á³ıÒ³0
-  *                 Ò³1½ÓÊÕÊı¾İ --> Ò³1ÓĞĞ§£¬²Á³ıÒ³0
-  *                 Ò³1Îª¿Õ --> Ò³0ÓĞĞ§£¬²Á³ıÒ³1
+  * @note   EEPROMåˆå§‹åŒ–
+  *         é¡µ0ç‚ºç©º: é¡µ1æœ‰æ•ˆ --> æ“¦é™¤é¡µ0
+  *                 é¡µ1æ¥æ”¶æ•°æ® --> é¡µ1æœ‰æ•ˆï¼Œæ“¦é™¤é¡µ0
+  *                 é¡µ1ä¸ºç©º --> é¡µ0æœ‰æ•ˆï¼Œæ“¦é™¤é¡µ1
   * 
-  *         Ò³1ÓĞĞ§: Ò³0ÓĞĞ§ --> ¸ñÊ½»¯
-  *                 Ò³½ÓÊÕÊı¾İ --> Ò³1ÓĞĞ§£¬²Á³ıÒ³0
-  *                 Ò³1Îª¿Õ --> Ò³0ÓĞĞ§£¬²Á³ıÒ³1
+  *         é¡µ1æœ‰æ•ˆ: é¡µ0æœ‰æ•ˆ --> æ ¼å¼åŒ–
+  *                 é¡µæ¥æ”¶æ•°æ® --> é¡µ1æœ‰æ•ˆï¼Œæ“¦é™¤é¡µ0
+  *                 é¡µ1ä¸ºç©º --> é¡µ0æœ‰æ•ˆï¼Œæ“¦é™¤é¡µ1
   *         
   */
 uint16_t EE_Init(void)
@@ -42,8 +42,8 @@ uint16_t EE_Init(void)
     uint32_t SectorError = 0;
     FLASH_EraseInitTypeDef pEraseInit;
 
-    PageStatus0 = (*(__IO uint16_t*)PAGE0_BASE_ADDRESS);    /* µÚ2¸öÉÈÇøµÚÒ»¸ö°ë×Ö */
-    PageStatus1 = (*(__IO uint16_t*)PAGE1_BASE_ADDRESS);    /* µÚ3¸öÉÈÇøµÚÒ»¸ö°ë×Ö */
+    PageStatus0 = (*(__IO uint16_t*)PAGE0_BASE_ADDRESS);    /* ç¬¬2ä¸ªæ‰‡åŒºç¬¬ä¸€ä¸ªåŠå­— */
+    PageStatus1 = (*(__IO uint16_t*)PAGE1_BASE_ADDRESS);    /* ç¬¬3ä¸ªæ‰‡åŒºç¬¬ä¸€ä¸ªåŠå­— */
 
     pEraseInit.TypeErase = TYPEERASE_SECTORS;
     pEraseInit.Sector = PAGE0_ID;
@@ -58,7 +58,7 @@ uint16_t EE_Init(void)
             {
                 if(!EE_VerifyPageFullyErased(PAGE0_BASE_ADDRESS))
                 {
-                    /* ·Ç¿Õ£¬½øĞĞ²Á³ı */
+                    /* éç©ºï¼Œè¿›è¡Œæ“¦é™¤ */
                     FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);
 
                     if (FlashStatus != HAL_OK)
@@ -89,7 +89,7 @@ uint16_t EE_Init(void)
             }
             else 
             {
-                /* 2Ò³¶¼Îª¿Õ£¬ÉèÒ³1ÎªÓĞĞ§ */
+                /* 2é¡µéƒ½ä¸ºç©ºï¼Œè®¾é¡µ1ä¸ºæœ‰æ•ˆ */
                 FlashStatus = EE_Format();
 
                 if (FlashStatus != HAL_OK)
@@ -99,7 +99,7 @@ uint16_t EE_Init(void)
             }
             break;
 
-        case RECEIVE_DATA:  /* ÕıÔÚ½ÓÊÕÊı¾İ */
+        case RECEIVE_DATA:  /* æ­£åœ¨æ¥æ”¶æ•°æ® */
             if (PageStatus1 == VALID_PAGE) /* Page0 receive, Page1 valid */
             {
                 /* Transfer data from Page1 to Page0 */
@@ -274,7 +274,7 @@ uint16_t EE_Init(void)
 
 
 /**
-  * @brief  ²é¿Õ.
+  * @brief  æŸ¥ç©º.
   * @param  Address: page address
   *   This parameter can be one of the following values:
   *     @arg PAGE0_BASE_ADDRESS: Page0 base address
@@ -403,7 +403,7 @@ uint16_t EE_WriteVariable(uint16_t VirtAddress, uint16_t Data)
   * @param  None
   * @retval Status of the last operation (Flash write or erase) done during
   *         EEPROM formating
-  * @note   ½«PAGE0ºÍPAGE1È«²¿²Á³ı£¬²¢½«PAGE0ÉèÎªµ±Ç°ÓĞĞ§
+  * @note   å°†PAGE0å’ŒPAGE1å…¨éƒ¨æ“¦é™¤ï¼Œå¹¶å°†PAGE0è®¾ä¸ºå½“å‰æœ‰æ•ˆ
   */
 static HAL_StatusTypeDef EE_Format(void)
 {
@@ -449,7 +449,7 @@ static HAL_StatusTypeDef EE_Format(void)
 }
 
 /**
-  * @brief  ²é¶ÁºÍĞ´µÄÓĞĞ§Ò³
+  * @brief  æŸ¥è¯»å’Œå†™çš„æœ‰æ•ˆé¡µ
   * @param  Operation: operation to achieve on the valid page.
   *   This parameter can be one of the following values:
   *     @arg READ_FROM_VALID_PAGE: read operation from valid page

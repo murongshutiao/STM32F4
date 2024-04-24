@@ -49,39 +49,39 @@
 #define MB_SER_PDU_SIZE_MIN     4       /*!< Minimum size of a Modbus RTU frame. */
 #define MB_SER_PDU_SIZE_MAX     256     /*!< Maximum size of a Modbus RTU frame. */
 #define MB_SER_PDU_SIZE_CRC     2       /*!< Size of CRC field in PDU. */
-#define MB_SER_PDU_ADDR_OFF     0       /*!< Ö÷»úµØÖ·Æ«ÒÆ */
-#define MB_SER_PDU_PDU_OFF      1       /*!< Ğ­ÒéPDU¶ÎÆ«ÒÆ */
+#define MB_SER_PDU_ADDR_OFF     0       /*!< ä¸»æœºåœ°å€åç§» */
+#define MB_SER_PDU_PDU_OFF      1       /*!< åè®®PDUæ®µåç§» */
 
-/* ----------------------- 485×´Ì¬¶¨Òå  ---------------------------------*/
+/* ----------------------- 485çŠ¶æ€å®šä¹‰  ---------------------------------*/
 typedef enum
 {
-    STATE_M_RX_INIT,              /*!< ³õÊ¼»¯. */
-    STATE_M_RX_IDLE,              /*!< ½ÓÊÕ”µ“şÖĞ. */
+    STATE_M_RX_INIT,              /*!< åˆå§‹åŒ–. */
+    STATE_M_RX_IDLE,              /*!< æ¥æ”¶æ•¸æ“šä¸­. */
     STATE_M_RX_RCV,               /*!< Frame is beeing received. */
     STATE_M_RX_ERROR,              /*!< If the frame is invalid. */
-} eMBMasterRcvState;        /* Ö÷»ú½ÓÊÕ×´Ì¬¶¨Òå */
+} eMBMasterRcvState;        /* ä¸»æœºæ¥æ”¶çŠ¶æ€å®šä¹‰ */
 
-/* ·¢ËÍ×´Ì¬ */
+/* å‘é€çŠ¶æ€ */
 typedef enum
 {
-    STATE_M_TX_IDLE,              /*!< ·¢ËÍÆ÷Îª¿ÕÏĞ×´Ì¬. */
-    STATE_M_TX_XMIT,              /*!< ·¢ËÍÆ÷Îª·¢ËÍ×´Ì¬ */
-    STATE_M_TX_XFWR,              /*!< ·¢ËÍÆ÷·¢ËÍÍê³É£¬µÈ´ı½ÓÊÕ. */
+    STATE_M_TX_IDLE,              /*!< å‘é€å™¨ä¸ºç©ºé—²çŠ¶æ€. */
+    STATE_M_TX_XMIT,              /*!< å‘é€å™¨ä¸ºå‘é€çŠ¶æ€ */
+    STATE_M_TX_XFWR,              /*!< å‘é€å™¨å‘é€å®Œæˆï¼Œç­‰å¾…æ¥æ”¶. */
 } eMBMasterSndState;
 
 /* ----------------------- Static variables ---------------------------------*/
-static volatile eMBMasterSndState eSndState;    /* ·¢ËÍÆ÷µ±Ç°·¢ËÍ×´Ì¬ */
-static volatile eMBMasterRcvState eRcvState;    /* ½ÓÊÕÆ÷µ±Ç°½ÓÊÕ×´Ì¬ */
+static volatile eMBMasterSndState eSndState;    /* å‘é€å™¨å½“å‰å‘é€çŠ¶æ€ */
+static volatile eMBMasterRcvState eRcvState;    /* æ¥æ”¶å™¨å½“å‰æ¥æ”¶çŠ¶æ€ */
 
-static volatile UCHAR  ucMasterRTUSndBuf[MB_PDU_SIZE_MAX];  /* Ö÷»ú·¢ËÍ»º³åÇø */
-static volatile UCHAR  ucMasterRTURcvBuf[MB_SER_PDU_SIZE_MAX];/* Ö÷»ú½ÓÊÕ»º³åÇø*/
+static volatile UCHAR  ucMasterRTUSndBuf[MB_PDU_SIZE_MAX];  /* ä¸»æœºå‘é€ç¼“å†²åŒº */
+static volatile UCHAR  ucMasterRTURcvBuf[MB_SER_PDU_SIZE_MAX];/* ä¸»æœºæ¥æ”¶ç¼“å†²åŒº*/
 static volatile USHORT usMasterSendPDULength;
 
-static volatile UCHAR *pucMasterSndBufferCur;   /* modbus·¢ËÍÊı¾İµÄÖ¸Õë */
-static volatile USHORT usMasterSndBufferCount;  /* modbus·¢ËÍÊı¾İµÄ³¤¶È */
+static volatile UCHAR *pucMasterSndBufferCur;   /* modbuså‘é€æ•°æ®çš„æŒ‡é’ˆ */
+static volatile USHORT usMasterSndBufferCount;  /* modbuså‘é€æ•°æ®çš„é•¿åº¦ */
 
 static volatile USHORT usMasterRcvBufferPos;
-static volatile BOOL   xFrameIsBroadcast = FALSE;   /* ¹ã²¥Ö¡±êÖ¾ */
+static volatile BOOL   xFrameIsBroadcast = FALSE;   /* å¹¿æ’­å¸§æ ‡å¿— */
 
 static volatile eMBMasterTimerMode eMasterCurTimerMode;
 
@@ -93,8 +93,8 @@ eMBErrorCode eMBMasterRTUInit(UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity 
 
     ENTER_CRITICAL_SECTION(  );
 
-    /* ³õÊ¼»¯Ó²¼ş£¬¸ù¾İ²¨ÌØÂÊÅäÖÃµ¥¸öbitÎ»Ê±¼ä */
-    /* ÆæÅ¼Ğ£ÑéÈç¹ûÎªÎŞĞ£Ñé£¬ÔòÓëÍ£Ö¹Î»Ò»ÖÂ */
+    /* åˆå§‹åŒ–ç¡¬ä»¶ï¼Œæ ¹æ®æ³¢ç‰¹ç‡é…ç½®å•ä¸ªbitä½æ—¶é—´ */
+    /* å¥‡å¶æ ¡éªŒå¦‚æœä¸ºæ— æ ¡éªŒï¼Œåˆ™ä¸åœæ­¢ä½ä¸€è‡´ */
     if(xMBMasterPortSerialInit(ucPort, ulBaudRate, 8, eParity ) != TRUE )
     {
         eStatus = MB_EPORTERR;
@@ -120,7 +120,7 @@ eMBErrorCode eMBMasterRTUInit(UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity 
 
         }
 
-        /* ModbusÖ÷»ú¶¨Ê±Æ÷³õÊ¼»¯ */
+        /* Modbusä¸»æœºå®šæ—¶å™¨åˆå§‹åŒ– */
         if( xMBMasterPortTimersInit((USHORT)usTimerT35_50us) != TRUE )
         {
             eStatus = MB_EPORTERR;
@@ -132,7 +132,7 @@ eMBErrorCode eMBMasterRTUInit(UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity 
 }
 
  /**
-  * @brief  RTU³õÊ¼»¯
+  * @brief  RTUåˆå§‹åŒ–
   * @param  None
   * @retval None
   * @note   
@@ -140,9 +140,9 @@ eMBErrorCode eMBMasterRTUInit(UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity 
 void eMBMasterRTUStart( void )
 {
     ENTER_CRITICAL_SECTION(  );
-    eRcvState = STATE_M_RX_INIT;        /* ÅäÖÃ½ÓÊÕÆ÷é³õÊ¼»¯ î‘B */
-    vMBMasterPortSerialEnable( TRUE, FALSE );   /* ÉèÖÃ½ÓÊÕÊ¹ÄÜ */
-    vMBMasterPortTimersT35Enable( );    /* ÉèÖÃÎªT35Ä£Ê½ */
+    eRcvState = STATE_M_RX_INIT;        /* é…ç½®æ¥æ”¶å™¨ç‚ºåˆå§‹åŒ–ç‹€æ…‹ */
+    vMBMasterPortSerialEnable( TRUE, FALSE );   /* è®¾ç½®æ¥æ”¶ä½¿èƒ½ */
+    vMBMasterPortTimersT35Enable( );    /* è®¾ç½®ä¸ºT35æ¨¡å¼ */
 
     EXIT_CRITICAL_SECTION(  );
 }
@@ -162,17 +162,17 @@ eMBErrorCode eMBMasterRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHO
     ENTER_CRITICAL_SECTION(  );
     assert_param( usMasterRcvBufferPos < MB_SER_PDU_SIZE_MAX );
 
-    /* ½øĞĞĞ­Òé³¤¶ÈÅĞ¶ÏºÍCRCĞ£Ñé */
+    /* è¿›è¡Œåè®®é•¿åº¦åˆ¤æ–­å’ŒCRCæ ¡éªŒ */
     if( ( usMasterRcvBufferPos >= MB_SER_PDU_SIZE_MIN )
         && ( usMBCRC16( ( UCHAR * ) ucMasterRTURcvBuf, usMasterRcvBufferPos ) == 0 ) )
     {
-        /* »ñÈ¡´Ó»úµØÖ· */
+        /* è·å–ä»æœºåœ°å€ */
         *pucRcvAddress = ucMasterRTURcvBuf[MB_SER_PDU_ADDR_OFF];
 
-        /* »ñÈ¡½ÓÊÕÊı¾İµÄ³¤¶È */
+        /* è·å–æ¥æ”¶æ•°æ®çš„é•¿åº¦ */
         *pusLength = ( USHORT )( usMasterRcvBufferPos - MB_SER_PDU_PDU_OFF - MB_SER_PDU_SIZE_CRC );
 
-        /* ·µ»ØĞ­ÒéµÄPDU¶ÎÊ×µØÖ· */
+        /* è¿”å›åè®®çš„PDUæ®µé¦–åœ°å€ */
         *pucFrame = (UCHAR *)&ucMasterRTURcvBuf[MB_SER_PDU_PDU_OFF];
     }
     else
@@ -184,13 +184,13 @@ eMBErrorCode eMBMasterRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHO
     return eStatus;
 }
 
-/* Ö÷»ú·¢ËÍº¯Êı */
+/* ä¸»æœºå‘é€å‡½æ•° */
 eMBErrorCode eMBMasterRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     USHORT          usCRC16;
 
-    /* ¼ì²é½ÚµãµØÖ· */
+    /* æ£€æŸ¥èŠ‚ç‚¹åœ°å€ */
     if ( ucSlaveAddress > MB_MASTER_TOTAL_SLAVE_NUM ) 
     {
         return MB_EINVAL;
@@ -204,18 +204,18 @@ eMBErrorCode eMBMasterRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USH
         pucMasterSndBufferCur = ( UCHAR * ) pucFrame - 1;
         usMasterSndBufferCount = 1;
 
-        /* ÌîÈë´Ó»úµØÖ· */
+        /* å¡«å…¥ä»æœºåœ°å€ */
         pucMasterSndBufferCur[MB_SER_PDU_ADDR_OFF] = ucSlaveAddress;
         usMasterSndBufferCount += usLength;
 
-        /* ¼ÆËãCRC */
+        /* è®¡ç®—CRC */
         usCRC16 = usMBCRC16( ( UCHAR * ) pucMasterSndBufferCur, usMasterSndBufferCount );
         ucMasterRTUSndBuf[usMasterSndBufferCount++] = ( UCHAR )( usCRC16 & 0xFF );
         ucMasterRTUSndBuf[usMasterSndBufferCount++] = ( UCHAR )( usCRC16 >> 8 );
 
         /* Activate the transmitter. */
-        eSndState = STATE_M_TX_XMIT;    /* ÅäÖÃÎª·¢ËÍ×´Ì¬ */
-        vMBMasterPortSerialEnable(FALSE,TRUE);   /* ÅäÖÃ·¢ËÍÊ¹ÄÜ,ÅäÖÃÁËTXEÖĞ¶Ï */
+        eSndState = STATE_M_TX_XMIT;    /* é…ç½®ä¸ºå‘é€çŠ¶æ€ */
+        vMBMasterPortSerialEnable(FALSE,TRUE);   /* é…ç½®å‘é€ä½¿èƒ½,é…ç½®äº†TXEä¸­æ–­ */
     }
     else
     {
@@ -225,7 +225,7 @@ eMBErrorCode eMBMasterRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USH
     return eStatus;
 }
 
-/* ½ÓÊÕÖĞ”àÖĞÕ{ÓÃ */
+/* æ¥æ”¶ä¸­æ–·ä¸­èª¿ç”¨ */
 BOOL xMBMasterRTUReceiveFSM( void )
 {
     BOOL            xTaskNeedSwitch = FALSE;
@@ -233,13 +233,13 @@ BOOL xMBMasterRTUReceiveFSM( void )
 
     assert_param((eSndState == STATE_M_TX_IDLE) || (eSndState == STATE_M_TX_XFWR));
 
-    /* ´®¿Ú»ñÈ¡Ò»¸ö×Ö½Ú */
+    /* ä¸²å£è·å–ä¸€ä¸ªå­—èŠ‚ */
     (void)xMBMasterPortSerialGetByte((CHAR *)&ucByte );
 
     switch (eRcvState)
     {
         case STATE_M_RX_INIT:   
-        vMBMasterPortTimersT35Enable(); /* ½ÓÊÕµÚÒ»¸ö×Ö·û,ÖØĞÂ¼ÆÊ± */
+        vMBMasterPortTimersT35Enable(); /* æ¥æ”¶ç¬¬ä¸€ä¸ªå­—ç¬¦,é‡æ–°è®¡æ—¶ */
         break;
 
         case STATE_M_RX_ERROR:
@@ -255,9 +255,9 @@ BOOL xMBMasterRTUReceiveFSM( void )
 
         usMasterRcvBufferPos = 0;
         ucMasterRTURcvBuf[usMasterRcvBufferPos++] = ucByte;
-        eRcvState = STATE_M_RX_RCV; /* ÅäÖÃÎª½ÓÊÕÍê³É×´Ì¬ */
+        eRcvState = STATE_M_RX_RCV; /* é…ç½®ä¸ºæ¥æ”¶å®ŒæˆçŠ¶æ€ */
 
-        /* ¶¨Ê±Æ÷ÖØĞÂ¼ÆÊ±. */
+        /* å®šæ—¶å™¨é‡æ–°è®¡æ—¶. */
         vMBMasterPortTimersT35Enable( );
         break;
 
@@ -275,14 +275,14 @@ BOOL xMBMasterRTUReceiveFSM( void )
         {
             eRcvState = STATE_M_RX_ERROR;
         }
-        vMBMasterPortTimersT35Enable(); /* »¹Î´½ÓÊÕÍê£¬ÖØĞÂ¼ÆÊ± */
+        vMBMasterPortTimersT35Enable(); /* è¿˜æœªæ¥æ”¶å®Œï¼Œé‡æ–°è®¡æ—¶ */
         break;
     }
     return xTaskNeedSwitch;
 }
 
 /*
-  @note:´Ëº¯ÊıÔÚ·¢ËÍÖĞ¶ÏÖĞµ÷ÓÃ
+  @note:æ­¤å‡½æ•°åœ¨å‘é€ä¸­æ–­ä¸­è°ƒç”¨
 */
 BOOL xMBMasterRTUTransmitFSM( void )
 {
@@ -292,27 +292,27 @@ BOOL xMBMasterRTUTransmitFSM( void )
 
     switch (eSndState)
     {
-        case STATE_M_TX_IDLE:   /* ¿ÕÏĞ×´Ì¬ */
-            /* Ê¹ÄÜ½ÓÊÕ£¬Í£Ö¹·¢ËÍ */
+        case STATE_M_TX_IDLE:   /* ç©ºé—²çŠ¶æ€ */
+            /* ä½¿èƒ½æ¥æ”¶ï¼Œåœæ­¢å‘é€ */
             vMBMasterPortSerialEnable(TRUE, FALSE);
             break;
 
-        case STATE_M_TX_XMIT:   /* ·¢ËÍ×´Ì¬ */
-            if( usMasterSndBufferCount != 0 )   /* ÅĞ¶Ï´ı·¢ËÍ×Ö½ÚÊı */
+        case STATE_M_TX_XMIT:   /* å‘é€çŠ¶æ€ */
+            if( usMasterSndBufferCount != 0 )   /* åˆ¤æ–­å¾…å‘é€å­—èŠ‚æ•° */
             {
-                /* ·¢ËÍÒ»¸ö×Ö½Ú */
+                /* å‘é€ä¸€ä¸ªå­—èŠ‚ */
                 xMBMasterPortSerialPutByte((CHAR)*pucMasterSndBufferCur );
                 pucMasterSndBufferCur++;  /* next byte in sendbuffer. */
                 usMasterSndBufferCount--;
             }
             else
             {
-                /* ·¢ËÍÍê³É£¬Ö´ĞĞÏÂ±ß´úÂë */
+                /* å‘é€å®Œæˆï¼Œæ‰§è¡Œä¸‹è¾¹ä»£ç  */
                 xFrameIsBroadcast = ( ucMasterRTUSndBuf[MB_SER_PDU_ADDR_OFF] == MB_ADDRESS_BROADCAST ) ? TRUE : FALSE;
 
-                /* ÇĞ»»Îª½ÓÊÕÊ¹ÄÜ£¬¹Ø±Õ·¢ËÍ */
+                /* åˆ‡æ¢ä¸ºæ¥æ”¶ä½¿èƒ½ï¼Œå…³é—­å‘é€ */
                 vMBMasterPortSerialEnable(TRUE,FALSE);
-                eSndState = STATE_M_TX_XFWR;/* ÅäÖÃÎª·¢ËÍÍê³É£¬µÈ´ı½ÓÊÕ×´Ì¬ */
+                eSndState = STATE_M_TX_XFWR;/* é…ç½®ä¸ºå‘é€å®Œæˆï¼Œç­‰å¾…æ¥æ”¶çŠ¶æ€ */
 
                 /* If the frame is broadcast ,master will enable timer of convert delay,
                 * else master will enable timer of respond timeout. */
@@ -334,21 +334,21 @@ BOOL xMBMasterRTUTransmitFSM( void )
     return xNeedPoll;
 }
 
-/* ¶¨•rÆ÷ î‘B™CˆÌĞĞº¯”µ */
+/* å®šæ™‚å™¨ç‹€æ…‹æ©ŸåŸ·è¡Œå‡½æ•¸ */
 BOOL xMBMasterRTUTimerExpired(void)
 {
 	BOOL xNeedPoll = FALSE;
 
-    /* ½ÓÊÕÆ÷ î‘BÌÀí */
+    /* æ¥æ”¶å™¨ç‹€æ…‹è™•ç† */
 	switch (eRcvState)
 	{
-        /* ³õÊ¼»¯£¬½«Ö÷»ú×´Ì¬ÉèÖÃÎª¿ÕÏĞ */
-        case STATE_M_RX_INIT:   /* ³¬•rµÄÇ°Ò» î‘B */
+        /* åˆå§‹åŒ–ï¼Œå°†ä¸»æœºçŠ¶æ€è®¾ç½®ä¸ºç©ºé—² */
+        case STATE_M_RX_INIT:   /* è¶…æ™‚çš„å‰ä¸€ç‹€æ…‹ */
 		xNeedPoll = xMBMasterPortEventPost(EV_MASTER_READY);
 		break;
 
         case STATE_M_RX_RCV:
-        /* ÉèÖÃÎª½ÓÊÕÍê³É×´Ì¬ */
+        /* è®¾ç½®ä¸ºæ¥æ”¶å®ŒæˆçŠ¶æ€ */
 		xNeedPoll = xMBMasterPortEventPost(EV_MASTER_FRAME_RECEIVED);
 		break;
 
@@ -366,7 +366,7 @@ BOOL xMBMasterRTUTimerExpired(void)
 		break;
 	}
     
-    /* Ö»ÒªßMÈëÁËß@‚€¶¨•rº¯”µ£¬¶¼ÕJé½ÓÊÕ”µ“şÍê³É */
+    /* åªè¦é€²å…¥äº†é€™å€‹å®šæ™‚å‡½æ•¸ï¼Œéƒ½èªç‚ºæ¥æ”¶æ•¸æ“šå®Œæˆ */
 	eRcvState = STATE_M_RX_IDLE;
 
 	switch (eSndState)
@@ -377,7 +377,7 @@ BOOL xMBMasterRTUTimerExpired(void)
         case STATE_M_TX_XFWR:
 		if ( xFrameIsBroadcast == FALSE ) 
         {
-			vMBMasterSetErrorType(EV_ERROR_RESPOND_TIMEOUT);    /* ÉèÖÃÎªÏìÓ¦³¬Ê± */
+			vMBMasterSetErrorType(EV_ERROR_RESPOND_TIMEOUT);    /* è®¾ç½®ä¸ºå“åº”è¶…æ—¶ */
 			xNeedPoll = xMBMasterPortEventPost(EV_MASTER_ERROR_PROCESS);
 		}
 		break;
@@ -389,7 +389,7 @@ BOOL xMBMasterRTUTimerExpired(void)
 	}
 	eSndState = STATE_M_TX_IDLE;
 
-    /* ½ÓÊÕ”µ“şÍê³É£¬êPé]¶¨•rÆ÷ */
+    /* æ¥æ”¶æ•¸æ“šå®Œæˆï¼Œé—œé–‰å®šæ™‚å™¨ */
 	vMBMasterPortTimersDisable( );
 
 	/* If timer mode is convert delay, the master event then turns EV_MASTER_EXECUTE status. */
@@ -425,13 +425,13 @@ USHORT usMBMasterGetPDUSndLength( void )
 	return usMasterSendPDULength;
 }
 
-/* Set Modbus Master µÄ³¬Ê±Ä£Ê½.*/
+/* Set Modbus Master çš„è¶…æ—¶æ¨¡å¼.*/
 void vMBMasterSetCurTimerMode( eMBMasterTimerMode eMBTimerMode )
 {
 	eMasterCurTimerMode = eMBTimerMode;
 }
 
-/* ·µ»Øµ±Ç°¹ã²¥×´Ì¬ */
+/* è¿”å›å½“å‰å¹¿æ’­çŠ¶æ€ */
 BOOL xMBMasterRequestIsBroadcast( void )
 {
 	return xFrameIsBroadcast;

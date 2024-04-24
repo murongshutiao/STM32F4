@@ -268,12 +268,12 @@ eMBException eMBMasterFuncWriteCoil( UCHAR * pucFrame, USHORT * usLen )
 #if MB_FUNC_WRITE_MULTIPLE_COILS_ENABLED > 0
 
 /**
- * @brief Ð´¶à¸öÏßÈ¦(0x0F)
- * @param ucSndAddr:´Ó»úµØÖ·
- *        usCoilAddr:ÏßÈ¦ÆðÊ¼µØÖ·
- *        usNCoils:Òª¶ÁÈ¡ÏßÈ¦×ÜÊý
+ * @brief å†™å¤šä¸ªçº¿åœˆ(0x0F)
+ * @param ucSndAddr:ä»Žæœºåœ°å€
+ *        usCoilAddr:çº¿åœˆèµ·å§‹åœ°å€
+ *        usNCoils:è¦è¯»å–çº¿åœˆæ€»æ•°
  *        usCoilData data to be written
- *        lTimeOut:³¬Ê±Ê±¼ä(-1 will waiting forever)
+ *        lTimeOut:è¶…æ—¶æ—¶é—´(-1 will waiting forever)
  * @return error code
  */
 eMBMasterReqErrCode eMBMasterReqWriteMultipleCoils( UCHAR ucSndAddr,
@@ -284,7 +284,7 @@ eMBMasterReqErrCode eMBMasterReqWriteMultipleCoils( UCHAR ucSndAddr,
     UCHAR                  ucByteCount;
     eMBMasterReqErrCode    eErrStatus = MB_MRE_NO_ERR;
 
-    /* ¶Ô´Ó»úµØÖ·½øÐÐÅÐ¶Ï */
+    /* å¯¹ä»Žæœºåœ°å€è¿›è¡Œåˆ¤æ–­ */
     if (ucSndAddr > MB_MASTER_TOTAL_SLAVE_NUM) 
     {
         eErrStatus = MB_MRE_ILL_ARG;

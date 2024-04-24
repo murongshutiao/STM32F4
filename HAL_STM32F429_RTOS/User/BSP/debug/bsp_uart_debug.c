@@ -4,9 +4,9 @@ UART_HandleTypeDef DebugUartHandler;
 
 
  /**
-  * @brief  DEBUG_USART GPIO ÅäÖÃ,¹¤×÷Ä£Ê½ÅäÖÃ¡£115200 8-N-1
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  DEBUG_USART GPIO é…ç½®,å·¥ä½œæ¨¡å¼é…ç½®ã€‚115200 8-N-1
+  * @param  æ— 
+  * @retval æ— 
   */  
 void Debug_Uart_Config(void)
 { 
@@ -21,15 +21,15 @@ void Debug_Uart_Config(void)
   
   HAL_UART_Init(&DebugUartHandler);
     
- /*Ê¹ÄÜ´®¿Ú½ÓÊÕ¶Ï */
+ /*ä½¿èƒ½ä¸²å£æ¥æ”¶æ–­ */
   __HAL_UART_ENABLE_IT(&DebugUartHandler,UART_IT_RXNE);  
 }
 
 
 /**
-  * @brief UART MSP ³õÊ¼»¯ 
+  * @brief UART MSP åˆå§‹åŒ– 
   * @param huart: UART handle
-  * @retval ÎŞ
+  * @retval æ— 
   */
 void Debug_Uart_Init(void)
 {  
@@ -47,19 +47,19 @@ void Debug_Uart_Init(void)
     GPIO_InitStruct.Alternate = DEBUG_USART_TX_AF;
     HAL_GPIO_Init(DEBUG_USART_TX_GPIO_PORT, &GPIO_InitStruct);
     
-    /* ÅäÖÃRxÒı½ÅÎª¸´ÓÃ¹¦ÄÜ */
+    /* é…ç½®Rxå¼•è„šä¸ºå¤ç”¨åŠŸèƒ½ */
     GPIO_InitStruct.Pin = DEBUG_USART_RX_PIN;
     GPIO_InitStruct.Alternate = DEBUG_USART_RX_AF;
     HAL_GPIO_Init(DEBUG_USART_RX_GPIO_PORT, &GPIO_InitStruct); 
     
-    HAL_NVIC_SetPriority(DEBUG_USART_IRQ ,0,1);	//ÇÀÕ¼ÓÅÏÈ¼¶0£¬×ÓÓÅÏÈ¼¶1
-    HAL_NVIC_EnableIRQ(DEBUG_USART_IRQ );		    //Ê¹ÄÜUSART1ÖĞ¶ÏÍ¨µÀ  
+    HAL_NVIC_SetPriority(DEBUG_USART_IRQ ,0,1);	//æŠ¢å ä¼˜å…ˆçº§0ï¼Œå­ä¼˜å…ˆçº§1
+    HAL_NVIC_EnableIRQ(DEBUG_USART_IRQ );		    //ä½¿èƒ½USART1ä¸­æ–­é€šé“  
 
     Debug_Uart_Config();
 }
 
 
-/*****************  ·¢ËÍ×Ö·û´® **********************/
+/*****************  å‘é€å­—ç¬¦ä¸² **********************/
 void Debug_Uart_SendString(uint8_t *str)
 {
 	unsigned int k=0;
@@ -86,7 +86,7 @@ void  DEBUG_USART_IRQHandler(void)
         ch=( uint16_t)READ_REG(DebugUartHandler.Instance->DR);
         //WRITE_REG(DebugUartHandler.Instance->DR,ch); 
 
-        /* Æô¶¯¶¨Ê±Æ÷ */
+        /* å¯åŠ¨å®šæ—¶å™¨ */
         multi_timer_start(&Timer_DebugUart_Handler,2000,(multi_timer_callback_t)MultiTimer_DebugUart_CallBack,NULL);
         DebugUartReceiveBuffer[DebugUartReveiveData.len++] = ch;
 
@@ -108,16 +108,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 #endif
 
-///ÖØ¶¨Ïòc¿âº¯Êıprintfµ½´®¿ÚDEBUG_USART£¬ÖØ¶¨Ïòºó¿ÉÊ¹ÓÃprintfº¯Êı
+///é‡å®šå‘cåº“å‡½æ•°printfåˆ°ä¸²å£DEBUG_USARTï¼Œé‡å®šå‘åå¯ä½¿ç”¨printfå‡½æ•°
 int fputc(int ch, FILE *f)
 {
-	/* ·¢ËÍÒ»¸ö×Ö½ÚÊı¾İµ½´®¿ÚDEBUG_USART */
+	/* å‘é€ä¸€ä¸ªå­—èŠ‚æ•°æ®åˆ°ä¸²å£DEBUG_USART */
 	HAL_UART_Transmit(&DebugUartHandler, (uint8_t *)&ch, 1, 1000);	
 	
 	return (ch);
 }
 
-///ÖØ¶¨Ïòc¿âº¯Êıscanfµ½´®¿ÚDEBUG_USART£¬ÖØĞ´Ïòºó¿ÉÊ¹ÓÃscanf¡¢getcharµÈº¯Êı
+///é‡å®šå‘cåº“å‡½æ•°scanfåˆ°ä¸²å£DEBUG_USARTï¼Œé‡å†™å‘åå¯ä½¿ç”¨scanfã€getcharç­‰å‡½æ•°
 int fgetc(FILE *f)
 {
 		
